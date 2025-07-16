@@ -9,6 +9,7 @@ Electronic Planning Board for Yourtech, a simple alternative to Excel.
 
 * Node version 22 or above
 * pnpm
+* Docker
 
 ## Getting Started
 
@@ -33,13 +34,14 @@ pnpm install
 
 ```bash
 cp .env.example .env
-
-# Open the .env file and change '[YOUR-PASSWORD]' to your local Postgres instance its password. Default: postgres
 ```
+
+Open the `.env` file and change _[YOUR-PASSWORD]_ to your local Postgres instance its password. Default: postgres
 
 4. Running the local environment
 
 ```bash
+pnpm supabase start
 pnpm run dev
 ```
 
