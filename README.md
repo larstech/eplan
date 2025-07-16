@@ -1,6 +1,6 @@
 # Electronic Planning Board
 
-![Yourtech logo made in Calc](public/yourtech-logo-in-calc.png)
+![Yourtech logo](public/yourtech-logo-full.png)
 <i>Credits to Vecteezy for the font design.</i>
 
 Electronic Planning Board for Yourtech, a simple alternative to Excel.
