@@ -7,9 +7,9 @@ Electronic Planning Board for Yourtech, a simple alternative to Excel.
 
 ## Requirements
 
-* Node version 22 or above
-* pnpm
-* Docker
+- Node version 22 or above
+- pnpm
+- Docker
 
 ## Getting Started
 
