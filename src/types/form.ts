@@ -1,6 +1,6 @@
 export type FormInput = {
-  name: string
+  name: "email" | "password"
   label: string
-  type: string
+  type: "email" | "password"
   placeholder: string
 }

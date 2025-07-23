@@ -13,6 +13,12 @@ import { useForm } from "react-hook-form"
 import Link from "next/link"
 import { getGreetingByTime } from "@/libs/greeting"
 import { FormInput } from "@/types/form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { companyEmail } from "@/utils/regexp"
+import { signIn } from "@/services/auth"
+import { useRouter } from "next/navigation"
+import { translatedError } from "@/utils/supabase"
 
 const formFields: FormInput[] = [
   {
@@ -28,6 +34,15 @@ const formFields: FormInput[] = [
     placeholder: "********",
   },
 ]
+
+const formSchema = z.object({
+  email: z.email({
+    error:
+      "Het emailadres moet afkomstig zijn van Yourtech. Probeer het opnieuw.",
+    pattern: companyEmail,
+  }),
+  password: z.string(),
+})
 
 const FormHeader = () => {
   return (
@@ -55,11 +70,26 @@ const FormFooter = () => {
 }
 
 const FormContent = () => {
-  const form = useForm()
+  const router = useRouter()
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  })
+
+  const formSubmit = async (values: z.infer<typeof formSchema>) => {
+    const result = await signIn(values.email, values.password)
+
+    if (result.error) {
+      form.setError("root", { message: translatedError(result.error.message) })
+      return
+    }
+
+    router.push("/")
+  }
 
   return (
     <Form {...form}>
-      <form className="space-y-8">
+      <form onSubmit={form.handleSubmit(formSubmit)} className="space-y-8">
         {formFields.map((data) => (
           <FormField
             key={data.name}
@@ -81,6 +111,19 @@ const FormContent = () => {
           />
         ))}
         <Button className="w-full">Inloggen</Button>
+
+        <div className="flex flex-col gap-y-2">
+          {form.formState.errors.email && (
+            <span className="text-sm text-red-500">
+              Fout: {form.formState.errors.email?.message}
+            </span>
+          )}
+          {form.formState.errors.root && (
+            <span className="text-sm text-red-500">
+              Fout: {form.formState.errors.root?.message}
+            </span>
+          )}
+        </div>
       </form>
     </Form>
   )
