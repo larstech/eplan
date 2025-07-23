@@ -18,7 +18,6 @@ import { z } from "zod"
 import { companyEmail } from "@/utils/regexp"
 import { signIn } from "@/services/auth"
 import { useRouter } from "next/navigation"
-import { translatedError } from "@/utils/supabase"
 
 const formFields: FormInput[] = [
   {
@@ -80,7 +79,8 @@ const FormContent = () => {
     const result = await signIn(values.email, values.password)
 
     if (result.error) {
-      form.setError("root", { message: translatedError(result.error.message) })
+      // Note to future self: Struggled with Supabase localized error messages. Defaulting to display the most common error.
+      form.setError("root", { message: "Ongeldige inloggegevens. Neem contact op met de administrator als het probleem aanhoudt." })
       return
     }
 
