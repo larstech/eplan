@@ -80,7 +80,10 @@ const FormContent = () => {
 
     if (result.error) {
       // Note to future self: Struggled with Supabase localized error messages. Defaulting to display the most common error.
-      form.setError("root", { message: "Ongeldige inloggegevens. Neem contact op met de administrator als het probleem aanhoudt." })
+      form.setError("root", {
+        message:
+          "Ongeldige inloggegevens. Neem contact op met de administrator als het probleem aanhoudt.",
+      })
       return
     }
 
