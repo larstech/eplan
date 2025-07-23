@@ -5,7 +5,7 @@ const MORNING_END = 12
 const AFTERNOON_START = 12
 const AFTERNOON_END = 18
 const EVENING_START = 18
-const EVENING_END = 0
+const EVENING_END = 24
 
 const getGreetingByTime = () => {
   const currentHour = new Date().getHours()
