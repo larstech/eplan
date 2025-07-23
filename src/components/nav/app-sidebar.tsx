@@ -1,12 +1,17 @@
+"use client"
+
 import {
   Sidebar,
+  SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Grip } from "lucide-react"
+import { Grip, LogOut } from "lucide-react"
 import Link from "next/link"
+import { signOut } from "@/services/auth"
 
 export function AppSidebar() {
   return (
@@ -28,6 +33,19 @@ export function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
+      <SidebarContent />
+
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={async () => await signOut()}>
+              <LogOut className="size-4" />
+              <span className="">Uitloggen</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }
