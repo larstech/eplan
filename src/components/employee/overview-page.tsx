@@ -8,8 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Employee } from "@/generated/prisma/client"
 import { getAllEmployees } from "@/services/employee"
+import { Employee } from "@/types/employee"
 import { sortEmployeesByName } from "@/utils/employee"
 import { useEffect, useState } from "react"
 
