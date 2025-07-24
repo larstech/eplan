@@ -1,4 +1,4 @@
-import { Employee } from "@/generated/prisma/client"
+import { Employee } from "@/types/employee"
 
 const sortEmployeesByName = (employees: Employee[]) => {
   return employees.sort((a, b) => {
