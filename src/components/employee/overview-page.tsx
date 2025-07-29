@@ -12,9 +12,10 @@ import { getAllEmployees } from "@/services/employee"
 import { Employee } from "@/types/employee"
 import { sortEmployeesByName } from "@/utils/employee"
 import { useEffect, useState } from "react"
+import "@/utils/array"
 
 export default function EmployeeOverviewPage() {
-  const [employees, setEmployees] = useState<Employee[] | undefined>()
+  const [employees, setEmployees] = useState<Employee[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,13 +36,21 @@ export default function EmployeeOverviewPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {employees?.map((employee) => (
-            <TableRow key={employee.email}>
+          {!employees.isEmpty() ? (
+            employees?.map((employee) => (
+              <TableRow key={employee.email}>
+                <TableCell>
+                  {employee.firstName} {employee.lastName}
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
               <TableCell>
-                {employee.firstName} {employee.lastName}
+                <i>Er zijn geen medewerkers gevonden.</i>
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </div>
