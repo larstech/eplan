@@ -43,8 +43,8 @@ export default function EmployeeOverviewPage() {
         </TableHeader>
         <TableBody>
           {!employees.isEmpty() ? (
-            employees?.map((employee) => (
-              <TableRow key={employee.email}>
+            employees?.map((employee, index) => (
+              <TableRow key={index}>
                 <TableCell>
                   {employee.firstName} {employee.lastName}
                 </TableCell>
