@@ -33,9 +33,9 @@ const RowActions = ({ employee }: { employee: Employee }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>
-          <Link href={`/app/employee/edit/${employee.id}`}>Wijzig</Link>
-        </DropdownMenuItem>
+        <Link href={`/app/employee/edit/${employee.id}`}>
+          <DropdownMenuItem>Wijzig</DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   )
