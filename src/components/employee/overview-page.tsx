@@ -13,6 +13,8 @@ import { Employee } from "@/types/employee"
 import { sortEmployeesByName } from "@/utils/employee"
 import { useEffect, useState } from "react"
 import "@/utils/array"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function EmployeeOverviewPage() {
   const [employees, setEmployees] = useState<Employee[]>([])
@@ -29,6 +31,10 @@ export default function EmployeeOverviewPage() {
 
   return (
     <div className="flex flex-col gap-y-2">
+      <Link href="/app/employee/create">
+        <Button className="w-full">Medewerker toevoegen</Button>
+      </Link>
+
       <Table>
         <TableHeader>
           <TableRow>
