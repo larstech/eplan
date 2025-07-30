@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { createEmployee } from "@/services/employee"
 import Link from "next/link"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export type FormInput = {
   name: "firstName" | "lastName"
@@ -37,6 +39,8 @@ const formSchema = z.object({
 })
 
 export default function EmployeeCreatePage() {
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,11 +51,17 @@ export default function EmployeeCreatePage() {
 
   const formSubmit = async (values: z.infer<typeof formSchema>) => {
     const { firstName, lastName } = values
-    await createEmployee({
+    const createdEmployee = await createEmployee({
       email: "",
       firstName: firstName,
       lastName: lastName,
     })
+
+    toast("Medewerker aangemaakt", {
+      description: `${createdEmployee.firstName} ${createdEmployee.lastName}`,
+    })
+
+    router.push("/app/employee")
   }
 
   return (
