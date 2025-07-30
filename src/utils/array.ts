@@ -1,4 +1,5 @@
 declare global {
+  // eslint-disable-next-line
   interface Array<T> {
     isEmpty(): boolean
   }
