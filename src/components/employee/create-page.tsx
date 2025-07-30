@@ -52,7 +52,6 @@ export default function EmployeeCreatePage() {
   const formSubmit = async (values: z.infer<typeof formSchema>) => {
     const { firstName, lastName } = values
     const createdEmployee = await createEmployee({
-      email: "",
       firstName: firstName,
       lastName: lastName,
     })
