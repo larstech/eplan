@@ -15,6 +15,31 @@ import { useEffect, useState } from "react"
 import "@/utils/array"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { MoreHorizontal } from "lucide-react"
+
+const RowActions = ({ employee }: { employee: Employee }) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem>
+          <Link href={`/app/employee/edit/${employee.id}`}>Wijzig</Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 export default function EmployeeOverviewPage() {
   const [employees, setEmployees] = useState<Employee[]>([])
@@ -39,6 +64,7 @@ export default function EmployeeOverviewPage() {
         <TableHeader>
           <TableRow>
             <TableHead className="font-bold">Naam</TableHead>
+            <TableHead>{/* Actions column without label */}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -47,6 +73,9 @@ export default function EmployeeOverviewPage() {
               <TableRow key={index}>
                 <TableCell>
                   {employee.firstName} {employee.lastName}
+                </TableCell>
+                <TableCell className="text-right">
+                  <RowActions employee={employee} />
                 </TableCell>
               </TableRow>
             ))
