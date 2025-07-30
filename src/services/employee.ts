@@ -12,9 +12,29 @@ const createEmployee = async (employee: Employee) => {
   return createdEmployee
 }
 
+const editEmployee = async (id: number, employee: Employee) => {
+  employee.firstName = formatFirstName(employee.firstName)
+  employee.lastName = formatLastName(employee.lastName)
+
+  const createdEmployee = await prisma.employee.update({
+    where: { id: id },
+    data: employee,
+  })
+  return createdEmployee
+}
+
+const getEmployeeById = async (id: number) => {
+  const employee = await prisma.employee.findUnique({
+    where: {
+      id: id,
+    },
+  })
+  return employee
+}
+
 const getAllEmployees = async () => {
   const employees = await prisma.employee.findMany()
   return employees
 }
 
-export { createEmployee, getAllEmployees }
+export { createEmployee, editEmployee, getEmployeeById, getAllEmployees }
