@@ -10,18 +10,18 @@ import { useEffect, useState } from "react"
 import { Id } from "@/types/id"
 import NotFound from "@/app/not-found"
 
-export default function EmployeeEditPage({ id }: { id: Id }) {
+export default function EmployeeEditPage({ employeeId }: { employeeId: Id }) {
   const router = useRouter()
   const [employee, setEmployee] = useState<Employee | null>()
 
   useEffect(() => {
     const fetchEmployee = async () => {
-      const employeeData = await getEmployeeById(id)
+      const employeeData = await getEmployeeById(employeeId)
       setEmployee(employeeData)
     }
 
     fetchEmployee()
-  }, [id])
+  }, [employeeId])
 
   if (!employee) {
     return <NotFound />

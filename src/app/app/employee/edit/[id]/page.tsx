@@ -1,9 +1,9 @@
 import EmployeeEditPage from "@/components/employee/edit-page"
 import { Id } from "@/types/id"
 
-type PageParams = Promise<{ id: Id }>
+type PageParams = Promise<{ employeeId: Id }>
 
 export default async function Page({ params }: { params: PageParams }) {
-  const { id } = await params
-  return <EmployeeEditPage id={id} />
+  const { employeeId } = await params
+  return <EmployeeEditPage employeeId={employeeId} />
 }
