@@ -4,11 +4,28 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { Employee } from "@/types/employee"
-import { editEmployee } from "@/services/employee"
+import { editEmployee, getEmployeeById } from "@/services/employee"
 import EmployeeDetailsForm, { employeeDetailsFormSchema } from "./details-form"
+import { useEffect, useState } from "react"
+import { Id } from "@/types/id"
+import NotFound from "@/app/not-found"
 
-export default function EmployeeEditPage({ employee }: { employee: Employee }) {
+export default function EmployeeEditPage({ id }: { id: Id }) {
   const router = useRouter()
+  const [employee, setEmployee] = useState<Employee | null>()
+
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      const employeeData = await getEmployeeById(id)
+      setEmployee(employeeData)
+    }
+
+    fetchEmployee()
+  }, [id])
+
+  if (!employee) {
+    return <NotFound />
+  }
 
   const formSubmit = async (
     values: z.infer<typeof employeeDetailsFormSchema>,
