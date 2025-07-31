@@ -50,8 +50,8 @@ export default function EmployeeDetailsForm({
   const form = useForm<z.infer<typeof employeeDetailsFormSchema>>({
     resolver: zodResolver(employeeDetailsFormSchema),
     defaultValues: {
-      firstName: employee?.firstName,
-      lastName: employee?.lastName,
+      firstName: employee?.firstName ?? "",
+      lastName: employee?.lastName ?? "",
     },
   })
 
