@@ -1,5 +1,5 @@
 type Employee = {
-  id?: number
+  id?: string
   firstName: string
   lastName: string
 }

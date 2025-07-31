@@ -4,10 +4,10 @@ import { getEmployeeById } from "@/services/employee"
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: number }>
+  params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const employee = await getEmployeeById(Number(id))
+  const employee = await getEmployeeById(id)
 
   return <EmployeeEditPage employee={employee!} />
 }

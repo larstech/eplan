@@ -12,7 +12,7 @@ const createEmployee = async (employee: Employee) => {
   return createdEmployee
 }
 
-const editEmployee = async (id: number, employee: Employee) => {
+const editEmployee = async (id: string, employee: Employee) => {
   employee.firstName = formatFirstName(employee.firstName)
   employee.lastName = formatLastName(employee.lastName)
 
@@ -23,7 +23,7 @@ const editEmployee = async (id: number, employee: Employee) => {
   return createdEmployee
 }
 
-const getEmployeeById = async (id: number) => {
+const getEmployeeById = async (id: string) => {
   const employee = await prisma.employee.findUnique({
     where: {
       id: id,
