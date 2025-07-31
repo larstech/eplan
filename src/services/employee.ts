@@ -2,6 +2,7 @@
 
 import { prisma } from "@/libs/prisma"
 import { Employee } from "@/types/employee"
+import { Id } from "@/types/id"
 import { formatFirstName, formatLastName } from "@/utils/employee"
 
 const createEmployee = async (employee: Employee) => {
@@ -12,7 +13,7 @@ const createEmployee = async (employee: Employee) => {
   return createdEmployee
 }
 
-const editEmployee = async (id: string, employee: Employee) => {
+const editEmployee = async (id: Id, employee: Employee) => {
   employee.firstName = formatFirstName(employee.firstName)
   employee.lastName = formatLastName(employee.lastName)
 
@@ -23,7 +24,7 @@ const editEmployee = async (id: string, employee: Employee) => {
   return createdEmployee
 }
 
-const getEmployeeById = async (id: string) => {
+const getEmployeeById = async (id: Id) => {
   const employee = await prisma.employee.findUnique({
     where: {
       id: id,
