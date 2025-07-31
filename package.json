@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "postinstall": "prisma generate",
     "build": "next build",
+    "build:migrate": "next build && prisma migrate deploy",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
