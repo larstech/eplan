@@ -75,7 +75,7 @@ export default function EmployeeDetailsForm({
             />
           ))}
           <div className="space-y-2">
-            <Button className="w-full">{submitLabel}</Button>
+            <Button loading={form.formState.isSubmitting} className="w-full">{submitLabel}</Button>
             <Link href="/app/employee">
               <Button className="w-full" variant="outline">
                 Annuleren
