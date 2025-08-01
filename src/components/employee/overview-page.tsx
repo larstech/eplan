@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
+import LoadingTable from "@/components/skeleton/table"
 
 const RowActions = ({ employee }: { employee: Employee }) => {
   return (
@@ -42,7 +43,7 @@ const RowActions = ({ employee }: { employee: Employee }) => {
 }
 
 export default function EmployeeOverviewPage() {
-  const [employees, setEmployees] = useState<Employee[]>([])
+  const [employees, setEmployees] = useState<Employee[] | null>()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,23 +69,27 @@ export default function EmployeeOverviewPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {!employees.isEmpty() ? (
-            employees?.map((employee, index) => (
-              <TableRow key={index}>
+          {employees ? (
+            !employees.isEmpty() ? (
+              employees?.map((employee, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    {employee.firstName} {employee.lastName}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <RowActions employee={employee} />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
                 <TableCell>
-                  {employee.firstName} {employee.lastName}
-                </TableCell>
-                <TableCell className="text-right">
-                  <RowActions employee={employee} />
+                  <i>Er zijn geen medewerkers gevonden.</i>
                 </TableCell>
               </TableRow>
-            ))
+            )
           ) : (
-            <TableRow>
-              <TableCell>
-                <i>Er zijn geen medewerkers gevonden.</i>
-              </TableCell>
-            </TableRow>
+            <LoadingTable cols={2} />
           )}
         </TableBody>
       </Table>
