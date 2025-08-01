@@ -113,7 +113,9 @@ const FormContent = () => {
             )}
           />
         ))}
-        <Button className="w-full">Inloggen</Button>
+        <Button loading={form.formState.isSubmitting} className="w-full">
+          Inloggen
+        </Button>
 
         <div className="flex flex-col gap-y-2">
           {form.formState.errors.email && (
