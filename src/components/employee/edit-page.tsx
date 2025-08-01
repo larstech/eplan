@@ -9,23 +9,36 @@ import EmployeeDetailsForm, { employeeDetailsFormSchema } from "./details-form"
 import { useEffect, useState } from "react"
 import { Id } from "@/types/id"
 import NotFound from "@/app/not-found"
+import LoadingPage from "@/components/skeleton/page"
 
 export default function EmployeeEditPage({ employeeId }: { employeeId: Id }) {
   const router = useRouter()
-  const [employee, setEmployee] = useState<Employee | null>()
+  const [state, setState] = useState<{
+    employee: Employee | null
+    loading: boolean
+  }>({
+    employee: null,
+    loading: true,
+  })
 
   useEffect(() => {
     const fetchEmployee = async () => {
       const employeeData = await getEmployeeById(employeeId)
-      setEmployee(employeeData)
+      setState({ employee: employeeData, loading: false })
     }
 
     fetchEmployee()
   }, [employeeId])
 
-  if (!employee) {
+  if (state.loading) {
+    return <LoadingPage />
+  }
+
+  if (!state.employee) {
     return <NotFound />
   }
+
+  const { employee } = state
 
   const formSubmit = async (
     values: z.infer<typeof employeeDetailsFormSchema>,
