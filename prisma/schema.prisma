@@ -15,3 +15,33 @@ model Employee {
   firstName String
   lastName  String
 }
+
+model Customer {
+  id                String @id @default(cuid())
+  companyName       String
+  address           Address?
+  contact           CustomerContact?
+  travelTimeMinutes Int
+  breakTimeMinutes  Int
+  notes             String
+}
+
+model Address {
+  id          String   @id @default(cuid())
+  customer    Customer @relation(fields: [customerId], references: [id])
+  customerId  String   @unique
+  country     String
+  postalCode  String
+  houseNumber String
+  street      String
+  city        String
+}
+
+model CustomerContact {
+  id          String   @id @default(cuid())
+  customer    Customer @relation(fields: [customerId], references: [id])
+  customerId  String   @unique
+  firstName   String
+  lastName    String
+  phoneNumber String
+}
