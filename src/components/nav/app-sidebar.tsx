@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Grip, LogOut, Users } from "lucide-react"
+import { Building2, Grip, LogOut, Users } from "lucide-react"
 import Link from "next/link"
 import { signOut } from "@/services/auth"
 
@@ -24,6 +24,11 @@ const data = [
         title: "Medewerkers",
         url: "/app/employee",
         icon: Users,
+      },
+      {
+        title: "Klanten",
+        url: "/app/customer",
+        icon: Building2,
       },
     ],
   },
