@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/table"
 import { useEffect, useState } from "react"
 import "@/utils/array"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import LoadingTable from "@/components/skeleton/table"
 import { Customer } from "@/types/customer"
 import { getAllCustomers } from "@/services/customer"
@@ -28,6 +30,10 @@ export default function CustomerOverviewPage() {
 
   return (
     <div className="flex flex-col gap-y-2">
+      <Link href="#">
+        <Button className="w-full">Klant toevoegen</Button>
+      </Link>
+
       <Table>
         <TableHeader>
           <TableRow>
@@ -67,7 +73,7 @@ export default function CustomerOverviewPage() {
               </TableRow>
             )
           ) : (
-            <LoadingTable cols={7} />
+            <LoadingTable cols={8} />
           )}
         </TableBody>
       </Table>
