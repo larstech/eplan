@@ -2,30 +2,30 @@ import { Id } from "./id"
 
 type Customer = {
   id?: Id
-  companyName: String
+  companyName: string
   address: Address | null
   contact: CustomerContact | null
   travelTimeMinutes: number
   breakTimeMinutes: number
-  notes: String
+  notes: string
 }
 
 type Address = {
   id?: Id
-  customerId: String
-  country: String
-  postalCode: String
-  houseNumber: String
-  street: String
-  city: String
+  customerId: string
+  country: string
+  postalCode: string
+  houseNumber: string
+  street: string
+  city: string
 }
 
 type CustomerContact = {
   id?: Id
-  customerId: String
-  firstName: String
-  lastName: String
-  phoneNumber: String
+  customerId: string
+  firstName: string
+  lastName: string
+  phoneNumber: string
 }
 
 export type { Customer, Address, CustomerContact }
