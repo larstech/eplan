@@ -21,14 +21,14 @@ const data = [
     title: "Beheren",
     items: [
       {
-        title: "Medewerkers",
-        url: "/app/employee",
-        icon: Users,
-      },
-      {
         title: "Klanten",
         url: "/app/customer",
         icon: Building2,
+      },
+      {
+        title: "Medewerkers",
+        url: "/app/employee",
+        icon: Users,
       },
     ],
   },
