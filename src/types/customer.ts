@@ -3,8 +3,8 @@ import { Id } from "./id"
 type Customer = {
   id?: Id
   companyName: string
-  address: Address | null
-  contact: CustomerContact | null
+  address: Address
+  contact: CustomerContact
   travelTimeMinutes: number
   breakTimeMinutes: number
   notes: string
@@ -12,7 +12,6 @@ type Customer = {
 
 type Address = {
   id?: Id
-  customerId: string
   country: string
   postalCode: string
   houseNumber: string
@@ -22,7 +21,6 @@ type Address = {
 
 type CustomerContact = {
   id?: Id
-  customerId: string
   firstName: string
   lastName: string
   phoneNumber: string
