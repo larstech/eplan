@@ -30,7 +30,7 @@ export default function CustomerOverviewPage() {
 
   return (
     <div className="flex flex-col gap-y-2">
-      <Link href="#">
+      <Link href="/app/customer/create">
         <Button className="w-full">Klant toevoegen</Button>
       </Link>
 
