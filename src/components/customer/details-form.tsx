@@ -167,7 +167,6 @@ export default function CustomerDetailsForm({
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
                       </FormItem>
                     )}
                   />
