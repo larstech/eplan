@@ -33,7 +33,7 @@ export default function NavHeader() {
           {pathnameData.map((data, index) => {
             if (data.current) {
               return (
-                <BreadcrumbItem>
+                <BreadcrumbItem key={index}>
                   <BreadcrumbPage>{data.section}</BreadcrumbPage>
                 </BreadcrumbItem>
               )
