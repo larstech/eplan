@@ -11,37 +11,45 @@ datasource db {
 }
 
 model Employee {
-  id        String @id @default(cuid())
+  id String @id @default(cuid())
+
   firstName String
   lastName  String
 }
 
 model Customer {
-  id                String @id @default(cuid())
+  id String @id @default(cuid())
+
   companyName       String
-  address           Address?
-  contact           CustomerContact?
   travelTimeMinutes Int
   breakTimeMinutes  Int
   notes             String
+
+  addressId String @unique
+  contactId String @unique
+
+  address Address         @relation(fields: [addressId], references: [id])
+  contact CustomerContact @relation(fields: [contactId], references: [id])
 }
 
 model Address {
-  id          String   @id @default(cuid())
-  customer    Customer @relation(fields: [customerId], references: [id])
-  customerId  String   @unique
+  id String @id @default(cuid())
+
   country     String
   postalCode  String
   houseNumber String
   street      String
   city        String
+
+  customer Customer?
 }
 
 model CustomerContact {
-  id          String   @id @default(cuid())
-  customer    Customer @relation(fields: [customerId], references: [id])
-  customerId  String   @unique
+  id String @id @default(cuid())
+
   firstName   String
   lastName    String
   phoneNumber String
+
+  customer Customer?
 }

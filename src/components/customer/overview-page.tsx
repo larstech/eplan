@@ -53,13 +53,13 @@ export default function CustomerOverviewPage() {
                 <TableRow key={index}>
                   <TableCell>{customer.companyName}</TableCell>
                   <TableCell>
-                    {customer.address?.street} {customer.address?.houseNumber},{" "}
-                    {customer.address?.postalCode}, {customer.address?.city}
+                    {customer.address.street} {customer.address.houseNumber},{" "}
+                    {customer.address.postalCode}, {customer.address.city}
                   </TableCell>
                   <TableCell>
-                    {customer.contact?.firstName} {customer.contact?.lastName}
+                    {customer.contact.firstName} {customer.contact.lastName}
                   </TableCell>
-                  <TableCell>{customer.contact?.phoneNumber}</TableCell>
+                  <TableCell>{customer.contact.phoneNumber}</TableCell>
                   <TableCell>{customer.travelTimeMinutes} minuten</TableCell>
                   <TableCell>{customer.breakTimeMinutes} minuten</TableCell>
                   <TableCell>{customer.notes}</TableCell>
