@@ -5,6 +5,8 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from "@/components/ui/sonner"
 
+type LayoutParams = Readonly<{ children: React.ReactNode }>
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,11 +23,7 @@ export const metadata: Metadata = {
     "Elektronisch planbord voor Yourtech, een simpel alternatief voor Excel",
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function Layout({ children }: LayoutParams) {
   return (
     <html lang="nl">
       <body
