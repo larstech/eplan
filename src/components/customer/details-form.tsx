@@ -98,7 +98,7 @@ const formFields: { items: FormInput[] }[] = [
   },
 ]
 
-const customerDetailsFormSchema = z.object({
+export const customerDetailsFormSchema = z.object({
   companyName: z.string(),
   country: z.string(),
   postalCode: z.string(),
@@ -188,5 +188,3 @@ export default function CustomerDetailsForm({
     </div>
   )
 }
-
-export { customerDetailsFormSchema }

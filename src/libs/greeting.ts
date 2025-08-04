@@ -7,7 +7,7 @@ const AFTERNOON_END = 18
 const EVENING_START = 18
 const EVENING_END = 24
 
-const getGreetingByTime = () => {
+export const getGreetingByTime = () => {
   const currentHour = new Date().getHours()
 
   if (inRange(currentHour, MORNING_START, MORNING_END)) {
@@ -20,5 +20,3 @@ const getGreetingByTime = () => {
     return "Goedendag"
   }
 }
-
-export { getGreetingByTime }

@@ -31,7 +31,7 @@ const formFields: FormInput[] = [
   },
 ]
 
-const employeeDetailsFormSchema = z.object({
+export const employeeDetailsFormSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
 })
@@ -89,5 +89,3 @@ export default function EmployeeDetailsForm({
     </div>
   )
 }
-
-export { employeeDetailsFormSchema }
