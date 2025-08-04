@@ -1,13 +1,5 @@
 "use client"
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { getAllEmployees } from "@/services/employee"
 import { Employee } from "@/types/employee"
 import { sortEmployeesByName } from "@/utils/employee"
@@ -22,7 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
-import LoadingTable from "@/components/skeleton/table"
+import { DataTable } from "../ui/data-table"
+import { ColumnDef } from "@tanstack/react-table"
 
 const RowActions = ({ employee }: { employee: Employee }) => {
   return (
@@ -42,8 +35,27 @@ const RowActions = ({ employee }: { employee: Employee }) => {
   )
 }
 
+const columns: ColumnDef<Employee>[] = [
+  {
+    id: "name",
+    header: "Naam",
+    accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const employee = row.original
+      return (
+        <div className="text-right">
+          <RowActions employee={employee} />
+        </div>
+      )
+    },
+  },
+]
+
 export default function EmployeeOverviewPage() {
-  const [employees, setEmployees] = useState<Employee[] | null>()
+  const [employees, setEmployees] = useState<Employee[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,38 +73,7 @@ export default function EmployeeOverviewPage() {
         <Button className="w-full">Medewerker toevoegen</Button>
       </Link>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="font-bold">Naam</TableHead>
-            <TableHead>{/* Actions column without label */}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {employees ? (
-            !employees.isEmpty() ? (
-              employees?.map((employee, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {employee.firstName} {employee.lastName}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <RowActions employee={employee} />
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell>
-                  <i>Er zijn geen medewerkers gevonden.</i>
-                </TableCell>
-              </TableRow>
-            )
-          ) : (
-            <LoadingTable cols={2} />
-          )}
-        </TableBody>
-      </Table>
+      <DataTable data={employees} columns={columns} />
     </div>
   )
 }

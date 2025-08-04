@@ -1,14 +1,6 @@
 "use client"
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -18,10 +10,11 @@ import { useEffect, useState } from "react"
 import "@/utils/array"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import LoadingTable from "@/components/skeleton/table"
 import { Customer } from "@/types/customer"
 import { getAllCustomers } from "@/services/customer"
 import { MoreHorizontal } from "lucide-react"
+import { ColumnDef } from "@tanstack/react-table"
+import { DataTable } from "../ui/data-table"
 
 const RowActions = ({ customer }: { customer: Customer }) => {
   return (
@@ -41,8 +34,54 @@ const RowActions = ({ customer }: { customer: Customer }) => {
   )
 }
 
+const columns: ColumnDef<Customer>[] = [
+  {
+    accessorKey: "companyName",
+    header: "Bedrijfsnaam",
+  },
+  {
+    id: "address",
+    header: "Adres",
+    accessorFn: (row) =>
+      `${row.address.street} ${row.address.houseNumber}, ${row.address.postalCode}, ${row.address.city}`,
+  },
+  {
+    id: "contactPerson",
+    header: "Contactpersoon",
+    accessorFn: (row) => `${row.contact.firstName} ${row.contact.lastName}`,
+  },
+  {
+    id: "contactNumber",
+    header: "Contactnummer",
+    accessorFn: (row) => row.contact.phoneNumber,
+  },
+  {
+    accessorKey: "travelTimeMinutes",
+    header: "Reistijd",
+  },
+  {
+    accessorKey: "breakTimeMinutes",
+    header: "Pauzetijd",
+  },
+  {
+    accessorKey: "notes",
+    header: "Opmerkingen",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const customer = row.original
+      return (
+        <div className="text-right">
+          <RowActions customer={customer} />
+        </div>
+      )
+    },
+  },
+]
+
 export default function CustomerOverviewPage() {
-  const [customers, setCustomers] = useState<Customer[] | null>(null)
+  const [customers, setCustomers] = useState<Customer[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,53 +98,7 @@ export default function CustomerOverviewPage() {
         <Button className="w-full">Klant toevoegen</Button>
       </Link>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="font-bold">Bedrijfsnaam</TableHead>
-            <TableHead className="font-bold">Adres</TableHead>
-            <TableHead className="font-bold">Contactpersoon</TableHead>
-            <TableHead className="font-bold">Contactnummer</TableHead>
-            <TableHead className="font-bold">Reistijd</TableHead>
-            <TableHead className="font-bold">Pauzetijd</TableHead>
-            <TableHead className="font-bold">Opmerkingen</TableHead>
-            <TableHead>{/* Actions column without label */}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {customers ? (
-            !customers.isEmpty() ? (
-              customers?.map((customer, index) => (
-                <TableRow key={index}>
-                  <TableCell>{customer.companyName}</TableCell>
-                  <TableCell>
-                    {customer.address.street} {customer.address.houseNumber},{" "}
-                    {customer.address.postalCode}, {customer.address.city}
-                  </TableCell>
-                  <TableCell>
-                    {customer.contact.firstName} {customer.contact.lastName}
-                  </TableCell>
-                  <TableCell>{customer.contact.phoneNumber}</TableCell>
-                  <TableCell>{customer.travelTimeMinutes} minuten</TableCell>
-                  <TableCell>{customer.breakTimeMinutes} minuten</TableCell>
-                  <TableCell>{customer.notes}</TableCell>
-                  <TableCell className="text-right">
-                    <RowActions customer={customer} />
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell>
-                  <i>Er zijn geen medewerkers gevonden.</i>
-                </TableCell>
-              </TableRow>
-            )
-          ) : (
-            <LoadingTable cols={8} />
-          )}
-        </TableBody>
-      </Table>
+      <DataTable data={customers} columns={columns} />
     </div>
   )
 }
