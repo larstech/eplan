@@ -1,3 +1,1 @@
-const companyEmail = new RegExp("\\w+@yourtech\.nl", "i")
-
-export { companyEmail }
+export const companyEmail = new RegExp("\\w+@yourtech\.nl", "i")

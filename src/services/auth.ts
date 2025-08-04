@@ -4,7 +4,7 @@ import { createClient } from "@/libs/supabase/server"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-const signIn = async (email: string, password: string) => {
+export const signIn = async (email: string, password: string) => {
   const supabase = await createClient()
   const result = await supabase.auth.signInWithPassword({
     email: email,
@@ -13,12 +13,10 @@ const signIn = async (email: string, password: string) => {
   return result
 }
 
-const signOut = async () => {
+export const signOut = async () => {
   const supabase = await createClient()
   await supabase.auth.signOut({ scope: "local" })
 
   revalidatePath("/")
   redirect("/")
 }
-
-export { signIn, signOut }

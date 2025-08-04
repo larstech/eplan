@@ -1,13 +1,13 @@
 import { Employee } from "@/types/employee"
 
-const formatFirstName = (firstName: string): string => {
+export const formatFirstName = (firstName: string): string => {
   const lowerCaseFirstName = firstName.toLowerCase()
   const capitalizedFirstName =
     lowerCaseFirstName.charAt(0).toUpperCase() + lowerCaseFirstName.slice(1)
   return capitalizedFirstName
 }
 
-const formatLastName = (lastName: string): string => {
+export const formatLastName = (lastName: string): string => {
   const lowerCaseLastName = lastName.toLowerCase()
   const lastNameParts = lowerCaseLastName.split(" ")
 
@@ -22,7 +22,7 @@ const formatLastName = (lastName: string): string => {
   return formattedLastNameParts.join(" ")
 }
 
-const sortEmployeesByName = (employees: Employee[]) => {
+export const sortEmployeesByName = (employees: Employee[]) => {
   return employees.sort((a, b) => {
     const firstNameComparison = a.firstName.localeCompare(b.firstName)
 
@@ -33,5 +33,3 @@ const sortEmployeesByName = (employees: Employee[]) => {
     return a.lastName.localeCompare(b.lastName)
   })
 }
-
-export { formatFirstName, formatLastName, sortEmployeesByName }

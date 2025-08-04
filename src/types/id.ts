@@ -1,3 +1,1 @@
-type Id = string
-
-export type { Id }
+export type Id = string

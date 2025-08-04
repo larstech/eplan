@@ -5,7 +5,7 @@ import { Employee } from "@/types/employee"
 import { Id } from "@/types/id"
 import { formatFirstName, formatLastName } from "@/utils/employee"
 
-const createEmployee = async (employee: Employee) => {
+export const createEmployee = async (employee: Employee) => {
   employee.firstName = formatFirstName(employee.firstName)
   employee.lastName = formatLastName(employee.lastName)
 
@@ -13,7 +13,7 @@ const createEmployee = async (employee: Employee) => {
   return createdEmployee
 }
 
-const editEmployee = async (id: Id, employee: Employee) => {
+export const editEmployee = async (id: Id, employee: Employee) => {
   employee.firstName = formatFirstName(employee.firstName)
   employee.lastName = formatLastName(employee.lastName)
 
@@ -24,7 +24,7 @@ const editEmployee = async (id: Id, employee: Employee) => {
   return createdEmployee
 }
 
-const getEmployeeById = async (id: Id) => {
+export const getEmployeeById = async (id: Id) => {
   const employee = await prisma.employee.findUnique({
     where: {
       id: id,
@@ -33,9 +33,7 @@ const getEmployeeById = async (id: Id) => {
   return employee
 }
 
-const getAllEmployees = async () => {
+export const getAllEmployees = async () => {
   const employees = await prisma.employee.findMany()
   return employees
 }
-
-export { createEmployee, editEmployee, getEmployeeById, getAllEmployees }

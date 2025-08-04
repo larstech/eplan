@@ -1,6 +1,6 @@
 import { Id } from "./id"
 
-type Customer = {
+export type Customer = {
   id?: Id
   companyName: string
   address: Address
@@ -10,7 +10,7 @@ type Customer = {
   notes: string
 }
 
-type Address = {
+export type Address = {
   id?: Id
   country: string
   postalCode: string
@@ -19,11 +19,9 @@ type Address = {
   city: string
 }
 
-type CustomerContact = {
+export type CustomerContact = {
   id?: Id
   firstName: string
   lastName: string
   phoneNumber: string
 }
-
-export type { Customer, Address, CustomerContact }

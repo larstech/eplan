@@ -4,7 +4,7 @@ import { prisma } from "@/libs/prisma"
 import { Customer } from "@/types/customer"
 import { Id } from "@/types/id"
 
-const createCustomer = async (customer: Customer) => {
+export const createCustomer = async (customer: Customer) => {
   const createdCustomer = await prisma.customer.create({
     data: {
       ...customer,
@@ -19,7 +19,7 @@ const createCustomer = async (customer: Customer) => {
   return createdCustomer
 }
 
-const editCustomer = async (id: Id, customer: Customer) => {
+export const editCustomer = async (id: Id, customer: Customer) => {
   const editedCustomer = await prisma.customer.update({
     where: { id: id },
     data: {
@@ -35,7 +35,7 @@ const editCustomer = async (id: Id, customer: Customer) => {
   return editedCustomer
 }
 
-const getCustomerById = async (id: Id) => {
+export const getCustomerById = async (id: Id) => {
   const customer = await prisma.customer.findUnique({
     where: {
       id: id,
@@ -48,7 +48,7 @@ const getCustomerById = async (id: Id) => {
   return customer
 }
 
-const getAllCustomers = async () => {
+export const getAllCustomers = async () => {
   const customers = await prisma.customer.findMany({
     include: {
       address: true,
@@ -57,5 +57,3 @@ const getAllCustomers = async () => {
   })
   return customers
 }
-
-export { createCustomer, editCustomer, getCustomerById, getAllCustomers }

@@ -12,12 +12,18 @@ import {
 import { useForm } from "react-hook-form"
 import Link from "next/link"
 import { getGreetingByTime } from "@/libs/greeting"
-import { FormInput } from "@/types/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { companyEmail } from "@/utils/regexp"
 import { signIn } from "@/services/auth"
 import { useRouter } from "next/navigation"
+
+type FormInput = {
+  name: "email" | "password"
+  label: string
+  type: "email" | "password"
+  placeholder: string
+}
 
 const formFields: FormInput[] = [
   {

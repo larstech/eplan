@@ -7,7 +7,7 @@ type PathnameData = {
   current: boolean
 }
 
-const getPathnameData = (pathname: string): PathnameData[] => {
+export const getPathnameData = (pathname: string): PathnameData[] => {
   const pathnameSeparator = "/"
   const sections = pathname.split(pathnameSeparator)
 
@@ -26,5 +26,3 @@ const getPathnameData = (pathname: string): PathnameData[] => {
     }
   })
 }
-
-export { getPathnameData }
