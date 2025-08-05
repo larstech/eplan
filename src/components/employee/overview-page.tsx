@@ -1,21 +1,21 @@
 "use client"
 
-import { getAllEmployees } from "@/services/employee"
-import { Employee } from "@/types/employee"
-import { sortEmployeesByName } from "@/utils/employee"
-import { useEffect, useState } from "react"
-import "@/utils/array"
+import { DataTable } from "../ui/data-table"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal } from "lucide-react"
-import { DataTable } from "../ui/data-table"
+import { getAllEmployees } from "@/services/employee"
+import { Employee } from "@/types/employee"
+import "@/utils/array"
+import { sortEmployeesByName } from "@/utils/employee"
 import { ColumnDef } from "@tanstack/react-table"
+import { MoreHorizontal } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
 const RowActions = ({ employee }: { employee: Employee }) => {
   return (

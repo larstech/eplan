@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   Form,
   FormControl,
@@ -9,14 +8,15 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form"
-import { useForm } from "react-hook-form"
-import Link from "next/link"
+import { Input } from "@/components/ui/input"
 import { getGreetingByTime } from "@/libs/greeting"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { companyEmail } from "@/utils/regexp"
 import { signIn } from "@/services/auth"
+import { companyEmail } from "@/utils/regexp"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 type FormInput = {
   name: "email" | "password"

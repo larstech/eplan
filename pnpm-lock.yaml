@@ -98,6 +98,9 @@ importers:
       "@tailwindcss/postcss":
         specifier: ^4.1.11
         version: 4.1.11
+      "@trivago/prettier-plugin-sort-imports":
+        specifier: ^5.2.2
+        version: 5.2.2(prettier@3.6.2)
       "@types/node":
         specifier: ^20.19.9
         version: 20.19.9
@@ -154,10 +157,60 @@ packages:
       }
     engines: { node: ">=6.9.0" }
 
+  "@babel/generator@7.28.0":
+    resolution:
+      {
+        integrity: sha512-lJjzvrbEeWrhB4P3QBsH7tey117PjLZnDbLiQEKjQ/fNJTjuq4HSqgFA+UNSwZT8D7dxxbnuSBMsa1lrWzKlQg==,
+      }
+    engines: { node: ">=6.9.0" }
+
+  "@babel/helper-globals@7.28.0":
+    resolution:
+      {
+        integrity: sha512-+W6cISkXFa1jXsDEdYA8HeevQT/FULhxzR99pxphltZcVaugps53THCeiWA8SguxxpSp3gKPiuYfSWopkLQ4hw==,
+      }
+    engines: { node: ">=6.9.0" }
+
+  "@babel/helper-string-parser@7.27.1":
+    resolution:
+      {
+        integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==,
+      }
+    engines: { node: ">=6.9.0" }
+
   "@babel/helper-validator-identifier@7.27.1":
     resolution:
       {
         integrity: sha512-D2hP9eA+Sqx1kBZgzxZh0y1trbuU+JoDkiEwqhQ36nodYqJwyEIhPSdMNd7lOm/4io72luTPWH20Yda0xOuUow==,
+      }
+    engines: { node: ">=6.9.0" }
+
+  "@babel/parser@7.28.0":
+    resolution:
+      {
+        integrity: sha512-jVZGvOxOuNSsuQuLRTh13nU0AogFlw32w/MT+LV6D3sP5WdbW61E77RnkbaO2dUvmPAYrBDJXGn5gGS6tH4j8g==,
+      }
+    engines: { node: ">=6.0.0" }
+    hasBin: true
+
+  "@babel/template@7.27.2":
+    resolution:
+      {
+        integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==,
+      }
+    engines: { node: ">=6.9.0" }
+
+  "@babel/traverse@7.28.0":
+    resolution:
+      {
+        integrity: sha512-mGe7UK5wWyh0bKRfupsUchrQGqvDbZDbKJw+kcRGSmdHVYrv+ltd0pnpDTVpiTqnaBru9iEvA8pz8W46v0Amwg==,
+      }
+    engines: { node: ">=6.9.0" }
+
+  "@babel/types@7.28.2":
+    resolution:
+      {
+        integrity: sha512-ruv7Ae4J5dUYULmeXw1gmb7rYRz57OWCPM57pHojnLq/3Z1CK2lNSLTCVjxVk1F/TZHwOZZrOWi0ur95BbLxNQ==,
       }
     engines: { node: ">=6.9.0" }
 
@@ -1505,6 +1558,25 @@ packages:
         integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==,
       }
     engines: { node: ">=12" }
+
+  "@trivago/prettier-plugin-sort-imports@5.2.2":
+    resolution:
+      {
+        integrity: sha512-fYDQA9e6yTNmA13TLVSA+WMQRc5Bn/c0EUBditUHNfMMxN7M82c38b1kEggVE3pLpZ0FwkwJkUEKMiOi52JXFA==,
+      }
+    engines: { node: ">18.12" }
+    peerDependencies:
+      "@vue/compiler-sfc": 3.x
+      prettier: 2.x - 3.x
+      prettier-plugin-svelte: 3.x
+      svelte: 4.x || 5.x
+    peerDependenciesMeta:
+      "@vue/compiler-sfc":
+        optional: true
+      prettier-plugin-svelte:
+        optional: true
+      svelte:
+        optional: true
 
   "@tybys/wasm-util@0.10.0":
     resolution:
@@ -3311,6 +3383,12 @@ packages:
       }
     engines: { node: ">= 0.4" }
 
+  javascript-natural-sort@0.7.1:
+    resolution:
+      {
+        integrity: sha512-nO6jcEfZWQXDhOiBtG2KvKyEptz7RVbpGP4vTD2hLBdmNQSsCiicO2Ioinv6UI4y9ukqnBpy+XZ9H6uLNgJTlw==,
+      }
+
   jiti@2.5.1:
     resolution:
       {
@@ -3329,6 +3407,14 @@ packages:
       {
         integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==,
       }
+    hasBin: true
+
+  jsesc@3.1.0:
+    resolution:
+      {
+        integrity: sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==,
+      }
+    engines: { node: ">=6" }
     hasBin: true
 
   json-buffer@3.0.1:
@@ -3577,6 +3663,12 @@ packages:
     resolution:
       {
         integrity: sha512-sReKOYJIJf74dhJONhU4e0/shzi1trVbSWDOhKYE5XV2O+H7Sb2Dihwuc7xWxVl+DgFPyTqIN3zMfT9cq5iWDg==,
+      }
+
+  lodash@4.17.21:
+    resolution:
+      {
+        integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==,
       }
 
   loose-envify@1.4.0:
@@ -4822,7 +4914,46 @@ snapshots:
       js-tokens: 4.0.0
       picocolors: 1.1.1
 
+  "@babel/generator@7.28.0":
+    dependencies:
+      "@babel/parser": 7.28.0
+      "@babel/types": 7.28.2
+      "@jridgewell/gen-mapping": 0.3.12
+      "@jridgewell/trace-mapping": 0.3.29
+      jsesc: 3.1.0
+
+  "@babel/helper-globals@7.28.0": {}
+
+  "@babel/helper-string-parser@7.27.1": {}
+
   "@babel/helper-validator-identifier@7.27.1": {}
+
+  "@babel/parser@7.28.0":
+    dependencies:
+      "@babel/types": 7.28.2
+
+  "@babel/template@7.27.2":
+    dependencies:
+      "@babel/code-frame": 7.27.1
+      "@babel/parser": 7.28.0
+      "@babel/types": 7.28.2
+
+  "@babel/traverse@7.28.0":
+    dependencies:
+      "@babel/code-frame": 7.27.1
+      "@babel/generator": 7.28.0
+      "@babel/helper-globals": 7.28.0
+      "@babel/parser": 7.28.0
+      "@babel/template": 7.27.2
+      "@babel/types": 7.28.2
+      debug: 4.4.1
+    transitivePeerDependencies:
+      - supports-color
+
+  "@babel/types@7.28.2":
+    dependencies:
+      "@babel/helper-string-parser": 7.27.1
+      "@babel/helper-validator-identifier": 7.27.1
 
   "@commitlint/cli@19.8.1(@types/node@20.19.9)(typescript@5.9.2)":
     dependencies:
@@ -5686,6 +5817,18 @@ snapshots:
       react-dom: 19.1.1(react@19.1.1)
 
   "@tanstack/table-core@8.21.3": {}
+
+  "@trivago/prettier-plugin-sort-imports@5.2.2(prettier@3.6.2)":
+    dependencies:
+      "@babel/generator": 7.28.0
+      "@babel/parser": 7.28.0
+      "@babel/traverse": 7.28.0
+      "@babel/types": 7.28.2
+      javascript-natural-sort: 0.7.1
+      lodash: 4.17.21
+      prettier: 3.6.2
+    transitivePeerDependencies:
+      - supports-color
 
   "@tybys/wasm-util@0.10.0":
     dependencies:
@@ -6899,6 +7042,8 @@ snapshots:
       has-symbols: 1.1.0
       set-function-name: 2.0.2
 
+  javascript-natural-sort@0.7.1: {}
+
   jiti@2.5.1: {}
 
   js-tokens@4.0.0: {}
@@ -6906,6 +7051,8 @@ snapshots:
   js-yaml@4.1.0:
     dependencies:
       argparse: 2.0.1
+
+  jsesc@3.1.0: {}
 
   json-buffer@3.0.1: {}
 
@@ -7017,6 +7164,8 @@ snapshots:
   lodash.uniq@4.5.0: {}
 
   lodash.upperfirst@4.3.1: {}
+
+  lodash@4.17.21: {}
 
   loose-envify@1.4.0:
     dependencies:

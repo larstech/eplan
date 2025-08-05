@@ -12,9 +12,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { signOut } from "@/services/auth"
 import { Building2, Grip, LogOut, Users } from "lucide-react"
 import Link from "next/link"
-import { signOut } from "@/services/auth"
 
 const data = [
   {

@@ -1,20 +1,20 @@
 "use client"
 
+import { DataTable } from "../ui/data-table"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useEffect, useState } from "react"
-import "@/utils/array"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { Customer } from "@/types/customer"
 import { getAllCustomers } from "@/services/customer"
-import { MoreHorizontal } from "lucide-react"
+import { Customer } from "@/types/customer"
+import "@/utils/array"
 import { ColumnDef } from "@tanstack/react-table"
-import { DataTable } from "../ui/data-table"
+import { MoreHorizontal } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
 const RowActions = ({ customer }: { customer: Customer }) => {
   return (

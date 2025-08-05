@@ -1,15 +1,15 @@
 "use client"
 
-import z from "zod"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { Customer } from "@/types/customer"
-import { editCustomer, getCustomerById } from "@/services/customer"
 import CustomerDetailsForm, { customerDetailsFormSchema } from "./details-form"
-import { useEffect, useState } from "react"
-import { Id } from "@/types/id"
 import NotFound from "@/app/not-found"
 import LoadingPage from "@/components/skeleton/page"
+import { editCustomer, getCustomerById } from "@/services/customer"
+import { Customer } from "@/types/customer"
+import { Id } from "@/types/id"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function CustomerEditPage({ customerId }: { customerId: Id }) {
   const router = useRouter()

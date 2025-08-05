@@ -1,5 +1,5 @@
-import { TableCell, TableRow } from "@/components/ui/table"
 import { Skeleton } from "@/components/ui/skeleton"
+import { TableCell, TableRow } from "@/components/ui/table"
 
 export default function LoadingTable({ cols }: { cols: number }) {
   const tableRows = 8
