@@ -1,10 +1,10 @@
 "use client"
 
-import z from "zod"
-import { useRouter } from "next/navigation"
 import CustomerDetailsForm, { customerDetailsFormSchema } from "./details-form"
 import { createCustomer } from "@/services/customer"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import z from "zod"
 
 export default function CustomerCreatePage() {
   const router = useRouter()

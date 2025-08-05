@@ -1,7 +1,7 @@
-import "@/styles/globals.css"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/nav/app-sidebar"
 import NavHeader from "@/components/nav/nav-header"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import "@/styles/globals.css"
 
 type LayoutParams = Readonly<{ children: React.ReactNode }>
 

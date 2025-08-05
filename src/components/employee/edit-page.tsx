@@ -1,15 +1,15 @@
 "use client"
 
-import z from "zod"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { Employee } from "@/types/employee"
-import { editEmployee, getEmployeeById } from "@/services/employee"
 import EmployeeDetailsForm, { employeeDetailsFormSchema } from "./details-form"
-import { useEffect, useState } from "react"
-import { Id } from "@/types/id"
 import NotFound from "@/app/not-found"
 import LoadingPage from "@/components/skeleton/page"
+import { editEmployee, getEmployeeById } from "@/services/employee"
+import { Employee } from "@/types/employee"
+import { Id } from "@/types/id"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function EmployeeEditPage({ employeeId }: { employeeId: Id }) {
   const router = useRouter()

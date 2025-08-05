@@ -1,7 +1,5 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import z from "zod"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -11,9 +9,11 @@ import {
   FormLabel,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
-import Link from "next/link"
 import { Employee } from "@/types/employee"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 type FormInput = {
   name: "firstName" | "lastName"
