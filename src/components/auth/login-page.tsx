@@ -43,8 +43,7 @@ const fields: FieldData[] = [
 
 const schema = z.object({
   email: z.email({
-    error:
-      "Het emailadres moet afkomstig zijn van Yourtech",
+    error: "Het emailadres moet afkomstig zijn van Yourtech",
     pattern: companyEmail,
   }),
   password: z.string(),
