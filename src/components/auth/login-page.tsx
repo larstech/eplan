@@ -7,6 +7,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { getGreetingByTime } from "@/libs/greeting"
@@ -18,14 +19,14 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-type FormInput = {
+type FieldData = {
   name: "email" | "password"
   label: string
-  type: "email" | "password"
+  type: string
   placeholder: string
 }
 
-const formFields: FormInput[] = [
+const fields: FieldData[] = [
   {
     name: "email",
     label: "Email",
@@ -40,19 +41,21 @@ const formFields: FormInput[] = [
   },
 ]
 
-const formSchema = z.object({
+const schema = z.object({
   email: z.email({
     error:
-      "Het emailadres moet afkomstig zijn van Yourtech. Probeer het opnieuw.",
+      "Het emailadres moet afkomstig zijn van Yourtech",
     pattern: companyEmail,
   }),
   password: z.string(),
 })
 
-const FormHeader = () => {
+function FormHeader() {
+  const timeBasedGreeting = getGreetingByTime()
+
   return (
     <div className="space-y-2">
-      <h1 className="text-xl text-center font-bold">{getGreetingByTime()}!</h1>
+      <h1 className="text-xl text-center font-bold">{timeBasedGreeting}!</h1>
       <p className="text-sm text-center text-muted-foreground">
         Log in op het Elektronisch Planbord
       </p>
@@ -60,28 +63,18 @@ const FormHeader = () => {
   )
 }
 
-const FormFooter = () => {
-  return (
-    <div>
-      <p className="text-sm text-muted-foreground">
-        Deze omgeving is uitsluitend bedoeld voor medewerkers van Yourtech. Ben
-        je geen medewerker, maar zoek je wel informatie over Yourtech?
-      </p>
-      <Link href="https://yourtech.nl/nl">
-        <Button variant="link">Klik dan hier</Button>
-      </Link>
-    </div>
-  )
-}
-
-const FormContent = () => {
+function FormContent() {
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   })
 
-  const formSubmit = async (values: z.infer<typeof formSchema>) => {
+  const attemptLogin = async (values: z.infer<typeof schema>) => {
     const result = await signIn(values.email, values.password)
 
     if (result.error) {
@@ -98,8 +91,8 @@ const FormContent = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(formSubmit)} className="space-y-8">
-        {formFields.map((data) => (
+      <form onSubmit={form.handleSubmit(attemptLogin)} className="space-y-8">
+        {fields.map((data) => (
           <FormField
             key={data.name}
             control={form.control}
@@ -115,34 +108,43 @@ const FormContent = () => {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
         ))}
+
         <Button loading={form.formState.isSubmitting} className="w-full">
           Inloggen
         </Button>
 
-        <div className="flex flex-col gap-y-2">
-          {form.formState.errors.email && (
-            <span className="text-sm text-red-500">
-              Fout: {form.formState.errors.email?.message}
-            </span>
-          )}
-          {form.formState.errors.root && (
-            <span className="text-sm text-red-500">
-              Fout: {form.formState.errors.root?.message}
-            </span>
-          )}
-        </div>
+        {form.formState.errors.root && (
+          <span className="text-sm text-red-500">
+            Fout: {form.formState.errors.root.message}
+          </span>
+        )}
       </form>
     </Form>
   )
 }
 
+function FormFooter() {
+  return (
+    <div>
+      <p className="text-sm text-muted-foreground">
+        Deze omgeving is uitsluitend bedoeld voor medewerkers van Yourtech. Ben
+        je geen medewerker, maar zoek je wel informatie over Yourtech?
+      </p>
+      <Link href="https://yourtech.nl/nl">
+        <Button variant="link">Klik dan hier</Button>
+      </Link>
+    </div>
+  )
+}
+
 export function LoginPage() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       <FormHeader />
       <FormContent />
       <FormFooter />
