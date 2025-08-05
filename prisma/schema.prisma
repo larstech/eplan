@@ -28,6 +28,8 @@ model Customer {
   addressId String @unique
   contactId String @unique
 
+  job Job?
+
   address Address         @relation(fields: [addressId], references: [id])
   contact CustomerContact @relation(fields: [contactId], references: [id])
 }
@@ -52,4 +54,16 @@ model CustomerContact {
   phoneNumber String
 
   customer Customer?
+}
+
+model Job {
+  id String @id @default(cuid())
+
+  orderId     Int
+  title       String
+  description String
+
+  customerId String @unique
+
+  customer Customer @relation(fields: [customerId], references: [id])
 }
