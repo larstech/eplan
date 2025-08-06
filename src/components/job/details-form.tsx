@@ -119,7 +119,7 @@ export default function JobDetailsForm({
     resolver: zodResolver(jobDetailsFormSchema),
     defaultValues: {
       orderId: String(job?.orderId ?? ""),
-      customerId: undefined,
+      customerId: job?.customer.id ?? "",
       title: job?.title ?? "",
       description: job?.description ?? "",
     },

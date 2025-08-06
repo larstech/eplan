@@ -1,6 +1,7 @@
 "use server"
 
 import { prisma } from "@/libs/prisma"
+import { Id } from "@/types/id"
 import { Job } from "@/types/job"
 
 export const createJob = async (job: Job) => {
@@ -11,6 +12,34 @@ export const createJob = async (job: Job) => {
     },
   })
   return createdJob
+}
+
+export const editJob = async (id: Id, job: Job) => {
+  const updatedJob = await prisma.job.update({
+    where: { id: id },
+    data: {
+      ...job,
+      customer: { connect: { id: job.customer.id } },
+    },
+  })
+  return updatedJob
+}
+
+export const getJobById = async (id: Id) => {
+  const job = await prisma.job.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      customer: {
+        include: {
+          address: true,
+          contact: true,
+        },
+      },
+    },
+  })
+  return job
 }
 
 export const getAllJobs = async () => {
