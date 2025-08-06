@@ -32,6 +32,14 @@ const columns: ColumnDef<Job>[] = [
   {
     accessorKey: "description",
     header: "Omschrijving",
+    cell: ({ getValue }) => {
+      const value = getValue() as string
+      return (
+        <div className="w-full max-w-xl text-wrap">
+          <span>{value}</span>
+        </div>
+      )
+    },
   },
   {
     id: "actions",
