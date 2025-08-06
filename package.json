@@ -11,6 +11,9 @@
     "format": "prettier --write .",
     "prepare": "husky"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
     "@prisma/client": "^6.13.0",
@@ -55,6 +58,7 @@
     "prettier": "3.6.2",
     "prisma": "^6.13.0",
     "tailwindcss": "^4.1.11",
+    "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.6",
     "typescript": "^5.9.2"
   }
