@@ -1,10 +1,12 @@
 "use client"
 
+import { Button } from "../ui/button"
+import { DataTable } from "../ui/data-table"
 import { getAllJobs } from "@/services/job"
 import { Job } from "@/types/job"
 import { ColumnDef } from "@tanstack/react-table"
+import Link from "next/link"
 import { useEffect, useState } from "react"
-import { DataTable } from "../ui/data-table"
 
 const columns: ColumnDef<Job>[] = [
   {
@@ -14,7 +16,7 @@ const columns: ColumnDef<Job>[] = [
   {
     id: "customerName",
     header: "Bedrijfsnaam",
-    accessorFn: (row) => row.customer.companyName
+    accessorFn: (row) => row.customer.companyName,
   },
   {
     accessorKey: "title",
@@ -40,6 +42,10 @@ export default function JobOverviewPage() {
 
   return (
     <div className="flex flex-col gap-y-2">
+      <Link href="/app/job/create">
+        <Button className="w-full">Werkzaamheid toevoegen</Button>
+      </Link>
+
       <DataTable data={jobs} columns={columns} />
     </div>
   )
