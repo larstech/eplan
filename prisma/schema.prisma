@@ -28,7 +28,7 @@ model Customer {
   addressId String @unique
   contactId String @unique
 
-  job Job?
+  job Job[]
 
   address Address         @relation(fields: [addressId], references: [id])
   contact CustomerContact @relation(fields: [contactId], references: [id])
@@ -63,7 +63,7 @@ model Job {
   title       String
   description String
 
-  customerId String @unique
+  customerId String
 
   customer Customer @relation(fields: [customerId], references: [id])
 }
