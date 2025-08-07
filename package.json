@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^6.13.0",
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.13.0",
     "@radix-ui/react-alert-dialog": "^1.1.14",
@@ -47,6 +48,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3.3.1",
+    "@faker-js/faker": "^9.9.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20.19.9",
