@@ -43,7 +43,7 @@ Open the `.env` file and change _[YOUR-PASSWORD]_ to your local Postgres instanc
 ```bash
 pnpm supabase start
 pnpm run dev
-pnpm run seed
+pnpm prisma migrate dev
 ```
 
 For further assistance, please consult the related documentation.
