@@ -13,10 +13,27 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { signOut } from "@/services/auth"
-import { Building2, Grip, ListTodo, LogOut, Users } from "lucide-react"
+import {
+  Building2,
+  CalendarDays,
+  Grip,
+  ListTodo,
+  LogOut,
+  Users,
+} from "lucide-react"
 import Link from "next/link"
 
 const data = [
+  {
+    title: "Overzicht",
+    items: [
+      {
+        title: "Kalender",
+        url: "/app/calendar",
+        icon: CalendarDays,
+      },
+    ],
+  },
   {
     title: "Beheren",
     items: [
