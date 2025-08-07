@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
 
 const EMPLOYEE_COUNT = 25
 const CUSTOMER_COUNT = 300
-const JOB_COUNT = 450
+const JOB_COUNT = 900
 
 function generateEmployees(count: number): Employee[] {
   return Array.from({ length: count }, () => ({
