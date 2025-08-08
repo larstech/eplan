@@ -3,6 +3,15 @@
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
+import {
   Table,
   TableBody,
   TableCell,
@@ -10,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table"
+import { Textarea } from "../ui/textarea"
 import { formatDate } from "@/libs/datetime"
 import { getAllCalendars } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"
@@ -59,6 +69,46 @@ const DateOverview = ({
   )
 }
 
+const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
+  return (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Werkzaamheid details</DialogTitle>
+      </DialogHeader>
+      <div className="grid gap-4 overflow-y-scroll">
+        <div className="grid grid-cols-2 gap-x-2">
+          <div className="grid gap-3">
+            <h3 className="text-sm font-semibold">Bedrijf</h3>
+            <span className="text-sm">{calendar.job.customer.companyName}</span>
+          </div>
+          <div className="grid gap-3">
+            <h3 className="text-sm font-semibold">Ordernummer</h3>
+            <span className="text-sm">{calendar.job.orderId}</span>
+          </div>
+        </div>
+        <div className="grid gap-3">
+          <h3 className="text-sm font-semibold">Omschrijving</h3>
+          <p className="text-sm">{calendar.job.description}</p>
+        </div>
+        <div className="grid grid-cols-2 gap-x-2">
+          <div className="grid gap-3">
+            <h3 className="text-sm font-semibold">Starttijd</h3>
+            <span className="text-sm">
+              {DateTime.fromJSDate(calendar.startTime).toFormat("HH:mm")}
+            </span>
+          </div>
+          <div className="grid gap-3">
+            <h3 className="text-sm font-semibold">Eindtijd</h3>
+            <span className="text-sm">
+              {DateTime.fromJSDate(calendar.endTime).toFormat("HH:mm")}
+            </span>
+          </div>
+        </div>
+      </div>
+    </DialogContent>
+  )
+}
+
 export default function CalendarOverviewPage() {
   const [date, setDate] = useState<DateTime>(formatDate())
   const [employees, setEmployees] = useState<Employee[]>([])
@@ -105,7 +155,8 @@ export default function CalendarOverviewPage() {
                 <br />
                 <Badge
                   variant={
-                    formatDate().toFormat("yyyy LLL dd") === date.start?.toFormat("yyyy LLL dd")
+                    formatDate().toFormat("yyyy LLL dd") ===
+                    date.start?.toFormat("yyyy LLL dd")
                       ? "default"
                       : "outline"
                   }
@@ -137,12 +188,14 @@ export default function CalendarOverviewPage() {
 
                 return filteredCalendars.length > 0 ? (
                   filteredCalendars.map((calendar, index) => (
-                    <TableCell
-                      key={index}
-                      className="min-w-48 max-w-48 overflow-hidden text-ellipsis bg-secondary/65 border"
-                    >
-                      {calendar.job.orderId} - {calendar.job.title}
-                    </TableCell>
+                    <Dialog key={index}>
+                      <TableCell className="min-w-48 max-w-48 overflow-hidden text-ellipsis bg-secondary/65 border cursor-pointer">
+                        <DialogTrigger>
+                          {calendar.job.orderId} - {calendar.job.title}
+                        </DialogTrigger>
+                      </TableCell>
+                      <CalendarDetails calendar={calendar} />
+                    </Dialog>
                   ))
                 ) : (
                   <TableCell key={index} className="min-w-48 max-w-48" />
