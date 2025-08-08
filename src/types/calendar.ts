@@ -3,9 +3,10 @@ import { Id } from "./id"
 import { Job } from "./job"
 
 export type Calendar = {
-  id: Id
+  id?: Id
   job: Job
   employee: Employee
-  startDate: Date
-  endDate: Date
+  date: Date
+  startTime: Date
+  endTime: Date
 }
