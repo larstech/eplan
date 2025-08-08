@@ -18,6 +18,7 @@ import { nextWeek, previousWeek } from "@/utils/datetime"
 import { sortEmployeesByName } from "@/utils/employee"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { DateTime, Interval } from "luxon"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 const CalendarControl = ({
@@ -78,7 +79,11 @@ export default function CalendarOverviewPage() {
   }, [])
 
   return (
-    <div>
+    <div className="flex flex-col gap-y-2">
+      <Link href="/app/calendar/create">
+        <Button className="w-full">Werkzaamheid inplannen</Button>
+      </Link>
+
       <div className="flex gap-x-1 items-center">
         <CalendarControl date={date} setWeek={setDate} />
         <DateOverview week={date} datesInWeek={datesInweek} />
@@ -111,7 +116,7 @@ export default function CalendarOverviewPage() {
 
               {datesInweek.splitBy({ day: 1 }).map((date, index) => {
                 const filteredCalendars = calendars.filter((calendar) => {
-                  const dateToDateTime = DateTime.fromJSDate(calendar.startDate)
+                  const dateToDateTime = DateTime.fromJSDate(calendar.date)
 
                   return (
                     datesInweek.contains(dateToDateTime) &&
