@@ -1,5 +1,6 @@
 "use client"
 
+import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 import {
   Table,
@@ -102,7 +103,16 @@ export default function CalendarOverviewPage() {
                   {date.start?.toFormat("cccc")}
                 </span>
                 <br />
-                <span>{date.start?.toFormat("d-L")}</span>
+                <Badge
+                  variant={
+                    formatDate().weekday === date.start?.weekday
+                      ? "default"
+                      : "outline"
+                  }
+                  className="mb-1"
+                >
+                  {date.start?.toFormat("d LLLL")}
+                </Badge>
               </TableHead>
             ))}
           </TableRow>
