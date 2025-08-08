@@ -105,7 +105,7 @@ export default function CalendarOverviewPage() {
                 <br />
                 <Badge
                   variant={
-                    formatDate().weekday === date.start?.weekday
+                    formatDate().toFormat("yyyy LLL dd") === date.start?.toFormat("yyyy LLL dd")
                       ? "default"
                       : "outline"
                   }
