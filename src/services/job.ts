@@ -42,6 +42,23 @@ export const getJobById = async (id: Id) => {
   return job
 }
 
+export const getJobByOrderId = async (orderId: number) => {
+  const job = await prisma.job.findFirst({
+    where: {
+      orderId: orderId,
+    },
+    include: {
+      customer: {
+        include: {
+          address: true,
+          contact: true,
+        },
+      },
+    },
+  })
+  return job
+}
+
 export const getAllJobs = async () => {
   const jobs = await prisma.job.findMany({
     include: {
