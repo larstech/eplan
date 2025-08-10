@@ -187,7 +187,7 @@ export default function CalendarOverviewPage() {
                   filteredCalendars.map((calendar, index) => (
                     <Dialog key={index}>
                       <TableCell className="min-w-48 max-w-48 overflow-hidden text-ellipsis bg-secondary/65 border cursor-pointer">
-                        <DialogTrigger>
+                        <DialogTrigger className="text-left min-w-48 max-w-48 overflow-hidden text-ellipsis">
                           {calendar.job.orderId} - {calendar.job.title}
                         </DialogTrigger>
                       </TableCell>
