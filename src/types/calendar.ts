@@ -10,3 +10,13 @@ export type Calendar = {
   startTime: Date
   endTime: Date
 }
+
+export type CalendarBulk = {
+  orderId: Id
+  employees: {
+    employeeId: Id
+    dates: string[]
+    startTime: string
+    endTime: string
+  }[]
+}

@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select"
+import { createCalendarFromBulk } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"
 import { Employee } from "@/types/employee"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -208,8 +209,8 @@ export default function CalendarCreatePage() {
     }
   }, [employeeCount, form])
 
-  const onSubmit = (values: FormValues) => {
-    console.log("Submitting:", values)
+  const onSubmit = async (values: FormValues) => {
+    await createCalendarFromBulk(values)
   }
 
   return (
