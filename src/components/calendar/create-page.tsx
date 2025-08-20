@@ -24,6 +24,7 @@ import { getAllEmployees } from "@/services/employee"
 import { Employee } from "@/types/employee"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ChevronDownIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { useForm, ControllerRenderProps, FieldPath } from "react-hook-form"
 import z from "zod"
@@ -161,6 +162,7 @@ const formFields: FormInput[] = [
 export default function CalendarCreatePage() {
   const [employees, setEmployees] = useState<Employee[]>([])
   const [employeeCount, setEmployeeCount] = useState(1)
+  const router = useRouter()
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -211,6 +213,7 @@ export default function CalendarCreatePage() {
 
   const onSubmit = async (values: FormValues) => {
     await createCalendarFromBulk(values)
+    router.push("/app/calendar")
   }
 
   return (
