@@ -1,13 +1,13 @@
 "use client"
 
-import { Button } from "../ui/button"
-import { DataTable } from "../ui/data-table"
+import { Button } from "../../ui/button"
+import { DataTable } from "../../ui/data-table"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+} from "../../ui/dropdown-menu"
 import { getAllJobs } from "@/services/job"
 import { Job } from "@/types/job"
 import { ColumnDef } from "@tanstack/react-table"

@@ -6,7 +6,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "../../ui/select"
+import { Textarea } from "../../ui/textarea"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -17,10 +18,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { formatDate } from "@/libs/datetime"
-import { getAllEmployees } from "@/services/employee"
-import { Calendar } from "@/types/calendar"
-import { Employee } from "@/types/employee"
+import { getAllCustomers } from "@/services/customer"
+import { Customer } from "@/types/customer"
+import { Job } from "@/types/job"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -29,15 +29,15 @@ import z from "zod"
 
 type FormFieldComponentProps = {
   field: ControllerRenderProps<
-    z.infer<typeof calendarDetailsFormSchema>,
-    keyof z.infer<typeof calendarDetailsFormSchema>
+    z.infer<typeof jobDetailsFormSchema>,
+    keyof z.infer<typeof jobDetailsFormSchema>
   >
   // eslint-disable-next-line
-  data?: any[]
+  data: any[]
 }
 
 type FormInput = {
-  name: "orderId" | "employeeId" | "date" | "startTime" | "endTime"
+  name: "orderId" | "customerId" | "title" | "description"
   label: string
   input: (props: FormFieldComponentProps) => React.ReactNode
 }
@@ -46,11 +46,11 @@ const formFields: FormInput[] = [
   {
     name: "orderId",
     label: "Ordernummer",
-    input: ({ field }) => <Input type="number" required {...field} />,
+    input: ({ field }) => <Input required type="number" {...field} />,
   },
   {
-    name: "employeeId",
-    label: "Medewerker",
+    name: "customerId",
+    label: "Klant",
     input: ({ field, data }) => {
       return (
         <Select
@@ -60,13 +60,13 @@ const formFields: FormInput[] = [
         >
           <FormControl className="w-full">
             <SelectTrigger>
-              <SelectValue placeholder="Selecteer een medewerker" />
+              <SelectValue placeholder="Selecteer een klant" />
             </SelectTrigger>
           </FormControl>
           <SelectContent>
-            {data?.map((employee) => (
-              <SelectItem key={employee.id} value={employee.id}>
-                {employee.firstName} {employee.lastName}
+            {data.map((customer) => (
+              <SelectItem key={customer.id} value={customer.id}>
+                {customer.companyName}
               </SelectItem>
             ))}
           </SelectContent>
@@ -75,60 +75,53 @@ const formFields: FormInput[] = [
     },
   },
   {
-    name: "date",
-    label: "Datum",
-    input: ({ field }) => <Input type="date" required {...field} />,
+    name: "title",
+    label: "Titel",
+    input: ({ field }) => <Input required {...field} />,
   },
   {
-    name: "startTime",
-    label: "Startdatum",
-    input: ({ field }) => <Input type="time" required {...field} />,
-  },
-  {
-    name: "endTime",
-    label: "Einddatum",
-    input: ({ field }) => <Input type="time" required {...field} />,
+    name: "description",
+    label: "Omschrijving",
+    input: ({ field }) => <Textarea required {...field} />,
   },
 ]
 
-export const calendarDetailsFormSchema = z.object({
+export const jobDetailsFormSchema = z.object({
   orderId: z.string(),
-  employeeId: z.string(),
-  date: z.string(),
-  startTime: z.string(),
-  endTime: z.string(),
+  customerId: z.string(),
+  title: z.string(),
+  description: z.string(),
 })
 
-type CalendarDetailsForm = {
+type JobDetailsForm = {
   submitLabel: string
-  calendar?: Calendar
-  onSubmit: (values: z.infer<typeof calendarDetailsFormSchema>) => void
+  job?: Job
+  onSubmit: (values: z.infer<typeof jobDetailsFormSchema>) => void
 }
 
-export default function CalendarDetailsForm({
+export default function JobDetailsForm({
   submitLabel,
-  calendar,
+  job,
   onSubmit,
-}: CalendarDetailsForm) {
-  const [employees, setEmployees] = useState<Employee[]>([])
+}: JobDetailsForm) {
+  const [customers, setCustomers] = useState<Customer[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllEmployees()
-      setEmployees(data)
+      const data = await getAllCustomers()
+      setCustomers(data)
     }
 
     fetchData()
   }, [])
 
-  const form = useForm<z.infer<typeof calendarDetailsFormSchema>>({
-    resolver: zodResolver(calendarDetailsFormSchema),
+  const form = useForm<z.infer<typeof jobDetailsFormSchema>>({
+    resolver: zodResolver(jobDetailsFormSchema),
     defaultValues: {
-      orderId: String(calendar?.job.id ?? ""),
-      employeeId: String(calendar?.employee.id ?? ""),
-      date: formatDate().toISODate(),
-      startTime: formatDate().toISOTime(),
-      endTime: formatDate().toISOTime(),
+      orderId: String(job?.orderId ?? ""),
+      customerId: job?.customer.id ?? "",
+      title: job?.title ?? "",
+      description: job?.description ?? "",
     },
   })
 
@@ -145,7 +138,7 @@ export default function CalendarDetailsForm({
                 <FormItem>
                   <FormLabel className="font-semibold">{data.label}</FormLabel>
                   <FormControl>
-                    <data.input field={field} data={employees} />
+                    <data.input field={field} data={customers} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -153,14 +146,10 @@ export default function CalendarDetailsForm({
             />
           ))}
           <div className="space-y-2">
-            <Button
-              type="submit"
-              loading={form.formState.isSubmitting}
-              className="w-full"
-            >
+            <Button loading={form.formState.isSubmitting} className="w-full">
               {submitLabel}
             </Button>
-            <Link href="/app/calendar">
+            <Link href="/app/job">
               <Button className="w-full" variant="outline">
                 Annuleren
               </Button>

@@ -1,4 +1,4 @@
-import CustomerEditPage from "@/components/customer/edit-page"
+import CustomerEditPage from "@/components/app/customer/edit-page"
 import { Id } from "@/types/id"
 
 type PageParams = Promise<{ customerId: Id }>
