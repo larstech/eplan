@@ -1,6 +1,6 @@
 "use client"
 
-import { DataTable } from "../ui/data-table"
+import { DataTable } from "../../ui/data-table"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,

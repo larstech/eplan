@@ -1,14 +1,14 @@
 "use client"
 
-import { Badge } from "../ui/badge"
-import { Button } from "../ui/button"
+import { Badge } from "../../ui/badge"
+import { Button } from "../../ui/button"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog"
+} from "../../ui/dialog"
 import {
   Table,
   TableBody,
@@ -16,7 +16,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
+} from "../../ui/table"
 import { formatDate } from "@/libs/datetime"
 import { getAllCalendars } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"

@@ -1,4 +1,4 @@
-import CustomerCreatePage from "@/components/customer/create-page"
+import CustomerCreatePage from "@/components/app/customer/create-page"
 
 export default function Page() {
   return <CustomerCreatePage />

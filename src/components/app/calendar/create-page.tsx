@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "../ui/button"
-import { Calendar } from "../ui/calendar"
+import { Button } from "../../ui/button"
+import { Calendar } from "../../ui/calendar"
 import {
   Form,
   FormControl,
@@ -9,16 +9,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+} from "../../ui/form"
+import { Input } from "../../ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "../../ui/select"
 import { createCalendarFromBulk } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"
 import { Employee } from "@/types/employee"
