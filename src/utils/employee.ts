@@ -1,5 +1,9 @@
 import { Employee } from "@/types/employee"
 
+export const getFullName = (employee: Employee): string => {
+  return `${employee.firstName} ${employee.lastName}`
+}
+
 export const formatFirstName = (firstName: string): string => {
   const lowerCaseFirstName = firstName.toLowerCase()
   const capitalizedFirstName =

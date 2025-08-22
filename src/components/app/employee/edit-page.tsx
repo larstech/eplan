@@ -1,17 +1,18 @@
 "use client"
 
-import EmployeeDetailsForm, { employeeDetailsFormSchema } from "./details-form"
+import EmployeeDetailsForm, { employeeSchema } from "./details-form"
 import NotFound from "@/app/not-found"
 import LoadingPage from "@/components/skeleton/page"
 import { editEmployee, getEmployeeById } from "@/services/employee"
 import { Employee } from "@/types/employee"
 import { Id } from "@/types/id"
+import { getFullName } from "@/utils/employee"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import z from "zod"
 
-export default function EmployeeEditPage({ employeeId }: { employeeId: Id }) {
+export default function EmployeeEditPage({ id }: { id: Id }) {
   const router = useRouter()
   const [state, setState] = useState<{
     employee: Employee | null
@@ -23,12 +24,13 @@ export default function EmployeeEditPage({ employeeId }: { employeeId: Id }) {
 
   useEffect(() => {
     const fetchEmployee = async () => {
-      const employeeData = await getEmployeeById(employeeId)
-      setState({ employee: employeeData, loading: false })
+      const employee = await getEmployeeById(id)
+
+      setState({ employee: employee, loading: false })
     }
 
     fetchEmployee()
-  }, [employeeId])
+  }, [id])
 
   if (state.loading) {
     return <LoadingPage />
@@ -40,26 +42,33 @@ export default function EmployeeEditPage({ employeeId }: { employeeId: Id }) {
 
   const { employee } = state
 
-  const formSubmit = async (
-    values: z.infer<typeof employeeDetailsFormSchema>,
-  ) => {
+  const formSubmit = async (values: z.infer<typeof employeeSchema>) => {
     const { firstName, lastName } = values
-    const editedEmployee = await editEmployee(employee.id!, {
+
+    await editEmployee(employee.id!, {
       firstName: firstName,
       lastName: lastName,
     })
+      .then((editedEmployee) => {
+        toast("Medewerker gegevens gewijzigd", {
+          description: `'${getFullName(employee)}' naar '${getFullName(editedEmployee)}'`,
+        })
 
-    toast("Wijzigingen opgeslagen", {
-      description: `'${employee.firstName} ${employee.lastName}' naar '${editedEmployee.firstName} ${editedEmployee.lastName}'`,
-    })
-
-    router.push("/app/employee")
+        // Do not push the create‑form URL to the browser's history stack.
+        // Editing should be done via the table's row action instead.
+        router.push("/app/employee")
+      })
+      .catch(() => {
+        toast("Medewerker kan niet worden gewijzigd", {
+          description: "Er is een onbekende fout opgetreden",
+        })
+      })
   }
 
   return (
     <EmployeeDetailsForm
       submitLabel="Wijzigingen opslaan"
-      onSubmit={formSubmit}
+      handleSubmit={formSubmit}
       employee={employee}
     />
   )

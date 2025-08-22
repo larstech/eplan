@@ -1,7 +1,7 @@
 "use client"
 
-import { DataTable } from "../../ui/data-table"
 import { Button } from "@/components/ui/button"
+import { DataTable } from "@/components/ui/data-table"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,22 +11,39 @@ import {
 import { getAllEmployees } from "@/services/employee"
 import { Employee } from "@/types/employee"
 import "@/utils/array"
-import { sortEmployeesByName } from "@/utils/employee"
+import { getFullName, sortEmployeesByName } from "@/utils/employee"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-const RowActions = ({ employee }: { employee: Employee }) => {
+type EmployeeRowActionsParams = { employee: Employee }
+
+const employeeColumns: ColumnDef<Employee>[] = [
+  {
+    id: "name",
+    header: "Naam",
+    accessorFn: (employee) => `${getFullName(employee)}`,
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => (
+      <div className="text-right">
+        <EmployeeRowActions employee={row.original} />
+      </div>
+    ),
+  },
+]
+
+function EmployeeRowActions({ employee }: EmployeeRowActionsParams) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <MoreHorizontal className="h-4 w-4" />
+        <Button variant="ghost">
+          <MoreHorizontal />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent>
         <Link href={`/app/employee/edit/${employee.id}`}>
           <DropdownMenuItem>Wijzig</DropdownMenuItem>
         </Link>
@@ -35,36 +52,20 @@ const RowActions = ({ employee }: { employee: Employee }) => {
   )
 }
 
-const columns: ColumnDef<Employee>[] = [
-  {
-    id: "name",
-    header: "Naam",
-    accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const employee = row.original
-      return (
-        <div className="text-right">
-          <RowActions employee={employee} />
-        </div>
-      )
-    },
-  },
-]
-
 export default function EmployeeOverviewPage() {
   const [employees, setEmployees] = useState<Employee[]>([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAllEmployees()
-      const sortedData = sortEmployeesByName(data)
-      setEmployees(sortedData)
+    const fetchEmployees = async () => {
+      const employees = await getAllEmployees()
+
+      // Alphabetically sort employees for easier lookup in the overview.
+      const sortedEmployees = sortEmployeesByName(employees)
+
+      setEmployees(sortedEmployees)
     }
 
-    fetchData()
+    fetchEmployees()
   }, [])
 
   return (
@@ -73,7 +74,7 @@ export default function EmployeeOverviewPage() {
         <Button className="w-full">Medewerker toevoegen</Button>
       </Link>
 
-      <DataTable data={employees} columns={columns} />
+      <DataTable data={employees} columns={employeeColumns} />
     </div>
   )
 }
