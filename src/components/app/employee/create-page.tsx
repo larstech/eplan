@@ -2,6 +2,7 @@
 
 import EmployeeDetailsForm, { employeeSchema } from "./details-form"
 import { createEmployee } from "@/services/employee"
+import { getFullName } from "@/utils/employee"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import z from "zod"
@@ -19,7 +20,7 @@ export default function EmployeeCreatePage() {
       .then((employee) => {
         toast("Niewe medewerker aangemaakt", {
           closeButton: true,
-          description: `${employee.firstName} ${employee.lastName}`,
+          description: getFullName(employee),
         })
 
         // Do not push the create‑form URL to the browser's history stack.
@@ -36,7 +37,7 @@ export default function EmployeeCreatePage() {
   return (
     <EmployeeDetailsForm
       submitLabel="Medewerker aanmaken"
-      onSubmit={handleSubmit}
+      handleSubmit={handleSubmit}
     />
   )
 }

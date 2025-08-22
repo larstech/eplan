@@ -15,12 +15,18 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import z from "zod"
 
-type FormInput = {
+type EmployeeInput = {
   name: "firstName" | "lastName"
   label: string
 }
 
-const formFields: FormInput[] = [
+type EmployeeDetailsFormParams = {
+  submitLabel: string
+  employee?: Employee
+  handleSubmit: (values: z.infer<typeof employeeSchema>) => void
+}
+
+const employeeFields: EmployeeInput[] = [
   {
     name: "firstName",
     label: "Voornaam",
@@ -36,17 +42,11 @@ export const employeeSchema = z.object({
   lastName: z.string(),
 })
 
-type EmployeeDetailsForm = {
-  submitLabel: string
-  employee?: Employee
-  onSubmit: (values: z.infer<typeof employeeSchema>) => void
-}
-
 export default function EmployeeDetailsForm({
   submitLabel,
   employee,
-  onSubmit,
-}: EmployeeDetailsForm) {
+  handleSubmit: onSubmit,
+}: EmployeeDetailsFormParams) {
   const form = useForm<z.infer<typeof employeeSchema>>({
     resolver: zodResolver(employeeSchema),
     defaultValues: {
@@ -59,7 +59,7 @@ export default function EmployeeDetailsForm({
     <div className="md:w-md">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {formFields.map((data) => (
+          {employeeFields.map((data) => (
             <FormField
               key={data.name}
               control={form.control}
