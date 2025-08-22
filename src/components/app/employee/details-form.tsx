@@ -31,7 +31,7 @@ const formFields: FormInput[] = [
   },
 ]
 
-export const employeeDetailsFormSchema = z.object({
+export const employeeSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
 })
@@ -39,7 +39,7 @@ export const employeeDetailsFormSchema = z.object({
 type EmployeeDetailsForm = {
   submitLabel: string
   employee?: Employee
-  onSubmit: (values: z.infer<typeof employeeDetailsFormSchema>) => void
+  onSubmit: (values: z.infer<typeof employeeSchema>) => void
 }
 
 export default function EmployeeDetailsForm({
@@ -47,8 +47,8 @@ export default function EmployeeDetailsForm({
   employee,
   onSubmit,
 }: EmployeeDetailsForm) {
-  const form = useForm<z.infer<typeof employeeDetailsFormSchema>>({
-    resolver: zodResolver(employeeDetailsFormSchema),
+  const form = useForm<z.infer<typeof employeeSchema>>({
+    resolver: zodResolver(employeeSchema),
     defaultValues: {
       firstName: employee?.firstName ?? "",
       lastName: employee?.lastName ?? "",
