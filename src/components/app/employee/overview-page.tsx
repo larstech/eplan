@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { DataTable } from "@/components/ui/data-table"
+import { DataTable, SortableColumn } from "@/components/ui/data-table"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,7 @@ import {
 import { getAllEmployees } from "@/services/employee"
 import { Employee } from "@/types/employee"
 import "@/utils/array"
-import { getFullName, sortEmployeesByName } from "@/utils/employee"
+import { getFullName } from "@/utils/employee"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"
@@ -22,7 +22,7 @@ type EmployeeRowActionsParams = { employee: Employee }
 const employeeColumns: ColumnDef<Employee>[] = [
   {
     id: "name",
-    header: "Naam",
+    header: ({ column }) => <SortableColumn column={column} name="Naam" />,
     accessorFn: (employee) => `${getFullName(employee)}`,
   },
   {
@@ -59,10 +59,7 @@ export default function EmployeeOverviewPage() {
     const fetchEmployees = async () => {
       const employees = await getAllEmployees()
 
-      // Alphabetically sort employees for easier lookup in the overview.
-      const sortedEmployees = sortEmployeesByName(employees)
-
-      setEmployees(sortedEmployees)
+      setEmployees(employees)
     }
 
     fetchEmployees()

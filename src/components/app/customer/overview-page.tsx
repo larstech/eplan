@@ -1,6 +1,6 @@
 "use client"
 
-import { DataTable } from "../../ui/data-table"
+import { DataTable, SortableColumn } from "../../ui/data-table"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -37,7 +37,9 @@ const RowActions = ({ customer }: { customer: Customer }) => {
 const columns: ColumnDef<Customer>[] = [
   {
     accessorKey: "companyName",
-    header: "Bedrijfsnaam",
+    header: ({ column }) => (
+      <SortableColumn column={column} name="Bedrijfsnaam" />
+    ),
   },
   {
     id: "address",

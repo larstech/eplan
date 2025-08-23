@@ -10,13 +10,18 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import {
+  Column,
   ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
   Table as TanStackTable,
   useReactTable,
 } from "@tanstack/react-table"
+import { ArrowUpDown } from "lucide-react"
+import React from "react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -25,6 +30,11 @@ interface DataTableProps<TData, TValue> {
 
 type TablePaginationParams<TData> = {
   table: TanStackTable<TData>
+}
+
+type TableColumnSortParams<TData, TValue> = {
+  column: Column<TData, TValue>
+  name: string
 }
 
 function TablePagination<TData>({ table }: TablePaginationParams<TData>) {
@@ -60,19 +70,40 @@ function TablePagination<TData>({ table }: TablePaginationParams<TData>) {
   )
 }
 
+export function SortableColumn<TData, TValue>({
+  column,
+  name,
+}: TableColumnSortParams<TData, TValue>) {
+  return (
+    <span
+      className="inline-flex items-center gap-2"
+      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    >
+      {name}
+      <ArrowUpDown className="ml-2 h-4 w-4" />
+    </span>
+  )
+}
+
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([])
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     initialState: {
       pagination: {
         pageSize: 20,
       },
+    },
+    state: {
+      sorting,
     },
   })
 
