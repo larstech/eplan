@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "../../ui/button"
-import { DataTable } from "../../ui/data-table"
+import { DataTable, SortableColumn } from "../../ui/data-table"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,11 +18,15 @@ import { useEffect, useState } from "react"
 const columns: ColumnDef<Job>[] = [
   {
     accessorKey: "orderId",
-    header: "Ordernummer",
+    header: ({ column }) => (
+      <SortableColumn column={column} name="Ordernummer" />
+    ),
   },
   {
     id: "customerName",
-    header: "Bedrijfsnaam",
+    header: ({ column }) => (
+      <SortableColumn column={column} name="Bedrijfsnaam" />
+    ),
     accessorFn: (row) => row.customer.companyName,
   },
   {
