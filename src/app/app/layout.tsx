@@ -10,7 +10,7 @@ export default function Layout({ children }: LayoutParams) {
     <SidebarProvider>
       <AppSidebar />
 
-      <SidebarInset>
+      <SidebarInset className="overflow-hidden">
         <NavHeader />
 
         <main className="p-2">{children}</main>
