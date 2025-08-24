@@ -90,13 +90,13 @@ const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
           <div className="grid gap-3">
             <h3 className="text-sm font-semibold">Starttijd</h3>
             <span className="text-sm">
-              {DateTime.fromJSDate(calendar.startTime).toFormat("HH:mm")}
+              {calendar.startTime.toFormat("HH:mm")}
             </span>
           </div>
           <div className="grid gap-3">
             <h3 className="text-sm font-semibold">Eindtijd</h3>
             <span className="text-sm">
-              {DateTime.fromJSDate(calendar.endTime).toFormat("HH:mm")}
+              {calendar.endTime.toFormat("HH:mm")}
             </span>
           </div>
         </div>
@@ -119,7 +119,14 @@ export default function CalendarOverviewPage() {
       setEmployees(sortedData)
 
       const calendars = await getAllCalendars()
-      setCalendars(calendars)
+      setCalendars(
+        calendars.map((calendar) => ({
+          ...calendar,
+          date: DateTime.fromJSDate(calendar.date),
+          startTime: DateTime.fromJSDate(calendar.startTime),
+          endTime: DateTime.fromJSDate(calendar.endTime),
+        })),
+      )
     }
 
     fetchData()
@@ -172,15 +179,12 @@ export default function CalendarOverviewPage() {
               </TableCell>
 
               {datesInweek.splitBy({ day: 1 }).map((date, index) => {
-                const filteredCalendars = calendars.filter((calendar) => {
-                  const dateToDateTime = DateTime.fromJSDate(calendar.date)
-
-                  return (
-                    datesInweek.contains(dateToDateTime) &&
-                    dateToDateTime.day == date.start?.day &&
-                    calendar.employee.id === employee.id
-                  )
-                })
+                const filteredCalendars = calendars.filter(
+                  (calendar) =>
+                    datesInweek.contains(calendar.date) &&
+                    calendar.date.day == date.start?.day &&
+                    calendar.employee.id === employee.id,
+                )
 
                 return filteredCalendars.length > 0 ? (
                   filteredCalendars.map((calendar, index) => (

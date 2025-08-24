@@ -25,9 +25,9 @@ export const createCalendarFromBulk = async (calendarBulk: CalendarBulk) => {
       await createCalendar({
         job: fetchedJob,
         employee: fetchedEmployee,
-        date: DateTime.fromISO(date).toJSDate(),
-        startTime: DateTime.fromISO(employee.startTime).toJSDate(),
-        endTime: DateTime.fromISO(employee.endTime).toJSDate(),
+        date: DateTime.fromISO(date),
+        startTime: DateTime.fromISO(employee.startTime),
+        endTime: DateTime.fromISO(employee.endTime),
       })
     })
   })
@@ -37,6 +37,9 @@ export const createCalendar = async (calendar: Calendar) => {
   const createdCalendar = await prisma.calendar.create({
     data: {
       ...calendar,
+      date: calendar.date.toJSDate(),
+      startTime: calendar.startTime.toJSDate(),
+      endTime: calendar.endTime.toJSDate(),
       job: { connect: { id: calendar.job.id } },
       employee: { connect: { id: calendar.employee.id } },
     },
