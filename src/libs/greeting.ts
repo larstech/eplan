@@ -1,22 +1,27 @@
 import { inRange } from "@/utils/number"
+import { DateTime } from "luxon"
 
-const MORNING_START = 6
-const MORNING_END = 12
-const AFTERNOON_START = 12
-const AFTERNOON_END = 18
-const EVENING_START = 18
-const EVENING_END = 24
+type TimeBlock = {
+  min: number
+  max: number
+  greeting: string
+}
 
-export const getGreetingByTime = () => {
-  const currentHour = new Date().getHours()
+const morningStart = 6
+const morningEnd = 12
+const afternoonStart = 12
+const afternoonEnd = 18
+const eveningStart = 18
+const eveningEnd = 24
 
-  if (inRange(currentHour, MORNING_START, MORNING_END)) {
-    return "Goedemorgen"
-  } else if (inRange(currentHour, AFTERNOON_START, AFTERNOON_END)) {
-    return "Goedemiddag"
-  } else if (inRange(currentHour, EVENING_START, EVENING_END)) {
-    return "Goedenavond"
-  } else {
-    return "Goedendag"
-  }
+const greetings: TimeBlock[] = [
+  { min: morningStart, max: morningEnd, greeting: "Goedemorgen" },
+  { min: afternoonStart, max: afternoonEnd, greeting: "Goedemiddag" },
+  { min: eveningStart, max: eveningEnd, greeting: "Goedenavond" },
+]
+
+export const getGreetingByTime = (): string => {
+  const hour = DateTime.now().hour
+  const match = greetings.find((timeBlock) => inRange(hour, timeBlock.min, timeBlock.max))
+  return match?.greeting ?? "Goedendag"
 }
