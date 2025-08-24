@@ -71,7 +71,11 @@ export default function EmployeeOverviewPage() {
         <Button className="w-full">Medewerker toevoegen</Button>
       </Link>
 
-      <DataTable data={employees} columns={employeeColumns} />
+      <DataTable
+        data={employees}
+        columns={employeeColumns}
+        filterColumn="name"
+      />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "./button"
+import { Input } from "./input"
 import {
   Table,
   TableBody,
@@ -12,8 +13,10 @@ import {
 import {
   Column,
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
@@ -26,6 +29,12 @@ import React from "react"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  filterColumn: string
+}
+
+type TableFilterParams<TData> = {
+  table: TanStackTable<TData>
+  column: string
 }
 
 type TablePaginationParams<TData> = {
@@ -35,6 +44,21 @@ type TablePaginationParams<TData> = {
 type TableColumnSortParams<TData, TValue> = {
   column: Column<TData, TValue>
   name: string
+}
+
+function TableFilter<TData>({ table, column }: TableFilterParams<TData>) {
+  return (
+    <div className="flex items-center py-4">
+      <Input
+        placeholder="Zoeken..."
+        value={(table.getColumn(column)?.getFilterValue() as string) ?? ""}
+        onChange={(event) =>
+          table.getColumn(column)?.setFilterValue(event.target.value)
+        }
+        className="w-full md:max-w-md"
+      />
+    </div>
+  )
 }
 
 function TablePagination<TData>({ table }: TablePaginationParams<TData>) {
@@ -88,8 +112,13 @@ export function SortableColumn<TData, TValue>({
 export function DataTable<TData, TValue>({
   columns,
   data,
+  filterColumn,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  )
+
   const table = useReactTable({
     data,
     columns,
@@ -97,6 +126,8 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     initialState: {
       pagination: {
         pageSize: 20,
@@ -104,11 +135,14 @@ export function DataTable<TData, TValue>({
     },
     state: {
       sorting,
+      columnFilters,
     },
   })
 
   return (
     <>
+      <TableFilter table={table} column={filterColumn} />
+
       <div className="overflow-hidden">
         <Table>
           <TableHeader>

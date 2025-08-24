@@ -9,3 +9,13 @@
 export const inRange = (value: number, start: number, end: number): boolean => {
   return value >= start && value < end
 }
+
+/**
+ * Checks if a given value starts with some other value.
+ * @param target - The number to check.
+ * @param value - The value that could match.
+ * @returns True is the target starts with the vlaue; otherwise, false.
+ */
+export const startsWith = (target: number, value: number): boolean => {
+  return target.toString().startsWith(String(value))
+}
