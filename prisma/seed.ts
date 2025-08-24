@@ -80,11 +80,9 @@ function generateCalendars(
     id: createId(),
     job: jobs[(jobs.length + i) % jobs.length],
     employee: employees[(employees.length + i) % employees.length],
-    date: datesInRange[
-      (datesInRange.length + i) % datesInRange.length
-    ].start?.toJSDate()!,
-    startTime: DateTime.now().toJSDate(),
-    endTime: DateTime.now().toJSDate(),
+    date: datesInRange[(datesInRange.length + i) % datesInRange.length].start!,
+    startTime: DateTime.now(),
+    endTime: DateTime.now(),
   }))
 }
 
@@ -137,6 +135,9 @@ async function seedCalendars(calendars: Calendar[]) {
     prisma.calendar.create({
       data: {
         ...calendar,
+        date: calendar.date.toJSDate(),
+        startTime: calendar.startTime.toJSDate(),
+        endTime: calendar.endTime.toJSDate(),
         job: {
           connect: { id: calendar.job.id },
         },

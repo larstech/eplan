@@ -1,14 +1,15 @@
 import { Employee } from "./employee"
 import { Id } from "./id"
 import { Job } from "./job"
+import { DateTime } from "luxon"
 
 export type Calendar = {
   id?: Id
   job: Job
   employee: Employee
-  date: Date
-  startTime: Date
-  endTime: Date
+  date: DateTime
+  startTime: DateTime
+  endTime: DateTime
 }
 
 export type CalendarBulk = {
