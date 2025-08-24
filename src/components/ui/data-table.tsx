@@ -63,34 +63,36 @@ function TableFilter<TData>({ table, column }: TableFilterParams<TData>) {
 
 function TablePagination<TData>({ table }: TablePaginationParams<TData>) {
   return (
-    <div className="flex justify-between items-center px-6">
-      <div className="text-sm">
-        Pagina{" "}
-        <span className="font-semibold">
-          {table.getState().pagination.pageIndex + 1}
-        </span>{" "}
-        van de <span className="font-semibold">{table.getPageCount()}</span>
-      </div>
+    table.getPageCount() > 1 && (
+      <div className="flex justify-between items-center px-6">
+        <div className="text-sm">
+          Pagina{" "}
+          <span className="font-semibold">
+            {table.getState().pagination.pageIndex + 1}
+          </span>{" "}
+          van de <span className="font-semibold">{table.getPageCount()}</span>
+        </div>
 
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Vorige
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Volgende
-        </Button>
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Vorige
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Volgende
+          </Button>
+        </div>
       </div>
-    </div>
+    )
   )
 }
 
