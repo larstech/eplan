@@ -100,7 +100,11 @@ export default function CustomerOverviewPage() {
         <Button className="w-full">Klant toevoegen</Button>
       </Link>
 
-      <DataTable data={customers} columns={columns} />
+      <DataTable
+        data={customers}
+        columns={columns}
+        filterColumn="companyName"
+      />
     </div>
   )
 }

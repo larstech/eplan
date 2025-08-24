@@ -10,6 +10,7 @@ import {
 } from "../../ui/dropdown-menu"
 import { getAllJobs } from "@/services/job"
 import { Job } from "@/types/job"
+import { startsWith } from "@/utils/number"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"
@@ -21,6 +22,7 @@ const columns: ColumnDef<Job>[] = [
     header: ({ column }) => (
       <SortableColumn column={column} name="Ordernummer" />
     ),
+    filterFn: (row, id, filterVal) => startsWith(row.getValue(id), filterVal),
   },
   {
     id: "customerName",
@@ -94,7 +96,7 @@ export default function JobOverviewPage() {
         <Button className="w-full">Werkzaamheid toevoegen</Button>
       </Link>
 
-      <DataTable data={jobs} columns={columns} />
+      <DataTable data={jobs} columns={columns} filterColumn="orderId" />
     </div>
   )
 }
