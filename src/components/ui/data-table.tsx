@@ -48,7 +48,7 @@ type TableColumnSortParams<TData, TValue> = {
 
 function TableFilter<TData>({ table, column }: TableFilterParams<TData>) {
   return (
-    <div className="flex items-center py-4">
+    <div className="flex items-center">
       <Input
         placeholder="Zoeken..."
         value={(table.getColumn(column)?.getFilterValue() as string) ?? ""}
