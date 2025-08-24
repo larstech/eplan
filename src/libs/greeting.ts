@@ -22,6 +22,8 @@ const greetings: TimeBlock[] = [
 
 export const getGreetingByTime = (): string => {
   const hour = DateTime.now().hour
-  const match = greetings.find((timeBlock) => inRange(hour, timeBlock.min, timeBlock.max))
+  const match = greetings.find((timeBlock) =>
+    inRange(hour, timeBlock.min, timeBlock.max),
+  )
   return match?.greeting ?? "Goedendag"
 }
