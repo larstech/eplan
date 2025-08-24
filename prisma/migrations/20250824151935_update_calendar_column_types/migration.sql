@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "public"."Calendar" ALTER COLUMN "date" SET DATA TYPE DATE,
+ALTER COLUMN "endTime" SET DATA TYPE TIME,
+ALTER COLUMN "startTime" SET DATA TYPE TIME;

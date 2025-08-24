@@ -75,9 +75,9 @@ model Job {
 model Calendar {
   id String @id @default(cuid(2))
 
-  date      DateTime
-  startTime DateTime
-  endTime   DateTime
+  date      DateTime @db.Date
+  startTime DateTime @db.Time()
+  endTime   DateTime @db.Time()
 
   jobId      String
   employeeId String
