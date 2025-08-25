@@ -17,7 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/table"
-import { formatDate } from "@/libs/datetime"
 import { getAllCalendars } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"
 import { Calendar } from "@/types/calendar"
@@ -38,7 +37,7 @@ const CalendarControl = ({
 }) => {
   return (
     <>
-      <Button variant="outline" onClick={() => setDate(formatDate())}>
+      <Button variant="outline" onClick={() => setDate(DateTime.local())}>
         Deze week
       </Button>
       <Button variant="outline" onClick={() => setDate(previousWeek(date))}>
@@ -107,7 +106,7 @@ const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
 }
 
 export default function CalendarOverviewPage() {
-  const [date, setDate] = useState<DateTime>(formatDate())
+  const [date, setDate] = useState<DateTime>(DateTime.local())
   const [employees, setEmployees] = useState<Employee[]>([])
   const [calendars, setCalendars] = useState<Calendar[]>([])
 
@@ -152,7 +151,7 @@ export default function CalendarOverviewPage() {
                 <br />
                 <Badge
                   variant={
-                    formatDate().toFormat("yyyy LLL dd") ===
+                    DateTime.local().toFormat("yyyy LLL dd") ===
                     date.start?.toFormat("yyyy LLL dd")
                       ? "default"
                       : "outline"

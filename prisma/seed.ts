@@ -2,14 +2,13 @@
  * DISCLAIMER: All data is AI-generated and not representative of real entities.
  */
 import { PrismaClient } from "@/generated/prisma/client"
-import { formatDate } from "@/libs/datetime"
 import { Calendar } from "@/types/calendar"
 import type { Address, Customer, CustomerContact } from "@/types/customer"
 import type { Employee } from "@/types/employee"
 import type { Job } from "@/types/job"
 import { fakerNL as faker } from "@faker-js/faker"
 import { createId } from "@paralleldrive/cuid2"
-import { Interval } from "luxon"
+import { DateTime, Interval } from "luxon"
 
 const prisma = new PrismaClient()
 
@@ -72,7 +71,7 @@ function generateCalendars(
   employees: Employee[],
 ): Calendar[] {
   const dateRange = Interval.after(
-    formatDate().startOf("week").minus({ week: 1 }),
+    DateTime.local().startOf("week").minus({ week: 1 }),
     { month: 1 },
   )
   const datesInRange = dateRange.splitBy({ day: 1 })
@@ -84,8 +83,8 @@ function generateCalendars(
     date: datesInRange[
       (datesInRange.length + i) % datesInRange.length
     ].start?.toJSDate()!,
-    startTime: formatDate().toJSDate(),
-    endTime: formatDate().toJSDate(),
+    startTime: DateTime.local().toJSDate(),
+    endTime: DateTime.local().toJSDate(),
   }))
 }
 
