@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/table"
+import { date } from "@/libs/datetime"
 import { getAllCalendars } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"
 import { Calendar } from "@/types/calendar"
@@ -90,13 +91,13 @@ const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
           <div className="grid gap-3">
             <h3 className="text-sm font-semibold">Starttijd</h3>
             <span className="text-sm">
-              {DateTime.fromJSDate(calendar.startTime).toFormat("HH:mm")}
+              {date(calendar.startTime).toFormat("HH:mm")}
             </span>
           </div>
           <div className="grid gap-3">
             <h3 className="text-sm font-semibold">Eindtijd</h3>
             <span className="text-sm">
-              {DateTime.fromJSDate(calendar.endTime).toFormat("HH:mm")}
+              {date(calendar.endTime).toFormat("HH:mm")}
             </span>
           </div>
         </div>
