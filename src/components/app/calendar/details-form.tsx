@@ -17,11 +17,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { formatDate } from "@/libs/datetime"
 import { getAllEmployees } from "@/services/employee"
 import { Calendar } from "@/types/calendar"
 import { Employee } from "@/types/employee"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { DateTime } from "luxon"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { ControllerRenderProps, useForm } from "react-hook-form"
@@ -126,9 +126,9 @@ export default function CalendarDetailsForm({
     defaultValues: {
       orderId: String(calendar?.job.id ?? ""),
       employeeId: String(calendar?.employee.id ?? ""),
-      date: formatDate().toISODate(),
-      startTime: formatDate().toISOTime(),
-      endTime: formatDate().toISOTime(),
+      date: DateTime.local().toISODate(),
+      startTime: DateTime.local().toISOTime(),
+      endTime: DateTime.local().toISOTime(),
     },
   })
 
