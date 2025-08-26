@@ -19,7 +19,7 @@ model Employee {
   calendar Calendar[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Customer {
@@ -39,7 +39,7 @@ model Customer {
   contact CustomerContact @relation(fields: [contactId], references: [id])
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Address {
@@ -54,7 +54,7 @@ model Address {
   customer Customer?
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model CustomerContact {
@@ -67,7 +67,7 @@ model CustomerContact {
   customer Customer?
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Job {
@@ -84,7 +84,7 @@ model Job {
   customer Customer @relation(fields: [customerId], references: [id])
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Calendar {
@@ -101,5 +101,5 @@ model Calendar {
   employee Employee @relation(fields: [employeeId], references: [id])
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
