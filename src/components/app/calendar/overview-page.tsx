@@ -60,8 +60,9 @@ const DateOverview = ({
 }) => {
   return (
     <span>
-      Week {week.weekNumber} ({weekDates.start?.toFormat("d LLLL y")} -{" "}
-      {weekDates.end?.toFormat("d LLLL y")})
+      Week {week.weekNumber} (
+      {weekDates.start?.setLocale("nl").toFormat("d LLLL y")} -{" "}
+      {weekDates.end?.setLocale("nl").toFormat("d LLLL y")})
     </span>
   )
 }
@@ -147,7 +148,7 @@ export default function CalendarOverviewPage() {
                 className="min-w-48 max-w-48 overflow-hidden text-ellipsis text-center"
               >
                 <span className="font-semibold">
-                  {date.start?.toFormat("cccc")}
+                  {date.start?.setLocale("nl").toFormat("cccc")}
                 </span>
                 <br />
                 <Badge
@@ -159,7 +160,7 @@ export default function CalendarOverviewPage() {
                   }
                   className="mb-1"
                 >
-                  {date.start?.toFormat("d LLLL")}
+                  {date.start?.setLocale("nl").toFormat("d LLLL")}
                 </Badge>
               </TableHead>
             ))}
