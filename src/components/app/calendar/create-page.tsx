@@ -241,6 +241,7 @@ export default function CalendarCreatePage() {
               <Input
                 type="number"
                 min={1}
+                max={10}
                 value={employeeCount}
                 onChange={(e) =>
                   setEmployeeCount(Math.max(1, Number(e.target.value) || 1))
