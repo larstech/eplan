@@ -7,8 +7,8 @@ import type { Address, Customer, CustomerContact } from "@/types/customer"
 import type { Employee } from "@/types/employee"
 import type { Job } from "@/types/job"
 import { fakerNL as faker } from "@faker-js/faker"
-import { createId } from "@paralleldrive/cuid2"
 import { DateTime, Interval } from "luxon"
+import { v4 as uuidv4 } from "uuid"
 
 const prisma = new PrismaClient()
 
@@ -19,7 +19,7 @@ const CALENDAR_COUNT = EMPLOYEE_COUNT * 15
 
 function generateEmployees(count: number): Employee[] {
   return Array.from({ length: count }, () => ({
-    id: createId(),
+    id: uuidv4(),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
   }))
@@ -28,7 +28,7 @@ function generateEmployees(count: number): Employee[] {
 function generateCustomers(count: number): Customer[] {
   return Array.from({ length: count }, () => {
     const address: Address = {
-      id: createId(),
+      id: uuidv4(),
       country: "NEDERLAND",
       postalCode: faker.location.zipCode(),
       houseNumber: String(faker.number.int({ min: 1, max: 200 })),
@@ -37,14 +37,14 @@ function generateCustomers(count: number): Customer[] {
     }
 
     const contact: CustomerContact = {
-      id: createId(),
+      id: uuidv4(),
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       phoneNumber: faker.phone.number(),
     }
 
     return {
-      id: createId(),
+      id: uuidv4(),
       companyName: faker.company.name(),
       address,
       contact,
@@ -57,7 +57,7 @@ function generateCustomers(count: number): Customer[] {
 
 function generateJobs(count: number, customers: Customer[]): Job[] {
   return Array.from({ length: count }, (_, i) => ({
-    id: createId(),
+    id: uuidv4(),
     orderId: 100 + i,
     customer: customers[(CUSTOMER_COUNT + i) % CUSTOMER_COUNT],
     title: faker.lorem.slug({ min: 2, max: 4 }),
@@ -77,7 +77,7 @@ function generateCalendars(
   const datesInRange = dateRange.splitBy({ day: 1 })
 
   return Array.from({ length: count }, (_, i) => ({
-    id: createId(),
+    id: uuidv4(),
     job: jobs[(jobs.length + i) % jobs.length],
     employee: employees[(employees.length + i) % employees.length],
     date: datesInRange[
