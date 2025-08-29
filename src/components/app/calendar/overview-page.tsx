@@ -81,9 +81,18 @@ const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
             <span className="text-sm">{calendar.job.customer.companyName}</span>
           </div>
           <div className="grid gap-3">
-            <h3 className="text-sm font-semibold">Ordernummer</h3>
-            <span className="text-sm">{calendar.job.orderId}</span>
+            <h3 className="text-sm font-semibold">Adres</h3>
+            <span className="text-sm">
+              {calendar.job.customer.address.street}{" "}
+              {calendar.job.customer.address.houseNumber},{" "}
+              {calendar.job.customer.address.postalCode},{" "}
+              {calendar.job.customer.address.city}
+            </span>
           </div>
+        </div>
+        <div className="grid gap-3">
+          <h3 className="text-sm font-semibold">Ordernummer</h3>
+          <span className="text-sm">{calendar.job.orderId}</span>
         </div>
         <div className="grid gap-3">
           <h3 className="text-sm font-semibold">Omschrijving</h3>
