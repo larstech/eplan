@@ -26,6 +26,7 @@ model Customer {
   id String @id @default(uuid())
 
   companyName       String
+  distanceInKm      Int    @default(0)
   travelTimeMinutes Int
   breakTimeMinutes  Int
   notes             String

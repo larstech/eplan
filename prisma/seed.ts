@@ -48,6 +48,7 @@ function generateCustomers(count: number): Customer[] {
       companyName: faker.company.name(),
       address,
       contact,
+      distanceInKm: faker.number.int({ min: 1, max: 80 }),
       travelTimeMinutes: faker.number.int({ min: 5, max: 120, multipleOf: 5 }),
       breakTimeMinutes: 15,
       notes: faker.lorem.sentence({ min: 3, max: 7 }),
@@ -98,6 +99,7 @@ async function seedCustomers(customers: Customer[]) {
       data: {
         id: customer.id,
         companyName: customer.companyName,
+        distanceInKm: customer.distanceInKm,
         travelTimeMinutes: customer.travelTimeMinutes,
         breakTimeMinutes: customer.breakTimeMinutes,
         notes: customer.notes,
