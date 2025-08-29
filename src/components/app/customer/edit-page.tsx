@@ -53,6 +53,7 @@ export default function CustomerEditPage({ customerId }: { customerId: Id }) {
       contactFirstName,
       contactLastName,
       contactPhoneNumber,
+      distanceInKm,
       travelTimeMinutes,
       breakTimeMinutes,
       notes,
@@ -60,6 +61,7 @@ export default function CustomerEditPage({ customerId }: { customerId: Id }) {
 
     const createdCustomer = await editCustomer(customerId, {
       companyName: companyName,
+      distanceInKm: Number(distanceInKm),
       travelTimeMinutes: Number(travelTimeMinutes),
       breakTimeMinutes: Number(breakTimeMinutes),
       notes: notes,
