@@ -22,6 +22,7 @@ import {
 import { createCalendarFromBulk } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"
 import { Employee } from "@/types/employee"
+import { sortEmployeesByName } from "@/utils/employee"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ChevronDownIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -182,7 +183,8 @@ export default function CalendarCreatePage() {
     const fetchData = async () => {
       try {
         const data = await getAllEmployees()
-        if (mounted) setEmployees(data)
+        const sortedData = sortEmployeesByName(data)
+        if (mounted) setEmployees(sortedData)
       } catch (err) {
         console.error("Failed to fetch employees:", err)
       }
