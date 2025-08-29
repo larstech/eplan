@@ -109,7 +109,10 @@ export default function JobDetailsForm({
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllCustomers()
-      setCustomers(data)
+      const sortedData = data.sort((a, b) =>
+        a.companyName.localeCompare(b.companyName),
+      )
+      setCustomers(sortedData)
     }
 
     fetchData()
