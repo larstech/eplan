@@ -5,6 +5,7 @@ export type Customer = {
   companyName: string
   address: Address
   contact: CustomerContact
+  distanceInKm: number
   travelTimeMinutes: number
   breakTimeMinutes: number
   notes: string

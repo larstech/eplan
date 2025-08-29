@@ -26,6 +26,7 @@ type FormInput = {
     | "contactFirstName"
     | "contactLastName"
     | "contactPhoneNumber"
+    | "distanceInKm"
     | "travelTimeMinutes"
     | "breakTimeMinutes"
     | "notes"
@@ -81,6 +82,11 @@ const formFields: { items: FormInput[] }[] = [
   {
     items: [
       {
+        name: "distanceInKm",
+        label: "Afstand (hele kilometers)",
+        type: "number",
+      },
+      {
         name: "travelTimeMinutes",
         label: "Reistijd (minuten)",
         type: "number",
@@ -108,6 +114,7 @@ export const customerDetailsFormSchema = z.object({
   contactFirstName: z.string(),
   contactLastName: z.string(),
   contactPhoneNumber: z.string(),
+  distanceInKm: z.string(),
   travelTimeMinutes: z.string(),
   breakTimeMinutes: z.string(),
   notes: z.string(),
@@ -136,6 +143,7 @@ export default function CustomerDetailsForm({
       contactFirstName: customer?.contact?.firstName ?? "",
       contactLastName: customer?.contact?.lastName ?? "",
       contactPhoneNumber: customer?.contact?.phoneNumber ?? "",
+      distanceInKm: String(customer?.distanceInKm) ?? "",
       travelTimeMinutes: String(customer?.travelTimeMinutes) ?? "",
       breakTimeMinutes: String(customer?.breakTimeMinutes) ?? "",
       notes: customer?.notes ?? "",

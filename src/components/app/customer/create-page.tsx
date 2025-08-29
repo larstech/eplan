@@ -22,6 +22,7 @@ export default function CustomerCreatePage() {
       contactFirstName,
       contactLastName,
       contactPhoneNumber,
+      distanceInKm,
       travelTimeMinutes,
       breakTimeMinutes,
       notes,
@@ -29,6 +30,7 @@ export default function CustomerCreatePage() {
 
     const createdCustomer = await createCustomer({
       companyName: companyName,
+      distanceInKm: Number(distanceInKm),
       travelTimeMinutes: Number(travelTimeMinutes),
       breakTimeMinutes: Number(breakTimeMinutes),
       notes: notes,

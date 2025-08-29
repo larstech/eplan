@@ -58,6 +58,10 @@ const columns: ColumnDef<Customer>[] = [
     accessorFn: (row) => row.contact.phoneNumber,
   },
   {
+    accessorKey: "distanceInKm",
+    header: "Afstand in km.",
+  },
+  {
     accessorKey: "travelTimeMinutes",
     header: "Reistijd",
   },
