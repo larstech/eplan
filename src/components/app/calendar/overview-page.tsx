@@ -24,10 +24,11 @@ import { Calendar } from "@/types/calendar"
 import { Employee } from "@/types/employee"
 import { nextWeek, previousWeek } from "@/utils/datetime"
 import { sortEmployeesByName } from "@/utils/employee"
+import * as htmlToImage from "html-to-image"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { DateTime, Interval } from "luxon"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const CalendarControl = ({
   date,
@@ -114,6 +115,23 @@ export default function CalendarOverviewPage() {
 
   const datesInweek = Interval.after(date.startOf("week"), { week: 1 })
 
+  const tableRef = useRef<HTMLTableElement | null>(null)
+
+  const currentYear = date.year
+  const currentWeek = date.weekNumber
+  const exportFileName = `planbord_${currentYear}W${currentWeek}`
+
+  const handleExport = () => {
+    htmlToImage
+      .toPng(tableRef.current!, { quality: 1, skipFonts: true })
+      .then(function (dataUrl) {
+        const link = document.createElement("a")
+        link.download = `${exportFileName}.jpeg`
+        link.href = dataUrl
+        link.click()
+      })
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const employees = await getAllEmployees()
@@ -133,12 +151,17 @@ export default function CalendarOverviewPage() {
         <Button className="w-full">Werkzaamheid inplannen</Button>
       </Link>
 
-      <div className="flex gap-x-1 items-center">
-        <CalendarControl date={date} setWeek={setDate} />
-        <DateOverview week={date} datesInWeek={datesInweek} />
+      <div className="flex justify-between">
+        <div className="flex items-center gap-x-1">
+          <CalendarControl date={date} setWeek={setDate} />
+          <DateOverview week={date} datesInWeek={datesInweek} />
+        </div>
+        <Button variant="outline" onClick={handleExport}>
+          Exporteer
+        </Button>
       </div>
 
-      <Table>
+      <Table className="bg-white" ref={tableRef}>
         <TableHeader>
           <TableRow>
             <TableHead className="font-semibold">Medewerker</TableHead>
