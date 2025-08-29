@@ -86,7 +86,8 @@ const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
               {calendar.job.customer.address.street}{" "}
               {calendar.job.customer.address.houseNumber},{" "}
               {calendar.job.customer.address.postalCode},{" "}
-              {calendar.job.customer.address.city}
+              {calendar.job.customer.address.city} (
+              {calendar.job.customer.distanceInKm} km)
             </span>
           </div>
         </div>
