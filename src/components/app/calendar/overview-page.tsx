@@ -22,9 +22,9 @@ import { getAllCalendars } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"
 import { Calendar } from "@/types/calendar"
 import { Employee } from "@/types/employee"
+import { exportCalendarToJpeg } from "@/utils/calendar"
 import { nextWeek, previousWeek } from "@/utils/datetime"
 import { sortEmployeesByName } from "@/utils/employee"
-import * as htmlToImage from "html-to-image"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { DateTime, Interval } from "luxon"
 import Link from "next/link"
@@ -127,19 +127,8 @@ export default function CalendarOverviewPage() {
 
   const tableRef = useRef<HTMLTableElement | null>(null)
 
-  const currentYear = date.year
-  const currentWeek = date.weekNumber
-  const exportFileName = `planbord_${currentYear}W${currentWeek}`
-
   const handleExport = () => {
-    htmlToImage
-      .toPng(tableRef.current!, { quality: 1, skipFonts: true })
-      .then(function (dataUrl) {
-        const link = document.createElement("a")
-        link.download = `${exportFileName}.jpeg`
-        link.href = dataUrl
-        link.click()
-      })
+    exportCalendarToJpeg(date, tableRef)
   }
 
   useEffect(() => {
