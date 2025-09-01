@@ -75,3 +75,7 @@ export const getAllCalendars = async () => {
   })
   return Calendars
 }
+
+export const deleteCalendar = async (calendar: Calendar) => {
+  await prisma.calendar.delete({ where: { id: calendar.id } })
+}

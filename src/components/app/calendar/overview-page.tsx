@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "../../ui/table"
 import { date } from "@/libs/datetime"
-import { getAllCalendars } from "@/services/calendar"
+import { deleteCalendar, getAllCalendars } from "@/services/calendar"
 import { getAllEmployees } from "@/services/employee"
 import { Calendar } from "@/types/calendar"
 import { Employee } from "@/types/employee"
@@ -29,6 +29,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 import { DateTime, Interval } from "luxon"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
 
 const CalendarControl = ({
   date,
@@ -69,6 +70,16 @@ const DateOverview = ({
 }
 
 const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
+  const handleDelete = async () => {
+    await deleteCalendar(calendar)
+    toast(
+      `Opdracht ${calendar.job.orderId} op ${DateTime.fromJSDate(calendar.date).toFormat("cccc d LLLL yyyy", { locale: "nl" })} uit de kalender verwijderd`,
+      {
+        description: "Herlaad de pagina op de kalender te synchronizeren.",
+      },
+    )
+  }
+
   return (
     <DialogContent>
       <DialogHeader>
@@ -113,6 +124,10 @@ const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
             </span>
           </div>
         </div>
+
+        <Button variant="destructive" onClick={handleDelete}>
+          Uit de planning verwijderen
+        </Button>
       </div>
     </DialogContent>
   )
