@@ -1,4 +1,4 @@
-import CustomerOverviewPage from "@/components/app/customer/overview-page"
+import CustomerOverviewPage from "@/features/customer/components/overview-page"
 
 export default function Page() {
   return <CustomerOverviewPage />

@@ -1,11 +1,15 @@
 /**
  * DISCLAIMER: All data is AI-generated and not representative of real entities.
  */
+import { Calendar } from "@/features/calendar/types/calendar"
+import {
+  Address,
+  Customer,
+  CustomerContact,
+} from "@/features/customer/types/customer"
+import type { Employee } from "@/features/employee/types/employee"
+import type { Job } from "@/features/job/types/job"
 import { PrismaClient } from "@/generated/prisma/client"
-import { Calendar } from "@/types/calendar"
-import type { Address, Customer, CustomerContact } from "@/types/customer"
-import type { Employee } from "@/types/employee"
-import type { Job } from "@/types/job"
 import { fakerNL as faker } from "@faker-js/faker"
 import { DateTime, Interval } from "luxon"
 import { v4 as uuidv4 } from "uuid"

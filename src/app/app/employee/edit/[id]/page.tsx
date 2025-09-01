@@ -1,4 +1,4 @@
-import EmployeeEditPage from "@/components/app/employee/edit-page"
+import EmployeeEditPage from "@/features/employee/components/edit-page"
 import { Id } from "@/types/id"
 
 type PageParams = Promise<{ id: Id }>

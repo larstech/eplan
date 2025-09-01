@@ -1,4 +1,4 @@
-import EmployeeCreatePage from "@/components/app/employee/create-page"
+import EmployeeCreatePage from "@/features/employee/components/create-page"
 
 export default function Page() {
   return <EmployeeCreatePage />

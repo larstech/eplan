@@ -1,4 +1,4 @@
-import CalendarOverviewPage from "@/components/app/calendar/overview-page"
+import CalendarOverviewPage from "@/features/calendar/components/overview-page"
 
 export default function Page() {
   return <CalendarOverviewPage />

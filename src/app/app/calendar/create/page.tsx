@@ -1,4 +1,4 @@
-import CalendarCreatePage from "@/components/app/calendar/create-page"
+import CalendarCreatePage from "@/features/calendar/components/create-page"
 
 export default function Page() {
   return <CalendarCreatePage />

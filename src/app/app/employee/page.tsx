@@ -1,4 +1,4 @@
-import EmployeeOverviewPage from "@/components/app/employee/overview-page"
+import EmployeeOverviewPage from "@/features/employee/components/overview-page"
 
 export default function Page() {
   return <EmployeeOverviewPage />
