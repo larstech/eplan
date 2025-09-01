@@ -1,6 +1,6 @@
 "use client"
 
-import { Customer } from "../types/customer"
+import { Customer } from "../types"
 import CustomerDetailsForm, { customerDetailsFormSchema } from "./details-form"
 import NotFound from "@/app/not-found"
 import LoadingPage from "@/components/skeleton/page"
@@ -8,7 +8,7 @@ import {
   editCustomer,
   getCustomerById,
 } from "@/features/customer/services/customer"
-import { Id } from "@/types/id"
+import { Id } from "@/types"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"

@@ -1,6 +1,6 @@
 "use server"
 
-import { Calendar, CalendarBulk } from "../types/calendar"
+import { Calendar, CalendarBulk } from "../types"
 import { getEmployeeById } from "@/features/employee/services/employee"
 import { getJobByOrderId } from "@/features/job/services/job"
 import { prisma } from "@/lib/prisma"

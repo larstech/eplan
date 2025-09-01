@@ -1,8 +1,8 @@
 "use server"
 
-import { Job } from "@/features/job/types/job"
+import { Job } from "@/features/job/types"
 import { prisma } from "@/lib/prisma"
-import { Id } from "@/types/id"
+import { Id } from "@/types"
 
 export const createJob = async (job: Job) => {
   const createdJob = await prisma.job.create({

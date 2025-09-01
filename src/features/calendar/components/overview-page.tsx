@@ -18,9 +18,9 @@ import {
   TableRow,
 } from "../../../components/ui/table"
 import { deleteCalendar, getAllCalendars } from "../services/calendar"
-import { Calendar } from "../types/calendar"
+import { Calendar } from "../types"
 import { getAllEmployees } from "@/features/employee/services/employee"
-import { Employee } from "@/features/employee/types/employee"
+import { Employee } from "@/features/employee/types"
 import { date } from "@/lib/datetime"
 import { exportCalendarToJpeg } from "@/utils/calendar"
 import { nextWeek, previousWeek } from "@/utils/datetime"

@@ -1,8 +1,8 @@
 "use server"
 
-import { Employee } from "@/features/employee/types/employee"
+import { Employee } from "@/features/employee/types"
 import { prisma } from "@/lib/prisma"
-import { Id } from "@/types/id"
+import { Id } from "@/types"
 import { formatFirstName, formatLastName } from "@/utils/employee"
 
 export const createEmployee = async (employee: Employee) => {

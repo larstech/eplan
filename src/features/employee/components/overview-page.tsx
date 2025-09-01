@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { getAllEmployees } from "@/features/employee/services/employee"
-import { Employee } from "@/features/employee/types/employee"
+import { Employee } from "@/features/employee/types"
 import "@/utils/array"
 import { getFullName } from "@/utils/employee"
 import { ColumnDef } from "@tanstack/react-table"

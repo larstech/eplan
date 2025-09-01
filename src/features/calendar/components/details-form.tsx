@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select"
-import { Calendar } from "../types/calendar"
+import { Calendar } from "../types"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { getAllEmployees } from "@/features/employee/services/employee"
-import { Employee } from "@/features/employee/types/employee"
+import { Employee } from "@/features/employee/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DateTime } from "luxon"
 import Link from "next/link"

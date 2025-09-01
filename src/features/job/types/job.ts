@@ -1,5 +1,5 @@
-import { Id } from "../../../types/id"
-import { Customer } from "@/features/customer/types/customer"
+import { Customer } from "@/features/customer/types"
+import { Id } from "@/types"
 
 export type Job = {
   id?: Id

@@ -1,6 +1,6 @@
-import { Employee } from "@/features/employee/types/employee"
-import { Job } from "@/features/job/types/job"
-import { Id } from "@/types/id"
+import { Employee } from "@/features/employee/types"
+import { Job } from "@/features/job/types"
+import { Id } from "@/types"
 
 export type Calendar = {
   id?: Id
