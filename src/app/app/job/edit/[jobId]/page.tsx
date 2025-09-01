@@ -1,5 +1,5 @@
 import JobEditPage from "@/features/job/components/edit-page"
-import { Id } from "@/types/id"
+import { Id } from "@/types"
 
 type PageParams = Promise<{ jobId: Id }>
 

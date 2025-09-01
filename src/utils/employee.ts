@@ -1,4 +1,4 @@
-import { Employee } from "@/features/employee/types/employee"
+import { Employee } from "@/features/employee/types"
 
 export const getFullName = (employee: Employee): string => {
   return `${employee.firstName} ${employee.lastName}`

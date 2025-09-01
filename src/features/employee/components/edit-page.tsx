@@ -7,8 +7,8 @@ import {
   editEmployee,
   getEmployeeById,
 } from "@/features/employee/services/employee"
-import { Employee } from "@/features/employee/types/employee"
-import { Id } from "@/types/id"
+import { Employee } from "@/features/employee/types"
+import { Id } from "@/types"
 import { getFullName } from "@/utils/employee"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"

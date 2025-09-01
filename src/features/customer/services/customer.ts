@@ -1,8 +1,8 @@
 "use server"
 
-import { Customer } from "../types/customer"
+import { Customer } from "../types"
 import { prisma } from "@/lib/prisma"
-import { Id } from "@/types/id"
+import { Id } from "@/types"
 
 export const createCustomer = async (customer: Customer) => {
   const createdCustomer = await prisma.customer.create({

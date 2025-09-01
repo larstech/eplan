@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { getAllJobs } from "@/features/job/services/job"
-import { Job } from "@/features/job/types/job"
+import { Job } from "@/features/job/types"
 import { startsWith } from "@/utils/number"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"

@@ -1,5 +1,5 @@
 import CustomerEditPage from "@/features/customer/components/edit-page"
-import { Id } from "@/types/id"
+import { Id } from "@/types"
 
 type PageParams = Promise<{ customerId: Id }>
 
