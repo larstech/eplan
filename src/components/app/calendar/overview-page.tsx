@@ -73,7 +73,7 @@ const CalendarDetails = ({ calendar }: { calendar: Calendar }) => {
   const handleDelete = async () => {
     await deleteCalendar(calendar)
     toast(
-      `Opdracht ${calendar.job.orderId} op ${DateTime.fromJSDate(calendar.date).toFormat("cccc d LLLL yyyy", { locale: "nl" })} uit de kalender verwijderd`,
+      `Opdracht ${calendar.job.orderId} op ${DateTime.fromJSDate(calendar.date).toFormat("cccc d LLLL yyyy", { locale: "nl" })} uit de kalender gehaald`,
       {
         description: "Herlaad de pagina op de kalender te synchronizeren.",
       },
