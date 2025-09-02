@@ -49,7 +49,7 @@ const schema = z.object({
   password: z.string(),
 })
 
-function FormHeader() {
+const FormHeader = () => {
   const timeBasedGreeting = getGreetingByTime()
 
   return (
@@ -62,7 +62,7 @@ function FormHeader() {
   )
 }
 
-function FormContent() {
+const FormContent = () => {
   const router = useRouter()
 
   const form = useForm<z.infer<typeof schema>>({
@@ -127,7 +127,7 @@ function FormContent() {
   )
 }
 
-function FormFooter() {
+const FormFooter = () => {
   return (
     <div>
       <p className="text-sm text-muted-foreground">
