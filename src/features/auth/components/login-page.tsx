@@ -1,79 +1,27 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { signIn } from "@/features/auth/services/auth"
-import { getGreetingByTime } from "@/lib/greeting"
-import { companyEmail } from "@/utils/regexp"
+import FormBody from "./form/body"
+import FormFooter from "./form/footer"
+import FormHeader from "./form/header"
+import { authFields, authSchema } from "@/features/auth"
+import { signIn } from "@/features/auth/services"
 import { zodResolver } from "@hookform/resolvers/zod"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-type FieldData = {
-  name: "email" | "password"
-  label: string
-  type: string
-  placeholder: string
-}
-
-const fields: FieldData[] = [
-  {
-    name: "email",
-    label: "Email",
-    type: "email",
-    placeholder: "Jouw.Naam@yourtech.nl",
-  },
-  {
-    name: "password",
-    label: "Wachtwoord",
-    type: "password",
-    placeholder: "********",
-  },
-]
-
-const schema = z.object({
-  email: z.email({
-    error: "Het emailadres moet afkomstig zijn van Yourtech",
-    pattern: companyEmail,
-  }),
-  password: z.string(),
-})
-
-const FormHeader = () => {
-  const timeBasedGreeting = getGreetingByTime()
-
-  return (
-    <div className="space-y-2">
-      <h1 className="text-xl text-center font-bold">{timeBasedGreeting}!</h1>
-      <p className="text-sm text-center text-muted-foreground">
-        Log in op het Elektronisch Planbord
-      </p>
-    </div>
-  )
-}
-
-const FormContent = () => {
+export function LoginPage() {
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof authSchema>>({
+    resolver: zodResolver(authSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   })
 
-  const attemptLogin = async (values: z.infer<typeof schema>) => {
+  async function attemptLogin(values: z.infer<typeof authSchema>) {
     const result = await signIn(values.email, values.password)
 
     if (result.error) {
@@ -89,63 +37,9 @@ const FormContent = () => {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(attemptLogin)} className="space-y-8">
-        {fields.map((data) => (
-          <FormField
-            key={data.name}
-            control={form.control}
-            name={data.name}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold">{data.label}</FormLabel>
-                <FormControl>
-                  <Input
-                    type={data.type}
-                    placeholder={data.placeholder}
-                    required
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        ))}
-
-        <Button loading={form.formState.isSubmitting} className="w-full">
-          Inloggen
-        </Button>
-
-        {form.formState.errors.root && (
-          <span className="text-sm text-red-500">
-            Fout: {form.formState.errors.root.message}
-          </span>
-        )}
-      </form>
-    </Form>
-  )
-}
-
-const FormFooter = () => {
-  return (
-    <div>
-      <p className="text-sm text-muted-foreground">
-        Deze omgeving is uitsluitend bedoeld voor medewerkers van Yourtech. Ben
-        je geen medewerker, maar zoek je wel informatie over Yourtech?
-      </p>
-      <Link href="https://yourtech.nl/nl">
-        <Button variant="link">Klik dan hier</Button>
-      </Link>
-    </div>
-  )
-}
-
-export function LoginPage() {
-  return (
     <div className="space-y-8">
       <FormHeader />
-      <FormContent />
+      <FormBody form={form} fields={authFields} attemptLogin={attemptLogin} />
       <FormFooter />
     </div>
   )
