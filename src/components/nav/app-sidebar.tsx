@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { signOut } from "@/features/auth/services/auth"
+import { signOut } from "@/features/auth/services"
 import {
   Building2,
   CalendarDays,
