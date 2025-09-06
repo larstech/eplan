@@ -1,22 +1,18 @@
-import { inRange } from "@/utils/number"
+import { DateTime } from "luxon"
 
-const MORNING_START = 6
-const MORNING_END = 12
-const AFTERNOON_START = 12
-const AFTERNOON_END = 18
-const EVENING_START = 18
-const EVENING_END = 24
+export default function getTimeBasedGreeting() {
+  const morningEnd = 12
+  const afternoonEnd = 18
+  const localHour = DateTime.local().hour
 
-export const getGreetingByTime = () => {
-  const currentHour = new Date().getHours()
-
-  if (inRange(currentHour, MORNING_START, MORNING_END)) {
+  // Between 0 (inclusive) and 12 (exclusive).
+  if (localHour < morningEnd) {
     return "Goedemorgen"
-  } else if (inRange(currentHour, AFTERNOON_START, AFTERNOON_END)) {
+    // Between 12 (inclusive) and 18 (exclusive).
+  } else if (localHour < afternoonEnd) {
     return "Goedemiddag"
-  } else if (inRange(currentHour, EVENING_START, EVENING_END)) {
-    return "Goedenavond"
-  } else {
-    return "Goedendag"
   }
+
+  // Between 18 and 23 (both inclusive).
+  return "Goedenavond"
 }

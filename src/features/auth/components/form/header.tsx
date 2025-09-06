@@ -1,12 +1,10 @@
-import { getGreetingByTime } from "@/lib/greeting"
+import getTimeBasedGreeting from "@/lib/greeting"
 
 export default function FormHeader() {
-  const timeBasedGreeting = getGreetingByTime()
-
   return (
-    <div className="space-y-2">
-      <h1 className="text-xl text-center font-bold">{timeBasedGreeting}!</h1>
-      <p className="text-sm text-center text-muted-foreground">
+    <div className="flex flex-col items-center space-y-4">
+      <h1 className="text-xl font-bold">{getTimeBasedGreeting()}!</h1>
+      <p className="text-sm text-muted-foreground">
         Log in op het Elektronisch Planbord
       </p>
     </div>
