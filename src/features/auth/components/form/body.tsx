@@ -1,51 +1,26 @@
+import FormField from "./field"
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Form } from "@/components/ui/form"
 import { AuthFieldData, AuthFormData } from "@/features/auth"
 import { UseFormReturn } from "react-hook-form"
 
-type PageParams = {
+type ComponentParams = {
   form: UseFormReturn<AuthFormData>
   fields: AuthFieldData[]
-  handleSubmit: (data: AuthFormData) => void
+  handleSubmit: (field: AuthFormData) => void
 }
 
-export default function FormBody({ form, fields, handleSubmit }: PageParams) {
+export default function FormBody({
+  form,
+  fields,
+  handleSubmit,
+}: ComponentParams) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        {fields.map((data) => {
-          const { label, name, placeholder, type } = data
-
-          return (
-            <FormField
-              key={name}
-              control={form.control}
-              name={name}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-semibold">{label}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type={type}
-                      placeholder={placeholder}
-                      required
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )
-        })}
+        {fields.map((field) => (
+          <FormField form={form} field={field} />
+        ))}
 
         <Button loading={form.formState.isSubmitting} className="w-full">
           Inloggen
