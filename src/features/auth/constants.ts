@@ -1,5 +1,4 @@
 import { AuthFieldData } from "@/features/auth"
-import { companyEmail } from "@/utils/regexp"
 import z from "zod"
 
 export const authFields: AuthFieldData[] = [
@@ -7,20 +6,21 @@ export const authFields: AuthFieldData[] = [
     name: "email",
     label: "Email",
     type: "email",
-    placeholder: "Jouw.Naam@yourtech.nl",
+    placeholder: "jouw.naam@yourtech.nl",
   },
   {
     name: "password",
     label: "Wachtwoord",
     type: "password",
-    placeholder: "********",
+    placeholder: "••••••••••••••••",
   },
 ]
 
 export const authSchema = z.object({
   email: z.email({
     error: "Het emailadres moet afkomstig zijn van Yourtech",
-    pattern: companyEmail,
+    // Supabase authentication email is case-insensitive.
+    pattern: new RegExp("\\w+@yourtech\.nl", "i"),
   }),
   password: z.string(),
 })
