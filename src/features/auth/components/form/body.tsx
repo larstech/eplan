@@ -19,7 +19,7 @@ export default function FormBody({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         {fields.map((field) => (
-          <FormField form={form} field={field} />
+          <FormField key={field.label} form={form} field={field} />
         ))}
 
         <Button loading={form.formState.isSubmitting} className="w-full">
