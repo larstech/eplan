@@ -13,33 +13,40 @@ import { z } from "zod"
 export function LoginPage() {
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof authSchema>>({
+  const authForm = useForm<z.infer<typeof authSchema>>({
     resolver: zodResolver(authSchema),
     defaultValues: {
+      // Leave blank because we don't know this about the visitor.
       email: "",
       password: "",
     },
   })
 
-  async function attemptLogin(values: z.infer<typeof authSchema>) {
-    const result = await signIn(values.email, values.password)
+  async function handleLoginAttempt(values: z.infer<typeof authSchema>) {
+    const { email, password } = values
 
-    if (result.error) {
-      // Note to future self: Struggled with Supabase localized error messages. Defaulting to display the most common error.
-      form.setError("root", {
+    const signInResult = await signIn(email, password)
+    const signInSuccessfull = !signInResult.error
+
+    if (!signInSuccessfull) {
+      authForm.setError("root", {
         message:
           "Ongeldige inloggegevens. Neem contact op met de administrator als het probleem aanhoudt.",
       })
       return
     }
 
-    router.push("/")
+    router.replace("/")
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <FormHeader />
-      <FormBody form={form} fields={authFields} attemptLogin={attemptLogin} />
+      <FormBody
+        form={authForm}
+        fields={authFields}
+        handleSubmit={handleLoginAttempt}
+      />
       <FormFooter />
     </div>
   )
