@@ -18,7 +18,7 @@ export const authFields: AuthFieldData[] = [
 
 export const authSchema = z.object({
   email: z.email({
-    error: "Het emailadres moet afkomstig zijn van Yourtech",
+    error: "De email moet eindigen met @yourtech.nl",
     // Supabase authentication email is case-insensitive.
     pattern: new RegExp("\\w+@yourtech\.nl", "i"),
   }),
