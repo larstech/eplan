@@ -14,34 +14,38 @@ import { UseFormReturn } from "react-hook-form"
 type PageParams = {
   form: UseFormReturn<AuthFormData>
   fields: AuthFieldData[]
-  attemptLogin: (data: AuthFormData) => void
+  handleSubmit: (data: AuthFormData) => void
 }
 
-export default function FormBody({ form, fields, attemptLogin }: PageParams) {
+export default function FormBody({ form, fields, handleSubmit }: PageParams) {
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(attemptLogin)} className="space-y-8">
-        {fields.map((data) => (
-          <FormField
-            key={data.name}
-            control={form.control}
-            name={data.name}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold">{data.label}</FormLabel>
-                <FormControl>
-                  <Input
-                    type={data.type}
-                    placeholder={data.placeholder}
-                    required
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        ))}
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        {fields.map((data) => {
+          const { label, name, placeholder, type } = data
+
+          return (
+            <FormField
+              key={name}
+              control={form.control}
+              name={name}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold">{label}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type={type}
+                      placeholder={placeholder}
+                      required
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )
+        })}
 
         <Button loading={form.formState.isSubmitting} className="w-full">
           Inloggen
@@ -49,7 +53,7 @@ export default function FormBody({ form, fields, attemptLogin }: PageParams) {
 
         {form.formState.errors.root && (
           <span className="text-sm text-red-500">
-            Fout: {form.formState.errors.root.message}
+            {form.formState.errors.root.message}
           </span>
         )}
       </form>
