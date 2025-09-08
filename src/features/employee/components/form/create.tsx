@@ -1,16 +1,15 @@
 "use client"
 
-import EmployeeDetailsForm, { employeeSchema } from "./details-form"
-import { createEmployee } from "@/features/employee/services/employee"
+import { createEmployee, EmployeeForm } from "@/features/employee"
 import { getFullName } from "@/utils/employee"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import z from "zod"
+import EmployeeDetailsForm from "./body"
 
 export default function EmployeeCreatePage() {
   const router = useRouter()
 
-  const handleSubmit = async (values: z.infer<typeof employeeSchema>) => {
+  const handleSubmit = async (values: EmployeeForm) => {
     const { firstName, lastName } = values
 
     await createEmployee({
