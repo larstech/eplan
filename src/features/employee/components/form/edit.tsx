@@ -1,6 +1,6 @@
 "use client"
 
-import EmployeeDetailsForm from "./form/body"
+import EmployeeDetailsForm from "./body"
 import NotFound from "@/app/not-found"
 import LoadingPage from "@/components/skeleton/page"
 import {

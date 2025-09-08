@@ -18,8 +18,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { getAllEmployees } from "@/features/employee/services/employee"
-import { Employee } from "@/features/employee/types"
+import { Employee } from "@/features/employee"
+import { getAllEmployees } from "@/features/employee/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DateTime } from "luxon"
 import Link from "next/link"

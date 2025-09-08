@@ -24,8 +24,8 @@ import {
   SelectValue,
 } from "../../../components/ui/select"
 import { createCalendarFromBulk } from "../services/calendar"
-import { getAllEmployees } from "@/features/employee/services/employee"
-import { Employee } from "@/features/employee/types"
+import { Employee } from "@/features/employee"
+import { getAllEmployees } from "@/features/employee/services"
 import { sortEmployeesByName } from "@/utils/employee"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ChevronDownIcon } from "lucide-react"

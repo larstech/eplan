@@ -7,7 +7,7 @@ import {
   Customer,
   CustomerContact,
 } from "@/features/customer/types/customer"
-import type { Employee } from "@/features/employee/types/employee"
+import type { Employee } from "@/features/employee"
 import type { Job } from "@/features/job/types/job"
 import { PrismaClient } from "@/generated/prisma/client"
 import { fakerNL as faker } from "@faker-js/faker"
