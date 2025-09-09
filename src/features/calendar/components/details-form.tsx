@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Employee } from "@/features/employee"
-import { getAllEmployees } from "@/features/employee/services"
+import { getEmployees } from "@/features/employee/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DateTime } from "luxon"
 import Link from "next/link"
@@ -114,7 +114,7 @@ export default function CalendarDetailsForm({
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllEmployees()
+      const data = await getEmployees()
       setEmployees(data)
     }
 

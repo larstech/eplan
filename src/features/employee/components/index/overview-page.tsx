@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Employee, getAllEmployees } from "@/features/employee"
+import { Employee, getEmployees } from "@/features/employee"
 import "@/utils/array"
 import { getFullName } from "@/utils/employee"
 import { ColumnDef } from "@tanstack/react-table"
@@ -56,7 +56,7 @@ export default function EmployeeOverviewPage() {
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const employees = await getAllEmployees()
+      const employees = await getEmployees()
 
       setEmployees(employees)
     }

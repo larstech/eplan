@@ -1,10 +1,10 @@
 "use client"
 
+import EmployeeDetailsForm from "./body"
 import { createEmployee, EmployeeForm } from "@/features/employee"
 import { getFullName } from "@/utils/employee"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import EmployeeDetailsForm from "./body"
 
 export default function EmployeeCreatePage() {
   const router = useRouter()
