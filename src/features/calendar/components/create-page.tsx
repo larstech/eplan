@@ -25,7 +25,7 @@ import {
 } from "../../../components/ui/select"
 import { createCalendarFromBulk } from "../services/calendar"
 import { Employee } from "@/features/employee"
-import { getAllEmployees } from "@/features/employee/services"
+import { getEmployees } from "@/features/employee/services"
 import { sortEmployeesByName } from "@/utils/employee"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ChevronDownIcon } from "lucide-react"
@@ -186,7 +186,7 @@ export default function CalendarCreatePage() {
     let mounted = true
     const fetchData = async () => {
       try {
-        const data = await getAllEmployees()
+        const data = await getEmployees()
         const sortedData = sortEmployeesByName(data)
         if (mounted) setEmployees(sortedData)
       } catch (err) {

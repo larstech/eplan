@@ -20,7 +20,7 @@ import {
 import { deleteCalendar, getAllCalendars } from "../services/calendar"
 import { Calendar } from "../types"
 import { Employee } from "@/features/employee"
-import { getAllEmployees } from "@/features/employee/services"
+import { getEmployees } from "@/features/employee/services"
 import { date } from "@/lib/datetime"
 import { exportCalendarToJpeg } from "@/utils/calendar"
 import { nextWeek, previousWeek } from "@/utils/datetime"
@@ -148,7 +148,7 @@ export default function CalendarOverviewPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const employees = await getAllEmployees()
+      const employees = await getEmployees()
       const sortedData = sortEmployeesByName(employees)
       setEmployees(sortedData)
 
