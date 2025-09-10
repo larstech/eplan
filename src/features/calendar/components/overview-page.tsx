@@ -39,7 +39,7 @@ const CalendarControl = ({
   setWeek: React.Dispatch<React.SetStateAction<DateTime>>
 }) => {
   return (
-    <>
+    <div className="flex gap-x-1">
       <Button variant="outline" onClick={() => setDate(DateTime.local())}>
         Deze week
       </Button>
@@ -49,7 +49,7 @@ const CalendarControl = ({
       <Button variant="outline" onClick={() => setDate(nextWeek(date))}>
         <ArrowRight />
       </Button>
-    </>
+    </div>
   )
 }
 
@@ -166,7 +166,7 @@ export default function CalendarOverviewPage() {
       </Link>
 
       <div className="flex justify-between">
-        <div className="flex items-center gap-x-1">
+        <div className="flex flex-col lg:flex-row gap-x-1 items-start lg:items-center">
           <CalendarControl date={date} setWeek={setDate} />
           <DateOverview week={date} datesInWeek={datesInweek} />
         </div>
