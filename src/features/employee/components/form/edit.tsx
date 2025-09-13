@@ -10,6 +10,7 @@ import {
   getEmployeeById,
 } from "@/features/employee"
 import { Id } from "@/types"
+import { strToBool } from "@/utils/boolean"
 import { getFullName } from "@/utils/employee"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -47,11 +48,12 @@ export default function EmployeeEditPage({ id }: { id: Id }) {
   const { employee } = state
 
   const formSubmit = async (values: z.infer<typeof employeeSchema>) => {
-    const { firstName, lastName } = values
+    const { firstName, lastName, freelancer } = values
 
     await editEmployee(employee.id!, {
       firstName: firstName,
       lastName: lastName,
+      freelancer: strToBool(freelancer),
     })
       .then((editedEmployee) => {
         toast("Medewerker gegevens gewijzigd", {

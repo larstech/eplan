@@ -26,6 +26,7 @@ function generateEmployees(count: number): Employee[] {
     id: uuidv4(),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
+    freelancer: faker.datatype.boolean(0.4),
   }))
 }
 

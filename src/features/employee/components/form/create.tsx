@@ -2,6 +2,7 @@
 
 import EmployeeDetailsForm from "./body"
 import { createEmployee, EmployeeForm } from "@/features/employee"
+import { strToBool } from "@/utils/boolean"
 import { getFullName } from "@/utils/employee"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -10,11 +11,12 @@ export default function EmployeeCreatePage() {
   const router = useRouter()
 
   const handleSubmit = async (values: EmployeeForm) => {
-    const { firstName, lastName } = values
+    const { firstName, lastName, freelancer } = values
 
     await createEmployee({
       firstName: firstName,
       lastName: lastName,
+      freelancer: strToBool(freelancer),
     })
       .then((employee) => {
         toast("Niewe medewerker aangemaakt", {
