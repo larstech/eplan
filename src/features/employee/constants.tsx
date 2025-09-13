@@ -28,7 +28,6 @@ export const employeeFields: EmployeeField[] = [
             onCheckedChange={(checked) =>
               field.onChange(checked ? "true" : "false")
             }
-            required
             {...field}
           />
           <span className="italic text-sm font-normal">
