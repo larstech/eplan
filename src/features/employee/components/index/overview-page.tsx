@@ -8,11 +8,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { Employee, getEmployees } from "@/features/employee"
 import "@/utils/array"
 import { getFullName } from "@/utils/employee"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { Asterisk, MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
@@ -23,6 +28,28 @@ const employeeColumns: ColumnDef<Employee>[] = [
     id: "name",
     header: ({ column }) => <SortableColumn column={column} name="Naam" />,
     accessorFn: (employee) => `${getFullName(employee)}`,
+    cell: (props) => {
+      const freelancer = props.row.original.freelancer
+
+      if (!freelancer) {
+        return <span>{props.getValue<string>()}</span>
+      }
+
+      return (
+        <div className="flex items-center gap-x-2">
+          <span>{props.getValue<string>()}</span>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Asterisk strokeWidth={1.5} />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>ZZP&apos;er</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      )
+    },
   },
   {
     id: "actions",
