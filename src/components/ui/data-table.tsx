@@ -55,7 +55,7 @@ function TableFilter<TData>({ table, column }: TableFilterParams<TData>) {
         onChange={(event) =>
           table.getColumn(column)?.setFilterValue(event.target.value)
         }
-        className="w-full md:max-w-md"
+        className="w-full"
       />
     </div>
   )
