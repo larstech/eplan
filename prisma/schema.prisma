@@ -13,8 +13,9 @@ datasource db {
 model Employee {
   id String @id @default(uuid())
 
-  firstName String
-  lastName  String
+  firstName  String
+  lastName   String
+  freelancer Boolean @default(false)
 
   calendar Calendar[]
 

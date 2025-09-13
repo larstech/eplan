@@ -8,13 +8,13 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import {
   Employee,
   employeeFields,
   EmployeeForm,
   employeeSchema,
 } from "@/features/employee"
+import { boolToStr } from "@/utils/boolean"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
@@ -36,6 +36,7 @@ export default function EmployeeDetailsForm({
     defaultValues: {
       firstName: employee?.firstName ?? "",
       lastName: employee?.lastName ?? "",
+      freelancer: boolToStr(employee?.freelancer ?? false),
     },
   })
 
@@ -52,7 +53,7 @@ export default function EmployeeDetailsForm({
                 <FormItem>
                   <FormLabel className="font-semibold">{data.label}</FormLabel>
                   <FormControl>
-                    <Input required {...field} />
+                    <data.input field={field} />
                   </FormControl>
                 </FormItem>
               )}
