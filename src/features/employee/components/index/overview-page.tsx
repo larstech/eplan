@@ -97,6 +97,11 @@ export default function EmployeeOverviewPage() {
         <Button className="w-full">Medewerker toevoegen</Button>
       </Link>
 
+      <div className="flex items-center rounded-md border-1 text-sm p-1 gap-x-2">
+        <Asterisk strokeWidth={1.5} />
+        <span>is ZZP&apos;er</span>
+      </div>
+
       <DataTable
         data={employees}
         columns={employeeColumns}
