@@ -1,17 +1,17 @@
 import { Employee } from "@/features/employee/types"
 
-export const getFullName = (employee: Employee): string => {
+export function getFullName(employee: Employee): string {
   return `${employee.firstName} ${employee.lastName}`
 }
 
-export const formatFirstName = (firstName: string): string => {
+export function formatFirstName(firstName: string): string {
   const lowerCaseFirstName = firstName.toLowerCase()
   const capitalizedFirstName =
     lowerCaseFirstName.charAt(0).toUpperCase() + lowerCaseFirstName.slice(1)
   return capitalizedFirstName
 }
 
-export const formatLastName = (lastName: string): string => {
+export function formatLastName(lastName: string): string {
   const lowerCaseLastName = lastName.toLowerCase()
   const lastNameParts = lowerCaseLastName.split(" ")
 
@@ -26,7 +26,7 @@ export const formatLastName = (lastName: string): string => {
   return formattedLastNameParts.join(" ")
 }
 
-export const sortEmployeesByName = (employees: Employee[]) => {
+export function sortEmployeesByName(employees: Employee[]) {
   return employees.sort((a, b) => {
     const firstNameComparison = a.firstName.localeCompare(b.firstName)
 
