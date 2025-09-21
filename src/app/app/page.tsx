@@ -1,11 +1,5 @@
-import { HardHat, Wrench } from "lucide-react"
+import Home from "@/features/app/home"
 
 export default function Page() {
-  return (
-    <main className="container mx-auto flex p-2">
-      <p className="pr-2">Er wordt momenteel aan deze applicatie gewerkt...</p>
-      <HardHat />
-      <Wrench />
-    </main>
-  )
+  return <Home />
 }
