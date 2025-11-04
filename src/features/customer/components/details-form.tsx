@@ -83,7 +83,7 @@ const formFields: { items: FormInput[] }[] = [
     items: [
       {
         name: "distanceInKm",
-        label: "Afstand (hele kilometers)",
+        label: "Afstand (enkele reis; hele kilometers)",
         type: "number",
       },
       {
