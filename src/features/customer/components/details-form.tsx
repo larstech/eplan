@@ -88,17 +88,17 @@ const formFields: { items: FormInput[] }[] = [
       },
       {
         name: "travelTimeMinutes",
-        label: "Reistijd (minuten)",
+        label: "Reistijd (enkele reis; in minuten)",
         type: "number",
       },
       {
         name: "breakTimeMinutes",
-        label: "Pauzetijd (minuten)",
+        label: "Pauzetijd (enkele reis; in minuten)",
         type: "number",
       },
       {
         name: "notes",
-        label: "Opmerkingen",
+        label: "Opmerkingen (optioneel)",
       },
     ],
   },
