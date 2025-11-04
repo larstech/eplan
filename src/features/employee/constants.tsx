@@ -40,7 +40,7 @@ export const employeeFields: EmployeeField[] = [
 ]
 
 export const employeeSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
+  firstName: z.string().min(3, { error: "Gebruik minimaal 3 tekens" }),
+  lastName: z.string().min(3, { error: "Gebruik minimaal 3 tekens" }),
   freelancer: z.string(),
 })
