@@ -75,7 +75,7 @@ model CustomerContact {
 model Job {
   id String @id @default(uuid())
 
-  orderId     Int
+  orderId     Int @unique
   title       String
   description String
 
