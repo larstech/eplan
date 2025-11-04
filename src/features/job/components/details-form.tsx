@@ -89,8 +89,8 @@ const formFields: FormInput[] = [
 export const jobDetailsFormSchema = z.object({
   orderId: z.string(),
   customerId: z.string(),
-  title: z.string(),
-  description: z.string(),
+  title: z.string().min(3, { error: "Gebruik minimaal 3 tekens" }),
+  description: z.string().min(3, { error: "Gebruik minimaal 3 tekens" }),
 })
 
 type JobDetailsForm = {
