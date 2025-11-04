@@ -22,12 +22,20 @@ export default function JobCreatePage() {
       return
     }
 
-    const createdJob = await createJob({
-      orderId: Number(orderId),
-      customer: customer,
-      title: title,
-      description: description,
-    })
+    let createdJob;
+    try {
+      createdJob = await createJob({
+        orderId: Number(orderId),
+        customer: customer,
+        title: title,
+        description: description,
+      })
+    } catch(err) {
+      toast("Fout bij het maken van een order", {
+        description: "Er is een fout opgetreden bij het maken van een order. Controleer of het order(nummer) al niet bestaat",
+      })
+      return
+    }
 
     toast("Werkzaamheid aangemaakt", {
       description: `Ordernummer: ${createdJob.orderId} - ${createdJob.title}`,
