@@ -33,6 +33,8 @@ import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { useForm, ControllerRenderProps, FieldPath } from "react-hook-form"
 import z from "zod"
+import { Job } from "@/features/job/types"
+import { getJobByOrderId } from "@/features/job/services/job"
 
 const schema = z.object({
   orderId: z.string().min(1, "Ordernummer is verplicht"),
@@ -168,6 +170,13 @@ export default function CalendarCreatePage() {
   const [employees, setEmployees] = useState<Employee[]>([])
   const [employeeCount, setEmployeeCount] = useState(1)
   const router = useRouter()
+  // The job that is the result of the order id. Used as a validation mechanism,
+  // to ensure that the order id that is filled in is the correct one.
+  const [job, setJob] = useState<Job | null>();
+  // The buffers stores the text typed in the input field. Used for displaying
+  // the correct state for the fetched job (which could either be something or
+  // null).
+  const [orderIdBuffer, setOrderIdBuffer] = useState<string>("");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -234,7 +243,15 @@ export default function CalendarCreatePage() {
                 <FormItem>
                   <FormLabel className="font-semibold">Ordernummer</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input type="number" {...field} onChange={async (e) => {
+                      field.onChange(e);
+                      setOrderIdBuffer(e.target.value);
+                      if (e.target.value != "") {
+                        setJob(await getJobByOrderId(parseInt(e.target.value)));
+                      } else {
+                        setJob(null);
+                      }
+                    }} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -255,6 +272,22 @@ export default function CalendarCreatePage() {
               />
             </div>
           </div>
+          {
+            job &&
+            <div className="border-1 rounded-md p-2 border-primary">
+              <b>Bedrijfsnaam</b><br />
+              <span>{job.customer.companyName}</span><br /><br/>
+
+              <b>Omschrijving</b><br />
+              <span>{job.description}</span>
+            </div>
+          }
+          {
+            !job && orderIdBuffer != "" &&
+            <div>
+              <span className="text-red-500">Order niet gevonden in het systeem</span>
+            </div>
+          }
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-x-2 gap-y-8">
             {Array.from({ length: employeeCount }).map((_, outerIndex) =>
               formFields.map((fieldConfig) => {
