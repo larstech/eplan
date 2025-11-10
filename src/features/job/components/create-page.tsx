@@ -30,7 +30,7 @@ export default function JobCreatePage() {
         title: title,
         description: description,
       })
-    } catch(err) {
+    } catch {
       toast("Fout bij het maken van een order", {
         description: "Er is een fout opgetreden bij het maken van een order. Controleer of het order(nummer) al niet bestaat",
       })
