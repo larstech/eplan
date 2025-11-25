@@ -1,12 +1,12 @@
 import "dotenv/config"
-import type { PrismaConfig } from "prisma"
+import { defineConfig, env } from "prisma/config"
 
-export default {
+export default defineConfig({
   datasource: {
-    url: process.env.POSTGRES_PRISMA_URL!,
+    url: env("POSTGRES_PRISMA_URL"),
   },
   schema: "prisma/schema.prisma",
   migrations: {
     seed: "tsx prisma/seed.ts",
   },
-} satisfies PrismaConfig
+})
