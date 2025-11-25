@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "../../../components/ui/button"
-import { Calendar } from "../../../components/ui/calendar"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import {
   Form,
   FormControl,
@@ -9,23 +9,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form"
-import { Input } from "../../../components/ui/input"
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../../components/ui/popover"
+} from "@/components/ui/popover"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../components/ui/select"
+} from "@/components/ui/select"
 import { createCalendarFromBulk } from "../services/calendar"
 import { Employee } from "@/features/employee"
-import { getEmployees } from "@/features/employee/services"
+import { getJobByOrderId } from "@/features/job/services/job"
+import { Job } from "@/features/job/types"
+import { createClient } from "@/lib/supabase/client"
 import { sortEmployeesByName } from "@/utils/employee"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ChevronDownIcon } from "lucide-react"
@@ -33,8 +35,6 @@ import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { useForm, ControllerRenderProps, FieldPath } from "react-hook-form"
 import z from "zod"
-import { Job } from "@/features/job/types"
-import { getJobByOrderId } from "@/features/job/services/job"
 
 const schema = z.object({
   orderId: z.string().min(1, "Ordernummer is verplicht"),
@@ -172,11 +172,11 @@ export default function CalendarCreatePage() {
   const router = useRouter()
   // The job that is the result of the order id. Used as a validation mechanism,
   // to ensure that the order id that is filled in is the correct one.
-  const [job, setJob] = useState<Job | null>();
+  const [job, setJob] = useState<Job | null>()
   // The buffers stores the text typed in the input field. Used for displaying
   // the correct state for the fetched job (which could either be something or
   // null).
-  const [orderIdBuffer, setOrderIdBuffer] = useState<string>("");
+  const [orderIdBuffer, setOrderIdBuffer] = useState<string>("")
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -195,7 +195,11 @@ export default function CalendarCreatePage() {
     let mounted = true
     const fetchData = async () => {
       try {
-        const data = await getEmployees()
+        const supabase = createClient()
+        const { data, error } = await supabase.from("Employee").select("*")
+        if (error) {
+          return
+        }
         const sortedData = sortEmployeesByName(data)
         if (mounted) setEmployees(sortedData)
       } catch (err) {
@@ -243,15 +247,21 @@ export default function CalendarCreatePage() {
                 <FormItem>
                   <FormLabel className="font-semibold">Ordernummer</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} onChange={async (e) => {
-                      field.onChange(e);
-                      setOrderIdBuffer(e.target.value);
-                      if (e.target.value != "") {
-                        setJob(await getJobByOrderId(parseInt(e.target.value)));
-                      } else {
-                        setJob(null);
-                      }
-                    }} />
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={async (e) => {
+                        field.onChange(e)
+                        setOrderIdBuffer(e.target.value)
+                        if (e.target.value != "") {
+                          setJob(
+                            await getJobByOrderId(parseInt(e.target.value)),
+                          )
+                        } else {
+                          setJob(null)
+                        }
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -272,22 +282,26 @@ export default function CalendarCreatePage() {
               />
             </div>
           </div>
-          {
-            job &&
+          {job && (
             <div className="border-1 rounded-md p-2 border-primary">
-              <b>Bedrijfsnaam</b><br />
-              <span>{job.customer.companyName}</span><br /><br/>
+              <b>Bedrijfsnaam</b>
+              <br />
+              <span>{job.customer.companyName}</span>
+              <br />
+              <br />
 
-              <b>Omschrijving</b><br />
+              <b>Omschrijving</b>
+              <br />
               <span>{job.description}</span>
             </div>
-          }
-          {
-            !job && orderIdBuffer != "" &&
+          )}
+          {!job && orderIdBuffer != "" && (
             <div>
-              <span className="text-red-500">Order niet gevonden in het systeem</span>
+              <span className="text-red-500">
+                Order niet gevonden in het systeem
+              </span>
             </div>
-          }
+          )}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-x-2 gap-y-8">
             {Array.from({ length: employeeCount }).map((_, outerIndex) =>
               formFields.map((fieldConfig) => {

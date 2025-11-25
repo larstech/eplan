@@ -1,14 +1,14 @@
 "use client"
 
-import { Badge } from "../../../components/ui/badge"
-import { Button } from "../../../components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../../components/ui/dialog"
+} from "@/components/ui/dialog"
 import {
   Table,
   TableBody,
@@ -16,12 +16,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../components/ui/table"
+} from "@/components/ui/table"
 import { deleteCalendar, getAllCalendars } from "../services/calendar"
 import { Calendar } from "../types"
 import { Employee } from "@/features/employee"
-import { getEmployees } from "@/features/employee/services"
 import { date } from "@/lib/datetime"
+import { createClient } from "@/lib/supabase/client"
 import { exportCalendarToJpeg } from "@/utils/calendar"
 import { nextWeek, previousWeek } from "@/utils/datetime"
 import { sortEmployeesByName } from "@/utils/employee"
@@ -148,8 +148,12 @@ export default function CalendarOverviewPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const employees = await getEmployees()
-      const sortedData = sortEmployeesByName(employees)
+      const supabase = createClient()
+      const { data, error } = await supabase.from("Employee").select("*")
+      if (error) {
+        return
+      }
+      const sortedData = sortEmployeesByName(data)
       setEmployees(sortedData)
 
       const calendars = await getAllCalendars()

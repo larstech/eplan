@@ -13,7 +13,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Employee, getEmployees } from "@/features/employee"
+import { Employee } from "@/features/employee"
+import { createClient } from "@/lib/supabase/client"
 import "@/utils/array"
 import { getFullName } from "@/utils/employee"
 import { ColumnDef } from "@tanstack/react-table"
@@ -83,12 +84,12 @@ export default function EmployeeOverviewPage() {
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const employees = await getEmployees()
-
-      setEmployees(employees)
+      const supabase = createClient()
+      const { data } = await supabase.from("Employee").select("*")
+      return data || []
     }
 
-    fetchEmployees()
+    fetchEmployees().then((employees) => setEmployees(employees))
   }, [])
 
   return (
