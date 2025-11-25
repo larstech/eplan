@@ -1,12 +1,5 @@
 "use client"
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Calendar } from "../types"
 import { Button } from "@/components/ui/button"
 import {
@@ -18,6 +11,13 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Employee } from "@/features/employee"
 import { createClient } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"

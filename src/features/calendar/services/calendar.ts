@@ -1,12 +1,11 @@
-"use server";
+"use server"
 
-import { Calendar, CalendarBulk } from "../types";
-import { getJobByOrderId } from "@/features/job/services/job";
-import { prisma } from "@/lib/prisma";
-import { createClient } from "@/lib/supabase/client";
-import { DateTime } from "luxon";
-import { toast } from "sonner";
-
+import { Calendar, CalendarBulk } from "../types"
+import { getJobByOrderId } from "@/features/job/services/job"
+import { prisma } from "@/lib/prisma"
+import { createClient } from "@/lib/supabase/client"
+import { DateTime } from "luxon"
+import { toast } from "sonner"
 
 export const createCalendarFromBulk = async (calendarBulk: CalendarBulk) => {
   calendarBulk.employees.forEach(async (employee) => {
