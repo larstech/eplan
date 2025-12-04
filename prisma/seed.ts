@@ -15,7 +15,7 @@ import { DateTime, Interval } from "luxon"
 import { v4 as uuidv4 } from "uuid"
 import { PrismaPg } from "@prisma/adapter-pg"
 
-const adapter = new PrismaPg({ connectionString: process.env.POSTGRES_PRISMA_URL! })
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaClient({ adapter })
 
 const EMPLOYEE_COUNT = 25
