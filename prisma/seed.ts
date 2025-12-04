@@ -13,8 +13,10 @@ import { PrismaClient } from "@/generated/prisma/client"
 import { fakerNL as faker } from "@faker-js/faker"
 import { DateTime, Interval } from "luxon"
 import { v4 as uuidv4 } from "uuid"
+import { PrismaPg } from "@prisma/adapter-pg"
 
-const prisma = new PrismaClient()
+const adapter = new PrismaPg({ connectionString: process.env.POSTGRES_PRISMA_URL! })
+const prisma = new PrismaClient({ adapter })
 
 const EMPLOYEE_COUNT = 25
 const CUSTOMER_COUNT = 300
