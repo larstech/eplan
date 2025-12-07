@@ -19,7 +19,7 @@ export const employeeFields: EmployeeField[] = [
     name: "freelancer",
     label: "ZZP'er",
     input: ({ field }) => {
-      const selected = strToBool(field.value)
+      const selected = strToBool(field.value ?? "false")
 
       return (
         <div className="flex items-center gap-1">
