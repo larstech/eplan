@@ -1,22 +1,27 @@
 "use server"
 
 import { Calendar, CalendarBulk } from "../types"
-import { getEmployeeById } from "@/features/employee/services"
 import { getJobByOrderId } from "@/features/job/services/job"
 import { prisma } from "@/lib/prisma"
+import { createClient } from "@/lib/supabase/client"
 import { DateTime } from "luxon"
 import { toast } from "sonner"
 
 export const createCalendarFromBulk = async (calendarBulk: CalendarBulk) => {
   calendarBulk.employees.forEach(async (employee) => {
     const fetchedJob = await getJobByOrderId(Number(calendarBulk.orderId))
-    const fetchedEmployee = await getEmployeeById(employee.employeeId)
+    const supabase = createClient()
+    const { data } = await supabase
+      .from("Employee")
+      .select("*")
+      .eq("id", employee.employeeId)
+      .single()
 
     if (!fetchedJob) {
       toast(`Ordernummer '${calendarBulk.orderId}' niet gevonden.`)
       return
     }
-    if (!fetchedEmployee) {
+    if (!data) {
       toast("Medewerker(s) niet gevonden.")
       return
     }
@@ -24,7 +29,7 @@ export const createCalendarFromBulk = async (calendarBulk: CalendarBulk) => {
     employee.dates.forEach(async (date) => {
       await createCalendar({
         job: fetchedJob,
-        employee: fetchedEmployee,
+        employee: data,
         date: DateTime.fromISO(date).toJSDate(),
         startTime: DateTime.fromISO(employee.startTime).toJSDate(),
         endTime: DateTime.fromISO(employee.endTime).toJSDate(),
@@ -34,7 +39,7 @@ export const createCalendarFromBulk = async (calendarBulk: CalendarBulk) => {
 }
 
 export const createCalendar = async (calendar: Calendar) => {
-  const createdCalendar = await prisma.calendar.create({
+  return await prisma.calendar.create({
     data: {
       ...calendar,
       job: { connect: { id: calendar.job.id } },
@@ -54,11 +59,10 @@ export const createCalendar = async (calendar: Calendar) => {
       employee: true,
     },
   })
-  return createdCalendar
 }
 
 export const getAllCalendars = async () => {
-  const Calendars = await prisma.calendar.findMany({
+  return await prisma.calendar.findMany({
     include: {
       employee: true,
       job: {
@@ -73,7 +77,6 @@ export const getAllCalendars = async () => {
       },
     },
   })
-  return Calendars
 }
 
 export const deleteCalendar = async (calendar: Calendar) => {

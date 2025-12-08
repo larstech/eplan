@@ -1,12 +1,5 @@
 "use client"
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select"
 import { Calendar } from "../types"
 import { Button } from "@/components/ui/button"
 import {
@@ -18,8 +11,15 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Employee } from "@/features/employee"
-import { getEmployees } from "@/features/employee/services"
+import { createClient } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DateTime } from "luxon"
 import Link from "next/link"
@@ -114,7 +114,11 @@ export default function CalendarDetailsForm({
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getEmployees()
+      const supabase = createClient()
+      const { data, error } = await supabase.from("Employee").select("*")
+      if (error) {
+        return
+      }
       setEmployees(data)
     }
 

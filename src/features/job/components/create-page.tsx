@@ -22,7 +22,7 @@ export default function JobCreatePage() {
       return
     }
 
-    let createdJob;
+    let createdJob
     try {
       createdJob = await createJob({
         orderId: Number(orderId),
@@ -32,7 +32,8 @@ export default function JobCreatePage() {
       })
     } catch {
       toast("Fout bij het maken van een order", {
-        description: "Er is een fout opgetreden bij het maken van een order. Controleer of het order(nummer) al niet bestaat",
+        description:
+          "Er is een fout opgetreden bij het maken van een order. Controleer of het order(nummer) al niet bestaat",
       })
       return
     }
