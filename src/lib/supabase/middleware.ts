@@ -39,5 +39,14 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  if (
+    request.nextUrl.pathname.startsWith("/app/admin") &&
+    !user?.role?.startsWith("admin")
+  ) {
+    const url = request.nextUrl.clone()
+    url.pathname = "/app/calendar"
+    return NextResponse.redirect(url)
+  }
+
   return supabaseResponse
 }

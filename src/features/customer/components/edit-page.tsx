@@ -86,7 +86,7 @@ export default function CustomerEditPage({ customerId }: { customerId: Id }) {
       description: createdCustomer.companyName,
     })
 
-    router.push("/app/customer")
+    router.push("/app/admin/customer")
   }
 
   return (

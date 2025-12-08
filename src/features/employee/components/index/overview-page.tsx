@@ -71,7 +71,7 @@ function EmployeeRowActions({ employee }: EmployeeRowActionsParams) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <Link href={`/app/employee/edit/${employee.id}`}>
+        <Link href={`/app/admin/employee/edit/${employee.id}`}>
           <DropdownMenuItem>Wijzig</DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
@@ -94,7 +94,7 @@ export default function EmployeeOverviewPage() {
 
   return (
     <div className="flex flex-col gap-y-2">
-      <Link href="/app/employee/create">
+      <Link href="/app/admin/employee/create">
         <Button className="w-full">Medewerker toevoegen</Button>
       </Link>
 

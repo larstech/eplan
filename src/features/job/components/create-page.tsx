@@ -42,7 +42,7 @@ export default function JobCreatePage() {
       description: `Ordernummer: ${createdJob.orderId} - ${createdJob.title}`,
     })
 
-    router.push("/app/job")
+    router.push("/app/admin/job")
   }
 
   return (

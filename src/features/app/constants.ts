@@ -9,15 +9,15 @@ export const homeNavigationLinks: NavigationLink[] = [
     name: "Planning bekijken",
   },
   {
-    href: "/app/job/create",
+    href: "/app/admin/job/create",
     name: "Nieuwe werkzaamheid registreren",
   },
   {
-    href: "/app/customer/create",
+    href: "/app/admin/customer/create",
     name: "Nieuwe klant aanmaken",
   },
   {
-    href: "/app/employee/create",
+    href: "/app/admin/employee/create",
     name: "Nieuwe medewerker aanmaken",
   },
 ]

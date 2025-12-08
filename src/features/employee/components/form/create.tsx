@@ -35,7 +35,7 @@ export default function EmployeeCreatePage() {
 
       // Do not push the create‑form URL to the browser's history stack.
       // Editing should be done via the table's row action instead.
-      router.replace("/app/employee")
+      router.replace("/app/admin/employee")
     } else {
       toast("Medewerker kan niet worden aangemaakt", {
         description: "Er is een onbekende fout opgetreden",

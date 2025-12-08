@@ -152,7 +152,7 @@ export default function JobDetailsForm({
             <Button loading={form.formState.isSubmitting} className="w-full">
               {submitLabel}
             </Button>
-            <Link href="/app/job">
+            <Link href="/app/admin/job">
               <Button className="w-full" variant="outline">
                 Annuleren
               </Button>
