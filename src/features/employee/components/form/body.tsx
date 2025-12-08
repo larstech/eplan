@@ -63,7 +63,7 @@ export default function EmployeeDetailsForm({
             <Button loading={form.formState.isSubmitting} className="w-full">
               {submitLabel}
             </Button>
-            <Link href="/app/employee">
+            <Link href="/app/admin/employee">
               <Button className="w-full" variant="outline">
                 Annuleren
               </Button>

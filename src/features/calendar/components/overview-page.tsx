@@ -141,6 +141,7 @@ export default function CalendarOverviewPage() {
   const datesInweek = Interval.after(date.startOf("week"), { week: 1 })
 
   const tableRef = useRef<HTMLTableElement | null>(null)
+  const [userRole, setUserRole] = useState<string>("")
 
   const handleExport = () => {
     exportCalendarToJpeg(date, tableRef)
@@ -149,6 +150,7 @@ export default function CalendarOverviewPage() {
   useEffect(() => {
     const fetchData = async () => {
       const supabase = createClient()
+      setUserRole((await supabase.auth.getUser()).data.user?.role ?? "")
       const { data, error } = await supabase.from("Employee").select("*")
       if (error) {
         return
@@ -165,9 +167,11 @@ export default function CalendarOverviewPage() {
 
   return (
     <div className="flex flex-col gap-y-2">
-      <Link href="/app/calendar/create">
-        <Button className="w-full">Werkzaamheid inplannen</Button>
-      </Link>
+      {userRole === "admin" && (
+        <Link href="/app/admin/calendar/create">
+          <Button className="w-full">Werkzaamheid inplannen</Button>
+        </Link>
+      )}
 
       <div className="flex justify-between">
         <div className="flex flex-col lg:flex-row gap-x-1 items-start lg:items-center">

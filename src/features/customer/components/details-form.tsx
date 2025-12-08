@@ -185,7 +185,7 @@ export default function CustomerDetailsForm({
             <Button loading={form.formState.isSubmitting} className="w-full">
               {submitLabel}
             </Button>
-            <Link href="/app/customer">
+            <Link href="/app/admin/customer">
               <Button className="w-full" variant="outline">
                 Annuleren
               </Button>

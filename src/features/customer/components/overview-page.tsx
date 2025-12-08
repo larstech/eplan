@@ -26,7 +26,7 @@ const RowActions = ({ customer }: { customer: Customer }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <Link href={`/app/customer/edit/${customer.id}`}>
+        <Link href={`/app/admin/customer/edit/${customer.id}`}>
           <DropdownMenuItem>Wijzig</DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
@@ -100,7 +100,7 @@ export default function CustomerOverviewPage() {
 
   return (
     <div className="flex flex-col gap-y-2">
-      <Link href="/app/customer/create">
+      <Link href="/app/admin/customer/create">
         <Button className="w-full">Klant toevoegen</Button>
       </Link>
 

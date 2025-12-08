@@ -64,7 +64,7 @@ export default function JobEditPage({ jobId }: { jobId: Id }) {
       description: `Ordernummer: ${createdJob.orderId} - ${createdJob.title}`,
     })
 
-    router.push("/app/job")
+    router.push("/app/admin/job")
   }
 
   return (

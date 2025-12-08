@@ -70,7 +70,7 @@ const RowActions = ({ job }: { job: Job }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <Link href={`/app/job/edit/${job.id}`}>
+        <Link href={`/app/admin/job/edit/${job.id}`}>
           <DropdownMenuItem>Wijzig</DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
@@ -92,7 +92,7 @@ export default function JobOverviewPage() {
 
   return (
     <div className="flex flex-col gap-y-2">
-      <Link href="/app/job/create">
+      <Link href="/app/admin/job/create">
         <Button className="w-full">Werkzaamheid toevoegen</Button>
       </Link>
 

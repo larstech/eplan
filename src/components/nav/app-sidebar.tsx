@@ -39,17 +39,17 @@ const data = [
     items: [
       {
         title: "Werkzaamheden",
-        url: "/app/job",
+        url: "/app/admin/job",
         icon: ListTodo,
       },
       {
         title: "Klanten",
-        url: "/app/customer",
+        url: "/app/admin/customer",
         icon: Building2,
       },
       {
         title: "Medewerkers",
-        url: "/app/employee",
+        url: "/app/admin/employee",
         icon: Users,
       },
     ],

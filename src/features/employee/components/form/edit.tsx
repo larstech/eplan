@@ -72,7 +72,7 @@ export default function EmployeeEditPage({ id }: { id: Id }) {
 
       // Do not push the create‑form URL to the browser's history stack.
       // Editing should be done via the table's row action instead.
-      router.push("/app/employee")
+      router.push("/app/admin/employee")
     } else {
       toast("Medewerker kan niet worden gewijzigd", {
         description: "Er is een onbekende fout opgetreden",
