@@ -20,6 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Employee } from "@/features/employee"
+import { getEmployees } from "@/features/employee/services"
 import { date } from "@/lib/datetime"
 import { createClient } from "@/lib/supabase/client"
 import { exportCalendarToJpeg } from "@/utils/calendar"
@@ -151,11 +152,9 @@ export default function CalendarOverviewPage() {
     const fetchData = async () => {
       const supabase = createClient()
       setUserRole((await supabase.auth.getUser()).data.user?.role ?? "")
-      const { data, error } = await supabase.from("Employee").select("*")
-      if (error) {
-        return
-      }
-      const sortedData = sortEmployeesByName(data)
+
+      const employees = await getEmployees()
+      const sortedData = sortEmployeesByName(employees)
       setEmployees(sortedData)
 
       const calendars = await getAllCalendars()

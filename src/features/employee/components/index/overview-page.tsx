@@ -13,8 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Employee } from "@/features/employee"
-import { createClient } from "@/lib/supabase/client"
+import { Employee, getEmployees } from "@/features/employee"
 import "@/utils/array"
 import { getFullName } from "@/utils/employee"
 import { ColumnDef } from "@tanstack/react-table"
@@ -84,12 +83,12 @@ export default function EmployeeOverviewPage() {
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const supabase = createClient()
-      const { data } = await supabase.from("Employee").select("*")
-      return data || []
+      const employees = await getEmployees()
+
+      setEmployees(employees)
     }
 
-    fetchEmployees().then((employees) => setEmployees(employees))
+    fetchEmployees()
   }, [])
 
   return (
@@ -98,7 +97,7 @@ export default function EmployeeOverviewPage() {
         <Button className="w-full">Medewerker toevoegen</Button>
       </Link>
 
-      <div className="flex items-center rounded-md border-1 text-sm p-1 gap-x-2">
+      <div className="flex items-center rounded-md border text-sm p-1 gap-x-2">
         <Asterisk strokeWidth={1.5} />
         <span>is ZZP&apos;er</span>
       </div>

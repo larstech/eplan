@@ -232,7 +232,7 @@ export default function CalendarCreatePage() {
 
   const onSubmit = async (values: FormValues) => {
     await createCalendarFromBulk(values)
-    router.push("/app/calendar")
+    router.push("/app/admin/calendar")
   }
 
   return (
@@ -283,7 +283,7 @@ export default function CalendarCreatePage() {
             </div>
           </div>
           {job && (
-            <div className="border-1 rounded-md p-2 border-primary">
+            <div className="border rounded-md p-2 border-primary">
               <b>Bedrijfsnaam</b>
               <br />
               <span>{job.customer.companyName}</span>

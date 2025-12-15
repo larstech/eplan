@@ -164,7 +164,7 @@ export default function CalendarDetailsForm({
             >
               {submitLabel}
             </Button>
-            <Link href="/app/calendar">
+            <Link href="/app/admin/calendar">
               <Button className="w-full" variant="outline">
                 Annuleren
               </Button>

@@ -3,8 +3,12 @@
 import EmployeeDetailsForm from "./body"
 import NotFound from "@/app/not-found"
 import LoadingPage from "@/components/skeleton/page"
-import { Employee, employeeSchema } from "@/features/employee"
-import { createClient } from "@/lib/supabase/client"
+import {
+  editEmployee,
+  Employee,
+  employeeSchema,
+  getEmployeeById,
+} from "@/features/employee"
 import { Id } from "@/types"
 import { strToBool } from "@/utils/boolean"
 import { getFullName } from "@/utils/employee"
@@ -25,20 +29,12 @@ export default function EmployeeEditPage({ id }: { id: Id }) {
 
   useEffect(() => {
     const fetchEmployee = async () => {
-      const supabase = createClient()
-      const { data } = await supabase
-        .from("Employee")
-        .select("*")
-        .eq("id", id)
-        .single()
-      return data
+      const employee = await getEmployeeById(id)
+
+      setState({ employee: employee, loading: false })
     }
 
-    fetchEmployee().then((employee) => {
-      if (employee) {
-        setState({ employee: employee, loading: false })
-      }
-    })
+    fetchEmployee()
   }, [id])
 
   if (state.loading) {
@@ -53,31 +49,26 @@ export default function EmployeeEditPage({ id }: { id: Id }) {
 
   const formSubmit = async (values: z.infer<typeof employeeSchema>) => {
     const { firstName, lastName, freelancer } = values
-    const supabase = createClient()
-    const { data } = await supabase
-      .from("Employee")
-      .update({
-        firstName: firstName,
-        lastName: lastName,
-        freelancer: strToBool(freelancer),
-      })
-      .eq("id", employee.id!)
-      .select("*")
-      .single()
 
-    if (data) {
-      toast("Medewerker gegevens gewijzigd", {
-        description: `'${getFullName(employee)}' naar '${getFullName(data)}'`,
-      })
+    await editEmployee(employee.id!, {
+      firstName: firstName,
+      lastName: lastName,
+      freelancer: strToBool(freelancer),
+    })
+      .then((editedEmployee) => {
+        toast("Medewerker gegevens gewijzigd", {
+          description: `'${getFullName(employee)}' naar '${getFullName(editedEmployee)}'`,
+        })
 
-      // Do not push the create‑form URL to the browser's history stack.
-      // Editing should be done via the table's row action instead.
-      router.push("/app/admin/employee")
-    } else {
-      toast("Medewerker kan niet worden gewijzigd", {
-        description: "Er is een onbekende fout opgetreden",
+        // Do not push the create‑form URL to the browser's history stack.
+        // Editing should be done via the table's row action instead.
+        router.push("/app/admin/employee")
       })
-    }
+      .catch(() => {
+        toast("Medewerker kan niet worden gewijzigd", {
+          description: "Er is een onbekende fout opgetreden",
+        })
+      })
   }
 
   return (

@@ -11,9 +11,9 @@ import type { Employee } from "@/features/employee"
 import type { Job } from "@/features/job/types/job"
 import { PrismaClient } from "@/generated/prisma/client"
 import { fakerNL as faker } from "@faker-js/faker"
+import { PrismaPg } from "@prisma/adapter-pg"
 import { DateTime, Interval } from "luxon"
 import { v4 as uuidv4 } from "uuid"
-import { PrismaPg } from "@prisma/adapter-pg"
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaClient({ adapter })
