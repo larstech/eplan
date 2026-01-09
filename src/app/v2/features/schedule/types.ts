@@ -1,9 +1,4 @@
-import {
-  min_year,
-  max_year,
-  min_week,
-  max_week,
-} from "@/app/v2/features/schedule"
+import { min_year, max_year, min_week } from "@/app/v2/features/schedule"
 import { weeksInYear } from "@/app/v2/helpers/date"
 
 export interface ScheduleWeekDTO {
