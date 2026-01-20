@@ -11,7 +11,7 @@ export default function AppNavbar() {
       <Container fluid>
         <Navbar.Brand>
           <Image
-            src="/yourtech-logo-full.png"
+            src="/yourtech-logo.svg"
             alt="Yourtech logo"
             height={30}
             width={107}
