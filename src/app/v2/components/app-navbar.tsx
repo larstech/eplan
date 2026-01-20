@@ -1,5 +1,6 @@
 "use client"
 
+import ThemeSwitcher from "@/app/v2/components/theme-switcher"
 import { route, routes } from "@/app/v2/helpers/routes"
 import Image from "next/image"
 import Link from "next/link"
@@ -26,6 +27,10 @@ export default function AppNavbar() {
               Agenda
             </Nav.Link>
           </Nav>
+
+          <Navbar.Text>
+            <ThemeSwitcher />
+          </Navbar.Text>
         </Navbar.Collapse>
       </Container>
     </Navbar>
