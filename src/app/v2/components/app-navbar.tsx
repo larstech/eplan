@@ -1,6 +1,6 @@
 "use client"
 
-import { route, routes } from "@/app/v2/helpers/route"
+import { route, routes } from "@/app/v2/helpers/routes"
 import Image from "next/image"
 import Link from "next/link"
 import { Container, Nav, Navbar } from "react-bootstrap"
