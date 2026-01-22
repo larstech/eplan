@@ -26,6 +26,9 @@ export default function AppNavbar() {
             <Nav.Link as={Link} href={route(routes.schedule)}>
               Agenda
             </Nav.Link>
+            <Nav.Link as={Link} href={route(routes.employees)}>
+              Medewerkers
+            </Nav.Link>
           </Nav>
 
           <Navbar.Text>
