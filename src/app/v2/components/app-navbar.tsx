@@ -29,6 +29,9 @@ export default function AppNavbar() {
             <Nav.Link as={Link} href={route(routes.employees)}>
               Medewerkers
             </Nav.Link>
+            <Nav.Link as={Link} href={route(routes.organizations)}>
+              Organisaties
+            </Nav.Link>
           </Nav>
 
           <Navbar.Text>
