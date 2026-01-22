@@ -32,6 +32,9 @@ export default function AppNavbar() {
             <Nav.Link as={Link} href={route(routes.organizations)}>
               Organisaties
             </Nav.Link>
+            <Nav.Link as={Link} href={route(routes.contacts)}>
+              Contactpersonen
+            </Nav.Link>
           </Nav>
 
           <Navbar.Text>

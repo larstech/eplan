@@ -1,5 +1,6 @@
 export const routes = {
   base: "/v2/app",
+  contacts: "/contacts",
   schedule: "/schedule",
   employees: "/employees",
   organizations: "/organizations",
