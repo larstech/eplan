@@ -161,7 +161,7 @@ export default function EmployeeView({ employeeDTOs }: EmployeeViewProps) {
         a.fullName().localeCompare(b.fullName()),
       ),
     )
-  }, [employeeDTOs])
+  }, [employeeDTOs, searchText])
 
   return (
     <Stack gap={3} className="mt-3">
