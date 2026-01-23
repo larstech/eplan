@@ -104,24 +104,26 @@ function DataTableEntry({ employee }: DataTableEntryProps) {
         )}
 
         {/* Employee actions column */}
-        <td className="d-flex gap-2">
-          {/* Open view to edit employee details */}
-          <Button
-            size="sm"
-            variant="outline-primary"
-            onClick={() => setShowEditView(true)}
-          >
-            <PencilIcon />
-          </Button>
+        <td className="align-top">
+          <div className="d-flex gap-2">
+            {/* Open view to edit employee details */}
+            <Button
+              size="sm"
+              variant="outline-primary"
+              onClick={() => setShowEditView(true)}
+            >
+              <PencilIcon />
+            </Button>
 
-          {/* Open view to delete employee */}
-          <Button
-            size="sm"
-            variant="outline-danger"
-            onClick={() => setShowDeleteView(true)}
-          >
-            <TrashIcon />
-          </Button>
+            {/* Open view to delete employee */}
+            <Button
+              size="sm"
+              variant="outline-danger"
+              onClick={() => setShowDeleteView(true)}
+            >
+              <TrashIcon />
+            </Button>
+          </div>
         </td>
       </tr>
 
