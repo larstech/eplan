@@ -40,12 +40,12 @@ export default function WorkOrderFormView({
           {/* Work order organization details */}
           <Form.Select
             className="mb-3"
-            value={formData.companyId ?? -1}
+            value={formData.organizationId ?? -1}
             onChange={(e) =>
-              updateFormData({ companyId: parseInt(e.target.value) })
+              updateFormData({ organizationId: parseInt(e.target.value) })
             }
           >
-            <option value={-1}>Geen bedrijf</option>
+            <option value={-1}>Geen organisatie</option>
             {organizations
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((organization) => {

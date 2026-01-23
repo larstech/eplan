@@ -1,7 +1,7 @@
 export interface WorkOrderDTO {
   id: number
   pid: string // Pipedrive ID
-  companyId: number | undefined
+  organizationId: number | undefined
   contactId: number | undefined
   title: string
   description: string
@@ -12,7 +12,7 @@ export class WorkOrder {
     return new WorkOrder(
       dto.id,
       dto.pid,
-      dto.companyId,
+      dto.organizationId,
       dto.contactId,
       dto.title,
       dto.description,
@@ -22,7 +22,7 @@ export class WorkOrder {
   constructor(
     public id: number,
     public pid: string,
-    public companyId: number | undefined,
+    public organizationId: number | undefined,
     public contactId: number | undefined,
     public title: string,
     public description: string,

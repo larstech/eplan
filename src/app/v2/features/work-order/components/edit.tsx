@@ -24,7 +24,7 @@ export default function WorkOrderEditView({
 }: WorkOrderEditViewProps) {
   const [formData, setFormData] = useState<WorkOrderFormData>({
     pid: workOrder.pid,
-    companyId: workOrder.companyId,
+    organizationId: workOrder.organizationId,
     contactId: workOrder.contactId,
     title: workOrder.title,
     description: workOrder.description,

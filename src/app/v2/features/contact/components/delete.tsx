@@ -48,7 +48,7 @@ export default function ContactDeleteView({
         </p>
         <ul>
           <li>De contactpersoon wordt direct uit het systeem verwijderd</li>
-          <li>De contactpersoon wordt ontzegd op het bedrijf</li>
+          <li>De contactpersoon wordt ontzegd op de organization</li>
           <li>De contactpersoon wordt ontzegd op zijn/haar taken</li>
         </ul>
         <p>

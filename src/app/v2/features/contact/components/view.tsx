@@ -52,7 +52,7 @@ function DataTableHeader({
               onChange={(e) => setContactSearchText(e.target.value)}
             />
           </InputGroup>
-          <Form.Text muted>Je kan ook zoeken op bedrijfsnaam</Form.Text>
+          <Form.Text muted>Je kan ook zoeken op organisatie</Form.Text>
         </Col>
 
         <Col md="auto">
@@ -91,7 +91,7 @@ function DataTableBody({ contacts, organizations }: DataTableBodyProps) {
       <thead>
         <tr>
           <th>Naam</th>
-          <th>Bedrijf</th>
+          <th>Organization</th>
           <th>Locatie</th>
           <th>Email</th>
           <th>Telefoonnummer</th>

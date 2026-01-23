@@ -4,7 +4,7 @@ import z from "zod"
 const WorkOrderZod = z.object({
   id: z.number(),
   pipedriveId: z.coerce.string().nonempty(),
-  companyId: z.number(),
+  organizationId: z.number(),
   contactId: z.number(),
   title: z.string().nonempty(),
   description: z.string(),

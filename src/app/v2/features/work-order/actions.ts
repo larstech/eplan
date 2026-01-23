@@ -10,7 +10,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 1,
     pid: "101",
-    companyId: 1,
+    organizationId: 1,
     contactId: 1,
     title: "Repareer lijn 1",
     description: "",
@@ -18,7 +18,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 2,
     pid: "102",
-    companyId: 1,
+    organizationId: 1,
     contactId: 2,
     title: "Vervang koelvloeistof",
     description: "",
@@ -26,7 +26,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 3,
     pid: "103",
-    companyId: 1,
+    organizationId: 1,
     contactId: 3,
     title: "Controleer heftruck batterij",
     description: "",
@@ -34,7 +34,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 4,
     pid: "104",
-    companyId: 1,
+    organizationId: 1,
     contactId: 4,
     title: "Reinig opslagruimte",
     description: "",
@@ -42,7 +42,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 5,
     pid: "105",
-    companyId: 1,
+    organizationId: 1,
     contactId: 5,
     title: "Inspecteer verpakking machines",
     description: "",
@@ -50,7 +50,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 6,
     pid: "106",
-    companyId: 2,
+    organizationId: 2,
     contactId: 6,
     title: "Kalibreer weegsystemen",
     description: "",
@@ -58,7 +58,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 7,
     pid: "107",
-    companyId: 2,
+    organizationId: 2,
     contactId: 7,
     title: "Ververs filters koeling",
     description: "",
@@ -66,7 +66,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 8,
     pid: "108",
-    companyId: 2,
+    organizationId: 2,
     contactId: 8,
     title: "Controleer voorraadniveau's",
     description: "",
@@ -74,7 +74,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 9,
     pid: "109",
-    companyId: 2,
+    organizationId: 2,
     contactId: 9,
     title: "Repareer verpakkingslijn",
     description: "",
@@ -82,7 +82,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 10,
     pid: "110",
-    companyId: 3,
+    organizationId: 3,
     contactId: 10,
     title: "Onderhoud transportbanden",
     description: "",
@@ -90,7 +90,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 11,
     pid: "111",
-    companyId: 3,
+    organizationId: 3,
     contactId: 11,
     title: "Vervang storing motor",
     description: "",
@@ -98,7 +98,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 12,
     pid: "112",
-    companyId: 3,
+    organizationId: 3,
     contactId: 12,
     title: "Herstel storing in software",
     description: "",
@@ -106,7 +106,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 13,
     pid: "113",
-    companyId: 4,
+    organizationId: 4,
     contactId: 13,
     title: "Verhuis voorraden naar magazijn",
     description: "",
@@ -114,7 +114,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 14,
     pid: "114",
-    companyId: 4,
+    organizationId: 4,
     contactId: 14,
     title: "Reinig gekoelde opslag",
     description: "",
@@ -122,7 +122,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 15,
     pid: "115",
-    companyId: 4,
+    organizationId: 4,
     contactId: 15,
     title: "Update voorraad systeem",
     description: "",
@@ -130,7 +130,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 16,
     pid: "116",
-    companyId: 5,
+    organizationId: 5,
     contactId: 1,
     title: "Vervang beschadigd rek",
     description: "",
@@ -138,7 +138,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 17,
     pid: "117",
-    companyId: 5,
+    organizationId: 5,
     contactId: 2,
     title: "Inspecteer inpakstations",
     description: "",
@@ -146,7 +146,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 18,
     pid: "118",
-    companyId: 6,
+    organizationId: 6,
     contactId: 3,
     title: "Test laad- en lospoorten",
     description: "",
@@ -154,7 +154,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 19,
     pid: "119",
-    companyId: 6,
+    organizationId: 6,
     contactId: 4,
     title: "Repareer verpakkingsmachine",
     description: "",
@@ -162,7 +162,7 @@ const workOrders: WorkOrderDTO[] = [
   {
     id: 20,
     pid: "120",
-    companyId: 7,
+    organizationId: 7,
     contactId: 5,
     title: "Update etiket software",
     description: "",

@@ -60,7 +60,7 @@ function DataTableHeader({
             />
           </InputGroup>
           <Form.Text muted>
-            Je kan ook zoeken op bedrijfsnaam en contactpersoon
+            Je kan ook zoeken op organisatie en contactpersoon
           </Form.Text>
         </Col>
 
@@ -95,7 +95,7 @@ function DataTableBody({
   >()
   workOrders.forEach((workOrder) => {
     const organization = organizations.find(
-      (organization) => organization.id === workOrder.companyId,
+      (organization) => organization.id === workOrder.organizationId,
     )
     workOrderOrganizationMapping.set(workOrder, organization)
   })
@@ -119,7 +119,7 @@ function DataTableBody({
             <th>PID</th>
           </OverlayTrigger>
           <th>Titel</th>
-          <th>Bedrijf</th>
+          <th>Organisatie</th>
           <th>Contactpersoon</th>
           {/* The description should contain the most details */}
           <th className="w-50">Omschrijving</th>
@@ -249,7 +249,7 @@ export default function WorkOrderView({
       // Filter on organization name
       organizations.some(
         (organization) =>
-          organization.id === workOrder.companyId &&
+          organization.id === workOrder.organizationId &&
           organization.name
             .toLowerCase()
             .includes(workOrderSearchText.toLowerCase()),

@@ -16,7 +16,7 @@ type WorkOrderCreateViewProps = {
 
 const initialFormData: WorkOrderFormData = {
   pid: "",
-  companyId: -1,
+  organizationId: -1,
   contactId: -1,
   title: "",
   description: "",
