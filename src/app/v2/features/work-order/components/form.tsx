@@ -41,9 +41,13 @@ export default function WorkOrderFormView({
           <Form.Select
             className="mb-3"
             value={formData.organizationId ?? -1}
-            onChange={(e) =>
-              updateFormData({ organizationId: parseInt(e.target.value) })
-            }
+            onChange={(e) => {
+              updateFormData({
+                organizationId: parseInt(e.target.value),
+                // Reset the contact details when the organization changes to prevent floating contact details
+                contactId: -1,
+              })
+            }}
           >
             <option value={-1}>Geen organisatie</option>
             {organizations
@@ -57,23 +61,37 @@ export default function WorkOrderFormView({
               })}
           </Form.Select>
 
-          <Form.Select
-            value={formData.contactId ?? -1}
-            onChange={(e) =>
-              updateFormData({ contactId: parseInt(e.target.value) })
-            }
-          >
-            <option value={-1}>Geen contactpersoon</option>
-            {contacts
-              .sort((a, b) => a.fullName().localeCompare(b.fullName()))
-              .map((contact) => {
-                return (
-                  <option key={contact.id} value={contact.id}>
-                    {contact.fullName()}
-                  </option>
-                )
-              })}
-          </Form.Select>
+          {/* Only show the contact details when an organization is selected */}
+          {formData.organizationId !== -1 && (
+            <>
+              <Form.Select
+                value={formData.contactId ?? -1}
+                onChange={(e) =>
+                  updateFormData({ contactId: parseInt(e.target.value) })
+                }
+              >
+                <option value={-1}>Geen contactpersoon</option>
+                {contacts
+                  // Only show contacts that work at the selected organization
+                  .filter(
+                    (contact) => contact.companyId === formData.organizationId,
+                  )
+                  .sort((a, b) => a.fullName().localeCompare(b.fullName()))
+                  .map((contact) => {
+                    return (
+                      <option key={contact.id} value={contact.id}>
+                        {contact.fullName()}
+                      </option>
+                    )
+                  })}
+              </Form.Select>
+              {formData.contactId !== -1 && (
+                <Form.Text muted>
+                  {contacts.find((c) => c.id === formData.contactId)?.address()}
+                </Form.Text>
+              )}
+            </>
+          )}
 
           <hr />
 
