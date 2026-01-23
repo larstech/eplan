@@ -57,7 +57,7 @@ export default function WorkOrderCreateView({
     <WorkOrderFormView
       contacts={contacts}
       formData={formData}
-      formTitle="Werkorder bewerken"
+      formTitle="Werkorder toevoegen"
       isSubmitting={isSubmitting}
       organizations={organizations}
       updateFormData={updateFormData}
