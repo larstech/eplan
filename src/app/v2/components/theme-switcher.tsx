@@ -14,9 +14,9 @@ export default function ThemeSwitcher() {
   return (
     <div className="d-flex justify-content-center">
       {theme === "light" ? (
-        <SunIcon onClick={toggleTheme} />
+        <SunIcon onClick={toggleTheme} style={{ cursor: "pointer" }} />
       ) : (
-        <MoonIcon onClick={toggleTheme} />
+        <MoonIcon onClick={toggleTheme} style={{ cursor: "pointer" }} />
       )}
     </div>
   )
