@@ -1,16 +1,64 @@
 import { deleteOrganization } from "../actions"
 import { Organization } from "@/app/v2/features/organization"
+import { WorkOrder } from "@/app/v2/features/work-order"
 import { FormEvent, useState } from "react"
-import { Button, Modal, Spinner } from "react-bootstrap"
+import { Accordion, Button, Modal, Spinner, Table } from "react-bootstrap"
 
 type OrganizationDeleteViewProps = {
   organization: Organization | null
+  workOrders: WorkOrder[]
   show: boolean
   onHide: () => void
 }
 
+type AffectedWorkOrdersProps = {
+  workOrders: WorkOrder[]
+}
+
+function AffectedWorkOrders({ workOrders }: AffectedWorkOrdersProps) {
+  // Sort work orders by pipedrive id
+  const sortedWorkOrders = workOrders.sort((a, b) =>
+    b.pid.toString().localeCompare(a.pid.toString()),
+  )
+
+  return (
+    <Accordion>
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>Werkorders die worden verwijderd</Accordion.Header>
+        <Accordion.Body>
+          <Table hover responsive>
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>Titel</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedWorkOrders.length > 0 ? (
+                sortedWorkOrders.map((workOrder) => (
+                  <tr key={workOrder.id}>
+                    <td>{workOrder.pid}</td>
+                    <td>{workOrder.title}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={2}>
+                    <i>Geen werkorders gevonden</i>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+  )
+}
+
 export default function OrganizationDeleteView({
   organization,
+  workOrders,
   show,
   onHide,
 }: OrganizationDeleteViewProps) {
@@ -46,13 +94,19 @@ export default function OrganizationDeleteView({
         </p>
         <ul>
           <li>De organisatie wordt direct uit het systeem verwijderd</li>
-          <li>De werkzaamheden worden behouden</li>
+          <li>De werkorders worden direct uit het systeem verwijderd </li>
           <li>De contactpersonen worden behouden</li>
         </ul>
         <p>
           Als je <strong>{organization?.name}</strong> wil verwijderen, klik dan
           op &quot;Ik weet het zeker&quot;
         </p>
+
+        {/*
+         * Highlight the work orders that will be deleted as part of the organization deletion.
+         * The affected work orders are very important to take into consideration because it's an irreversible action
+         */}
+        <AffectedWorkOrders workOrders={workOrders} />
       </Modal.Body>
 
       <Modal.Footer>

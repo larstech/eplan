@@ -224,3 +224,18 @@ export const deleteWorkOrder = async (workOrderId: number) => {
 
   revalidatePath(route(routes.workOrders))
 }
+
+export const deleteWorkOrdersByOrganizationId = async (
+  organizationId: number,
+) => {
+  // Fake a delay to simulate an API call
+  await new Promise((resolve) => setTimeout(resolve, 200))
+
+  workOrders.splice(
+    0,
+    workOrders.length,
+    ...workOrders.filter(
+      (workOrder) => workOrder.organizationId !== organizationId,
+    ),
+  )
+}

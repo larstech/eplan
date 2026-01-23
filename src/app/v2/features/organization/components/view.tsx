@@ -4,6 +4,7 @@ import { Organization, OrganizationDTO } from "@/app/v2/features/organization"
 import OrganizationCreateView from "@/app/v2/features/organization/components/create"
 import OrganizationDeleteView from "@/app/v2/features/organization/components/delete"
 import OrganizationEditView from "@/app/v2/features/organization/components/edit"
+import { WorkOrder, WorkOrderDTO } from "@/app/v2/features/work-order"
 import { PencilIcon, Search, TrashIcon } from "lucide-react"
 import { use, useEffect, useState } from "react"
 import { Stack } from "react-bootstrap"
@@ -12,6 +13,7 @@ import { Table } from "react-bootstrap"
 
 type OrganizationViewProps = {
   organizationDTOs: Promise<OrganizationDTO[]>
+  workOrderDTOs: Promise<WorkOrderDTO[]>
 }
 
 type DataTableHeaderProps = {
@@ -20,10 +22,12 @@ type DataTableHeaderProps = {
 
 type DataTableBodyProps = {
   organizations: Organization[]
+  workOrders: WorkOrder[]
 }
 
 type DataTableEntryProps = {
   organization: Organization
+  workOrders: WorkOrder[]
 }
 
 function DataTableHeader({ setSearchText }: DataTableHeaderProps) {
@@ -61,7 +65,7 @@ function DataTableHeader({ setSearchText }: DataTableHeaderProps) {
   )
 }
 
-function DataTableBody({ organizations }: DataTableBodyProps) {
+function DataTableBody({ organizations, workOrders }: DataTableBodyProps) {
   return (
     <Table bordered hover>
       <thead>
@@ -72,9 +76,19 @@ function DataTableBody({ organizations }: DataTableBodyProps) {
       </thead>
       <tbody>
         {organizations.length > 0 ? (
-          organizations.map((organization) => (
-            <DataTableEntry key={organization.id} organization={organization} />
-          ))
+          organizations.map((organization) => {
+            // Filter work order by organization name
+            const filteredWorkOrders = workOrders.filter(
+              (workOrder) => workOrder.organizationId === organization.id,
+            )
+            return (
+              <DataTableEntry
+                key={organization.id}
+                organization={organization}
+                workOrders={filteredWorkOrders}
+              />
+            )
+          })
         ) : (
           <tr>
             <td colSpan={2}>
@@ -87,7 +101,7 @@ function DataTableBody({ organizations }: DataTableBodyProps) {
   )
 }
 
-function DataTableEntry({ organization }: DataTableEntryProps) {
+function DataTableEntry({ organization, workOrders }: DataTableEntryProps) {
   const [showEditView, setShowEditView] = useState(false)
   const [showDeleteView, setShowDeleteView] = useState(false)
 
@@ -128,6 +142,7 @@ function DataTableEntry({ organization }: DataTableEntryProps) {
       />
       <OrganizationDeleteView
         organization={organization}
+        workOrders={workOrders}
         show={showDeleteView}
         onHide={() => setShowDeleteView(false)}
       />
@@ -137,6 +152,7 @@ function DataTableEntry({ organization }: DataTableEntryProps) {
 
 export default function OrganizationView({
   organizationDTOs,
+  workOrderDTOs,
 }: OrganizationViewProps) {
   // Sorted organizations is set in the useEffect to refresh itself when the organizations are modified in any way
   const [sortedOrganizations, setSortedOrganizations] = useState<
@@ -156,6 +172,8 @@ export default function OrganizationView({
     organization.name.toLowerCase().includes(searchText.toLowerCase()),
   )
 
+  const workOrders = use(workOrderDTOs).map((dto) => WorkOrder.fromDTO(dto))
+
   useEffect(() => {
     setSortedOrganizations(
       // Sort organizations by full name
@@ -168,7 +186,10 @@ export default function OrganizationView({
       <h1>Organisatiesoverzicht</h1>
 
       <DataTableHeader setSearchText={setSearchText} />
-      <DataTableBody organizations={sortedOrganizations} />
+      <DataTableBody
+        organizations={sortedOrganizations}
+        workOrders={workOrders}
+      />
     </Stack>
   )
 }

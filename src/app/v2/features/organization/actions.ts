@@ -2,6 +2,7 @@
 
 import { OrganizationDTO } from "@/app/v2/features/organization/types"
 import { validate } from "@/app/v2/features/organization/validation"
+import { deleteWorkOrdersByOrganizationId } from "@/app/v2/features/work-order"
 import { route, routes } from "@/app/v2/helpers/routes"
 import { revalidatePath } from "next/cache"
 
@@ -71,6 +72,7 @@ export const deleteOrganization = async (organizationId: number) => {
     return
   }
 
+  await deleteWorkOrdersByOrganizationId(organizationId)
   organizations.splice(index, 1)
 
   revalidatePath(route(routes.organizations))
