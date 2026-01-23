@@ -51,7 +51,7 @@ export default function WorkOrderDeleteView({
           <li>Het werkorder wordt direct uit de agenda verwijderd</li>
         </ul>
         <p>
-          Als je <strong>PID {workOrder.id}</strong> wil verwijderen, klik dan
+          Als je <strong>PID {workOrder.pid}</strong> wil verwijderen, klik dan
           op &quot;Ik weet het zeker&quot;
         </p>
       </Modal.Body>
