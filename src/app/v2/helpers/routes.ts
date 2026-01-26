@@ -7,4 +7,5 @@ export const routes = {
   workOrders: "/work-orders",
 }
 
-export const route = (route: string) => `${routes.base}${route}`
+export const route = (route: string, dynamic: string = "") =>
+  `${routes.base}${route}/${dynamic}`
