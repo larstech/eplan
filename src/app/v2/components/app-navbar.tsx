@@ -1,6 +1,6 @@
 "use client"
 
-import ThemeSwitcher from "@/app/v2/components/theme-switcher"
+import ThemeSwitcher from "@/app/v2/features/theme-switcher/components/view"
 import { route, routes } from "@/app/v2/helpers/routes"
 import Image from "next/image"
 import Link from "next/link"
