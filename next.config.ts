@@ -1,4 +1,3 @@
-import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin"
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
@@ -6,14 +5,14 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/",
-        destination: "/app",
+        destination: "/schedule",
         permanent: true,
       },
     ]
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
-      config.plugins = [...config.plugins, new PrismaPlugin()]
+      config.plugins = [...config.plugins]
     }
     return config
   },
