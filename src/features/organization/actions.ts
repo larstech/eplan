@@ -7,19 +7,7 @@ import { route } from "@/helpers/routes"
 import { revalidatePath } from "next/cache"
 
 // Temporary in-memory organization database
-const organizations: OrganizationDTO[] = [
-  { id: 1, name: "Van der Veen Logistiek" },
-  { id: 2, name: "Bakker Transportgroep" },
-  { id: 3, name: "Holland Food Movers" },
-  { id: 4, name: "De Boer Distributie" },
-  { id: 5, name: "Langerhuize Logistiek" },
-  { id: 6, name: "Klaassen Food Services" },
-  { id: 7, name: "Zorgeloos Logistiek" },
-  { id: 8, name: "Flevoland Vervoer" },
-  { id: 9, name: "Groenveld Voedingslogistiek" },
-  { id: 10, name: "De Vries Transport" },
-]
-
+const organizations: OrganizationDTO[] = []
 let lastOrganizationId = organizations.length
 
 export const getNextOrganizationId = async (): Promise<number> =>
