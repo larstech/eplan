@@ -7,6 +7,40 @@ export interface ScheduleWeekDTO {
   week: number
 }
 
+export interface ScheduleItemDTO {
+  id: number
+  workOrderPid: string
+  employeeId: number
+  date: Date
+  startTime: string
+  endTime: string
+  note: string
+}
+
+export class ScheduleItem {
+  static fromDTO(dto: ScheduleItemDTO): ScheduleItem {
+    return new ScheduleItem(
+      dto.id,
+      dto.workOrderPid,
+      dto.employeeId,
+      dto.date,
+      dto.startTime,
+      dto.endTime,
+      dto.note,
+    )
+  }
+
+  constructor(
+    public id: number,
+    public workOrderPid: string,
+    public employeeId: number,
+    public date: Date,
+    public startTime: string,
+    public endTime: string,
+    public note: string,
+  ) {}
+}
+
 export class ScheduleWeek {
   static fromDTO(dto: ScheduleWeekDTO): ScheduleWeek {
     return new ScheduleWeek(dto.year, dto.week)
@@ -57,6 +91,10 @@ export class ScheduleWeek {
     })
   }
 
+  containsDate(date: Date): boolean {
+    return date >= this.start() && date <= this.end()
+  }
+
   start(): Date {
     return this.datesInRange()[0]
   }
@@ -96,3 +134,5 @@ export class ScheduleWeek {
     return new ScheduleWeek(this.year + 1, min_week)
   }
 }
+
+export type ScheduleItemFormData = Omit<ScheduleItemDTO, "id">

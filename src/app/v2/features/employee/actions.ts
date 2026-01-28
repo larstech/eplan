@@ -45,6 +45,15 @@ export const fetchEmployees = async (): Promise<EmployeeDTO[]> => {
   return employees
 }
 
+export const fetchEmployeeById = async (
+  id: number,
+): Promise<EmployeeDTO | undefined> => {
+  // Fake a delay to simulate an API call
+  await new Promise((resolve) => setTimeout(resolve, 200))
+
+  return employees.find((employee) => employee.id === id)
+}
+
 export const createEmployee = async (employeeDTO: EmployeeDTO) => {
   // Fake a delay to simulate an API call
   await new Promise((resolve) => setTimeout(resolve, 200))

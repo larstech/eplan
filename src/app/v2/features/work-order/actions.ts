@@ -180,6 +180,15 @@ export const fetchWorkOrders = async (): Promise<WorkOrderDTO[]> => {
   return workOrders
 }
 
+export const fetchWorkOrderByPid = async (
+  pid: string,
+): Promise<WorkOrderDTO | undefined> => {
+  // Fake a delay to simulate an API call
+  await new Promise((resolve) => setTimeout(resolve, 200))
+
+  return workOrders.find((workOrder) => workOrder.pid === pid)
+}
+
 export const createWorkOrder = async (workOrderDTO: WorkOrderDTO) => {
   // Fake a delay to simulate an API call
   await new Promise((resolve) => setTimeout(resolve, 200))

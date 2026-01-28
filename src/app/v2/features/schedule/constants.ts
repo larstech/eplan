@@ -4,3 +4,5 @@ export const min_year = 2025
 export const max_year = min_year + 5
 export const min_week = 1
 export const max_week = 52 | 53
+export const commonStartTime = "07:30"
+export const commonEndTime = "16:00"
