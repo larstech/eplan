@@ -10,12 +10,6 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.plugins = [...config.plugins]
-    }
-    return config
-  },
 }
 
 export default nextConfig
