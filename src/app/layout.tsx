@@ -1,10 +1,10 @@
-import { defaultTheme } from "@/app/v2/features/theme-switcher/contants"
-import { Toaster } from "@/components/ui/sonner"
+import AppNavbar from "@/components/app-navbar"
+import { defaultTheme } from "@/features/theme-switcher/contants"
+import BootstrapClient from "@/providers/bootstrap-client"
 import "@/styles/globals.css"
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from "next"
 import { cookies } from "next/headers"
+import { Container } from "react-bootstrap"
 
 type LayoutParams = Readonly<{ children: React.ReactNode }>
 
@@ -20,12 +20,11 @@ export default async function Layout({ children }: LayoutParams) {
   return (
     <html lang="nl" data-bs-theme={theme}>
       <body>
-        {children}
+        <BootstrapClient />
 
-        <Toaster />
+        <AppNavbar />
 
-        <Analytics />
-        <SpeedInsights />
+        <Container fluid>{children}</Container>
       </body>
     </html>
   )

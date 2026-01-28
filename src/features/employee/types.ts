@@ -1,24 +1,23 @@
-import { employeeSchema } from "@/features/employee"
-import { ControllerRenderProps } from "react-hook-form"
-import z from "zod"
-
-export type Employee = {
-  id?: string
+export interface EmployeeDTO {
+  id: number
   firstName: string
   lastName: string
   freelancer: boolean
 }
 
-export type FormValues = z.infer<typeof employeeSchema>
+export class Employee {
+  static fromDTO(dto: EmployeeDTO): Employee {
+    return new Employee(dto.id, dto.firstName, dto.lastName, dto.freelancer)
+  }
 
-export type FormFieldComponentProps = {
-  field: ControllerRenderProps<FormValues, keyof FormValues>
+  constructor(
+    public id: number,
+    public firstName: string,
+    public lastName: string,
+    public freelancer: boolean,
+  ) {}
+
+  fullName(): string {
+    return `${this.firstName} ${this.lastName}`
+  }
 }
-
-export type EmployeeField = {
-  name: "firstName" | "lastName" | "freelancer"
-  label: string
-  input: (props: FormFieldComponentProps) => React.ReactNode
-}
-
-export type EmployeeForm = z.infer<typeof employeeSchema>

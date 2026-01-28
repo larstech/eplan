@@ -1,9 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Button } from "react-bootstrap"
 
 export default function NotFound() {
   const pathname = usePathname()
@@ -24,7 +24,7 @@ export default function NotFound() {
         </p>
 
         <Link href="/">
-          <Button className="mt-4">Ga terug naar de startpagina</Button>
+          <Button className="mt-4">Ga terug naar de agenda</Button>
         </Link>
       </div>
     </div>
