@@ -1,109 +1,57 @@
 "use server"
 
-import { fetchEmployeeById } from "@/features/employee"
-import {
-  ScheduleItemDTO,
-  ScheduleWeek,
-  ScheduleWeekDTO,
-} from "@/features/schedule/types"
+import { ScheduleItemDTO } from "@/features/schedule/types"
 import { validate } from "@/features/schedule/validation"
-import { fetchWorkOrderByPid } from "@/features/work-order"
 import { route } from "@/helpers/routes"
+import { sql } from "@/lib/neon"
+import { DateTime } from "luxon"
 import { revalidatePath } from "next/cache"
 
-const scheduleItems: ScheduleItemDTO[] = []
-
-let lastScheduleItemId = scheduleItems.length
-
-export const getNextScheduleItemId = async (): Promise<number> =>
-  ++lastScheduleItemId
-
-export const fetchScheduleWeek = async (
-  year: number,
-  week: number,
-): Promise<ScheduleWeekDTO> => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
-  return { id: 1, year, week }
-}
-
 export const fetchScheduleItems = async (
-  scheduleWeekDTO: ScheduleWeekDTO,
+  weekNumber: number,
 ): Promise<ScheduleItemDTO[]> => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
+  const monday = DateTime.fromObject({ weekNumber }).startOf("week")
+  const sunday = monday.plus({ days: 6 })
 
-  const scheduleWeek = ScheduleWeek.fromDTO(scheduleWeekDTO)
-  return scheduleItems.filter((scheduleItem) =>
-    scheduleWeek.containsDate(scheduleItem.date),
-  )
+  return (
+    await sql<ScheduleItemDTO[]>`SELECT *
+                                 FROM schedule_items
+                                 WHERE date BETWEEN ${monday} AND ${sunday}`
+  ).map((scheduleItem: any) => ({
+    ...scheduleItem,
+    workOrderPid: scheduleItem.work_order_pid,
+    employeeId: scheduleItem.employee_id,
+    startTime: scheduleItem.start_time,
+    endTime: scheduleItem.end_time,
+  }))
 }
 
 export const createScheduleItem = async (scheduleItemDTO: ScheduleItemDTO) => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
   if (!validate(scheduleItemDTO)) {
-    console.log("invalid schedule item")
     return
   }
 
-  const workOrder = await fetchWorkOrderByPid(scheduleItemDTO.workOrderPid)
-  if (!workOrder) {
-    console.log("no work order")
-    return
-  }
-
-  const employee = await fetchEmployeeById(scheduleItemDTO.employeeId)
-  if (!employee) {
-    console.log("no employee")
-    return
-  }
-
-  scheduleItems.push(scheduleItemDTO)
+  await sql`INSERT INTO schedule_items (work_order_pid, employee_id, date, start_time, end_time, note)
+            VALUES (${scheduleItemDTO.workOrderPid}, ${scheduleItemDTO.employeeId}, ${scheduleItemDTO.date}, ${scheduleItemDTO.startTime}, ${scheduleItemDTO.endTime}, ${scheduleItemDTO.note})`
 
   revalidatePath(route.schedule)
 }
 
 export const editScheduleItem = async (scheduleItemDTO: ScheduleItemDTO) => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
   if (!validate(scheduleItemDTO)) {
     return
   }
 
-  const index = scheduleItems.findIndex((e) => e.id === scheduleItemDTO.id)
-  if (index === -1) {
-    return
-  }
-
-  const workOrder = await fetchWorkOrderByPid(scheduleItemDTO.workOrderPid)
-  if (!workOrder) {
-    return
-  }
-
-  const employee = await fetchEmployeeById(scheduleItemDTO.employeeId)
-  if (!employee) {
-    return
-  }
-
-  scheduleItems[index] = scheduleItemDTO
+  await sql`UPDATE schedule_items
+            SET work_order_pid = ${scheduleItemDTO.workOrderPid}, employee_id = ${scheduleItemDTO.employeeId}, date = ${scheduleItemDTO.date}, start_time = ${scheduleItemDTO.startTime}, end_time = ${scheduleItemDTO.endTime}, note = ${scheduleItemDTO.note}
+            WHERE id = ${scheduleItemDTO.id}`
 
   revalidatePath(route.schedule)
 }
 
 export const deleteScheduleItem = async (scheduleItemId: number) => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
-  const index = scheduleItems.findIndex((e) => e.id === scheduleItemId)
-  if (index === -1) {
-    return
-  }
-
-  scheduleItems.splice(index, 1)
+  await sql`DELETE FROM schedule_items
+            WHERE id = ${scheduleItemId}`
 
   revalidatePath(route.schedule)
 }

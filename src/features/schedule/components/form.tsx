@@ -80,10 +80,8 @@ export default function ScheduleItemFormView({
             {/* The value only displays when the time part is trimmed off */}
             <Form.Control
               type="date"
-              value={formData.date.toISOString().split("T")[0] ?? ""}
-              onChange={(e) =>
-                updateFormData({ date: new Date(e.target.value) })
-              }
+              value={formData.date}
+              onChange={(e) => updateFormData({ date: e.target.value })}
             />
           </Form.Group>
           <Row>

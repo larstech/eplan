@@ -1,7 +1,6 @@
 import { Employee } from "@/features/employee"
 import { deleteScheduleItem, ScheduleItem } from "@/features/schedule"
 import { WorkOrder } from "@/features/work-order"
-import { localDateString } from "@/helpers/date"
 import { FormEvent, useState } from "react"
 import { Button, Modal, Spinner } from "react-bootstrap"
 
@@ -59,7 +58,7 @@ export default function ScheduleItemDeleteView({
         <p>
           Als je <strong>{employee.fullName()}</strong> op{" "}
           <strong>
-            {localDateString(scheduleItem.date, { dateStyle: "full" })}
+            {scheduleItem.date.toLocaleString({ dateStyle: "full" })}
           </strong>{" "}
           van <strong>PID {workOrder.pid}</strong> wil verwijderen, klik dan op
           &quot;Ik weet het zeker&quot;

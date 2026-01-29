@@ -12,6 +12,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "@types/luxon": "^3.7.1",
     "bootstrap": "5.3.8",
     "dotenv": "^17.2.3",
     "html-to-image": "^1.11.13",

@@ -1,4 +1,4 @@
-import { createContact, getNextContactId } from "../actions"
+import { createContact } from "../actions"
 import { ContactFormData } from "../types"
 import ContactFormView from "@/features/contact/components/form"
 import { Organization } from "@/features/organization"
@@ -42,11 +42,7 @@ export default function ContactCreateView({
     e.preventDefault()
     setIsSubmitting(true)
 
-    const contactId = await getNextContactId()
-    await createContact({
-      id: contactId,
-      ...formData,
-    })
+    await createContact({ id: -1, ...formData })
 
     // Reset the form field values
     setFormData(initialFormData)

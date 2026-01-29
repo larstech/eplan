@@ -1,4 +1,4 @@
-import { createEmployee, getNextEmployeeId } from "../actions"
+import { createEmployee } from "../actions"
 import { FormEvent, useState } from "react"
 import { Button, Form, Modal, Spinner } from "react-bootstrap"
 
@@ -20,9 +20,8 @@ export default function EmployeeCreateView({
     e.preventDefault()
     setIsSubmitting(true)
 
-    const employeeId = await getNextEmployeeId()
     await createEmployee({
-      id: employeeId,
+      id: -1,
       firstName,
       lastName,
       freelancer,

@@ -1,4 +1,4 @@
-import { createWorkOrder, getNextWorkOrderId } from "../actions"
+import { createWorkOrder } from "../actions"
 import { Contact } from "@/features/contact"
 import { Organization } from "@/features/organization"
 import { WorkOrderFormData } from "@/features/work-order"
@@ -40,9 +40,8 @@ export default function WorkOrderCreateView({
     e.preventDefault()
     setIsSubmitting(true)
 
-    const workOrderId = await getNextWorkOrderId()
     await createWorkOrder({
-      id: workOrderId,
+      id: -1,
       ...formData,
     })
 

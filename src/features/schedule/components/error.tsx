@@ -1,14 +1,4 @@
-"use client"
-
-import { ScheduleWeek } from "@/features/schedule"
-import { useRouter } from "next/navigation"
-
 export default function ScheduleError() {
-  const router = useRouter()
-  const goToWeek = (y: number, w: number) => {
-    router.push(`/v2/app/schedule/${y}/${w}`)
-  }
-
   return (
     <div className="position-absolute top-50 start-50 translate-middle">
       <div className="card">
@@ -18,15 +8,6 @@ export default function ScheduleError() {
           <p className="card-text">
             Probeer het opnieuw, of ga direct naar de huidige week
           </p>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => {
-              goToWeek(ScheduleWeek.today().year, ScheduleWeek.today().week)
-            }}
-          >
-            Ga naar deze week
-          </button>
         </div>
       </div>
     </div>

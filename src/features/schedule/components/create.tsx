@@ -1,10 +1,11 @@
-import { createScheduleItem, getNextScheduleItemId } from "../actions"
+import { createScheduleItem } from "../actions"
 import {
   commonEndTime,
   commonStartTime,
   ScheduleItemFormData,
 } from "@/features/schedule"
 import ScheduleItemFormView from "@/features/schedule/components/form"
+import { DateTime } from "luxon"
 import { FormEvent, useState } from "react"
 
 type ScheduleItemCreateViewProps = {
@@ -16,7 +17,7 @@ type ScheduleItemCreateViewProps = {
 const initialFormData: ScheduleItemFormData = {
   workOrderPid: "",
   employeeId: -1,
-  date: new Date(),
+  date: DateTime.now().toFormat("yyyy-LL-dd"),
   startTime: commonStartTime,
   endTime: commonEndTime,
   note: "",
@@ -39,9 +40,8 @@ export default function ScheduleItemCreateView({
     e.preventDefault()
     setIsSubmitting(true)
 
-    const scheduleItemId = await getNextScheduleItemId()
     await createScheduleItem({
-      id: scheduleItemId,
+      id: -1,
       ...formData,
     })
 

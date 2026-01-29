@@ -7,7 +7,6 @@ import {
   OrganizationsContext,
 } from "@/features/schedule/components/view"
 import { WorkOrder } from "@/features/work-order"
-import { localDateString } from "@/helpers/date"
 import { MailIcon, PhoneIcon } from "lucide-react"
 import Link from "next/link"
 import { useContext, useState } from "react"
@@ -73,7 +72,7 @@ export default function ScheduleItemDetailsView({
           <Stack gap={3}>
             {/* Date and time details */}
             <div className="text-muted">
-              {localDateString(scheduleItem.date, { dateStyle: "long" })} van{" "}
+              {scheduleItem.date.toLocaleString({ dateStyle: "long" })} van{" "}
               {scheduleItem.startTime} tot {scheduleItem.endTime}
             </div>
 

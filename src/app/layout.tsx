@@ -1,6 +1,7 @@
 import AppNavbar from "@/components/app-navbar"
 import { defaultTheme } from "@/features/theme-switcher/contants"
 import BootstrapClient from "@/providers/bootstrap-client"
+import LuxonProvider from "@/providers/luxon-provider"
 import "@/styles/globals.css"
 import type { Metadata } from "next"
 import { cookies } from "next/headers"
@@ -21,6 +22,7 @@ export default async function Layout({ children }: LayoutParams) {
     <html lang="nl" data-bs-theme={theme}>
       <body>
         <BootstrapClient />
+        <LuxonProvider />
 
         <AppNavbar />
 

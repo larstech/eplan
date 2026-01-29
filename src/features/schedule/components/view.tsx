@@ -3,20 +3,14 @@
 import { Contact, ContactDTO } from "@/features/contact"
 import { Employee, EmployeeDTO } from "@/features/employee"
 import { Organization, OrganizationDTO } from "@/features/organization"
-import {
-  isToday,
-  ScheduleItem,
-  ScheduleItemDTO,
-  ScheduleWeek,
-  ScheduleWeekDTO,
-} from "@/features/schedule"
+import { isToday, ScheduleItem, ScheduleItemDTO } from "@/features/schedule"
 import ScheduleItemCreateView from "@/features/schedule/components/create"
 import ScheduleItemDetailsView from "@/features/schedule/components/details"
 import ScheduleItemEditView from "@/features/schedule/components/edit"
 import { WorkOrder, WorkOrderDTO } from "@/features/work-order"
-import { localDateString } from "@/helpers/date"
 import { route } from "@/helpers/routes"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { DateTime } from "luxon"
 import { useRouter } from "next/navigation"
 import { createContext, use, useContext, useState } from "react"
 import {
@@ -32,11 +26,11 @@ import {
 } from "react-bootstrap"
 
 interface ScheduleViewProps {
+  currentDate: string
   contactDTOs: Promise<ContactDTO[]>
   employeeDTOs: Promise<EmployeeDTO[]>
   organizationDTOs: Promise<OrganizationDTO[]>
   scheduleItemDTOs: Promise<ScheduleItemDTO[]>
-  scheduleWeekDTO: ScheduleWeekDTO
   workOrderDTOs: Promise<WorkOrderDTO[]>
 }
 
@@ -45,21 +39,25 @@ interface DataTableEntryProps {
   scheduleItems: ScheduleItem[]
 }
 
+export const CurrentDateContext = createContext<DateTime>(DateTime.now())
 export const ContactsContext = createContext<Contact[]>([])
 export const EmployeesContext = createContext<Employee[]>([])
-export const ScheduleWeekContext = createContext(ScheduleWeek.today())
 export const ScheduleItemsContext = createContext<ScheduleItem[]>([])
 export const OrganizationsContext = createContext<Organization[]>([])
 export const WorkOrdersContext = createContext<WorkOrder[]>([])
 
 function DataTableHeader() {
-  const scheduleWeek = useContext(ScheduleWeekContext)
+  const currentDate = useContext(CurrentDateContext)
+
   const [showCreateModal, setShowCreateModal] = useState(false)
 
   const router = useRouter()
   const showWeek = (y: number, w: number) => {
     router.push(route.schedule + `/${y}/${w}`)
   }
+
+  const previousWeek = currentDate.minus({ weeks: 1 })
+  const nextWeek = currentDate.plus({ weeks: 1 })
 
   return (
     <>
@@ -69,9 +67,9 @@ function DataTableHeader() {
           <ButtonToolbar>
             <ButtonGroup className="me-3">
               <Button
-                onClick={() => {
-                  showWeek(ScheduleWeek.today().year, ScheduleWeek.today().week)
-                }}
+                onClick={() =>
+                  showWeek(DateTime.now().year, DateTime.now().weekNumber)
+                }
               >
                 Vandaag
               </Button>
@@ -81,12 +79,9 @@ function DataTableHeader() {
               {/* Go to the previous week */}
               <Button
                 variant="outline-primary"
-                onClick={() => {
-                  showWeek(
-                    scheduleWeek.previous().year,
-                    scheduleWeek.previous().week,
-                  )
-                }}
+                onClick={() =>
+                  showWeek(previousWeek.weekYear, previousWeek.weekNumber)
+                }
               >
                 <ChevronLeft />
               </Button>
@@ -94,9 +89,7 @@ function DataTableHeader() {
               {/* Go to the next week */}
               <Button
                 variant="outline-primary"
-                onClick={() => {
-                  showWeek(scheduleWeek.next().year, scheduleWeek.next().week)
-                }}
+                onClick={() => showWeek(nextWeek.weekYear, nextWeek.weekNumber)}
               >
                 <ChevronRight />
               </Button>
@@ -107,9 +100,9 @@ function DataTableHeader() {
         <Col md="auto" className="d-flex align-items-center me-auto">
           {/* Display the current week range + the week number */}
           <div>
-            {localDateString(scheduleWeek.start(), { dateStyle: "long" })} -{" "}
-            {localDateString(scheduleWeek.end(), { dateStyle: "long" })} (Week{" "}
-            {scheduleWeek.week})
+            {currentDate.startOf("week").toLocaleString({ dateStyle: "long" })}{" "}
+            - {currentDate.endOf("week").toLocaleString({ dateStyle: "long" })}{" "}
+            (Week {currentDate.weekNumber})
           </div>
         </Col>
 
@@ -130,8 +123,8 @@ function DataTableHeader() {
 }
 
 function DataTableBody() {
+  const currentDate = useContext(CurrentDateContext)
   const employees = useContext(EmployeesContext)
-  const scheduleWeek = useContext(ScheduleWeekContext)
   const scheduleItems = useContext(ScheduleItemsContext)
 
   // Map employees to their corresponding schedule items. All schedule items are
@@ -144,6 +137,11 @@ function DataTableBody() {
     )
   })
 
+  const startOfWeek = currentDate.startOf("week")
+  const weekdays = Array.from({ length: 7 }, (_, i) =>
+    startOfWeek.plus({ days: i }),
+  )
+
   return (
     <Table bordered responsive>
       <thead>
@@ -151,19 +149,15 @@ function DataTableBody() {
           <th>Medewerker</th>
 
           {/* Each day of the week is a column to create a weekly overview */}
-          {scheduleWeek.datesInRange().map((date, index) => {
+          {weekdays.map((date, index) => {
             return (
               <th
                 key={index}
                 className={`${isToday(date) ? "bg-body-tertiary" : ""}`}
               >
                 <Stack>
-                  <div className="fs-6 fw-normal">
-                    {localDateString(date, { weekday: "long" })}
-                  </div>
-                  <div className="fs-5">
-                    {localDateString(date, { day: "2-digit" })}
-                  </div>
+                  <div className="fs-6 fw-normal">{date.toFormat("cccc")}</div>
+                  <div className="fs-5">{date.toFormat("dd")}</div>
                 </Stack>
               </th>
             )
@@ -192,7 +186,7 @@ function DataTableBody() {
 }
 
 function DataTableEntry({ employee, scheduleItems }: DataTableEntryProps) {
-  const scheduleWeek = useContext(ScheduleWeekContext)
+  const currentDate = useContext(CurrentDateContext)
   const organizations = useContext(OrganizationsContext)
   const workOrders = useContext(WorkOrdersContext)
 
@@ -206,15 +200,20 @@ function DataTableEntry({ employee, scheduleItems }: DataTableEntryProps) {
     ScheduleItem | undefined
   >(undefined)
 
+  const startOfWeek = currentDate.startOf("week")
+  const weekdays = Array.from({ length: 7 }, (_, i) =>
+    startOfWeek.plus({ days: i }),
+  )
+
   return (
     <>
       <tr>
         <td>{employee.fullName()}</td>
         {/* Each day of the week is a column */}
-        {scheduleWeek.datesInRange().map((date, index) => {
-          const scheduleItem = scheduleItems
-            .filter((item) => scheduleWeek.containsDate(item.date))
-            .filter((item) => item.date.getDay() === date.getDay())
+        {weekdays.map((date, index) => {
+          const scheduleItem = scheduleItems.filter(
+            (item) => date.weekday === item.date.weekday,
+          )
 
           if (scheduleItem.length === 0) {
             return (
@@ -287,10 +286,10 @@ function DataTableEntry({ employee, scheduleItems }: DataTableEntryProps) {
 }
 
 export default function ScheduleView({
+  currentDate,
   contactDTOs,
   employeeDTOs,
   organizationDTOs,
-  scheduleWeekDTO,
   scheduleItemDTOs,
   workOrderDTOs,
 }: ScheduleViewProps) {
@@ -304,9 +303,6 @@ export default function ScheduleView({
   const organizations = use(organizationDTOs).map((dto) =>
     Organization.fromDTO(dto),
   )
-
-  // Map schedule week DTOs to ScheduleWeek instances so that complementary methods can be called on them
-  const scheduleWeek = ScheduleWeek.fromDTO(scheduleWeekDTO)
 
   // Map schedule item DTOs to ScheduleItem instances so that complementary methods can be called on them
   const scheduleItems = use(scheduleItemDTOs).map((dto) =>
@@ -322,10 +318,10 @@ export default function ScheduleView({
   )
 
   return (
-    <ContactsContext value={contacts}>
-      <EmployeesContext value={sortedEmployees}>
-        <OrganizationsContext value={organizations}>
-          <ScheduleWeekContext value={scheduleWeek}>
+    <CurrentDateContext value={DateTime.fromISO(currentDate)}>
+      <ContactsContext value={contacts}>
+        <EmployeesContext value={sortedEmployees}>
+          <OrganizationsContext value={organizations}>
             <ScheduleItemsContext value={scheduleItems}>
               <WorkOrdersContext value={workOrders}>
                 <Stack gap={3} className="mt-3">
@@ -334,9 +330,9 @@ export default function ScheduleView({
                 </Stack>
               </WorkOrdersContext>
             </ScheduleItemsContext>
-          </ScheduleWeekContext>
-        </OrganizationsContext>
-      </EmployeesContext>
-    </ContactsContext>
+          </OrganizationsContext>
+        </EmployeesContext>
+      </ContactsContext>
+    </CurrentDateContext>
   )
 }

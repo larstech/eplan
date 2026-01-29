@@ -1,4 +1,4 @@
-import { createOrganization, getNextOrganizationId } from "../actions"
+import { createOrganization } from "../actions"
 import { FormEvent, useState } from "react"
 import { Button, Form, Modal, Spinner } from "react-bootstrap"
 
@@ -18,11 +18,7 @@ export default function OrganizationCreateView({
     e.preventDefault()
     setIsSubmitting(true)
 
-    const organizationId = await getNextOrganizationId()
-    await createOrganization({
-      id: organizationId,
-      name,
-    })
+    await createOrganization({ id: -1, name })
 
     // Reset the form field values
     setName("")

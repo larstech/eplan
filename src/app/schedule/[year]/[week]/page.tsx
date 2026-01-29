@@ -4,14 +4,11 @@ import LoadingState from "@/components/loading"
 import { fetchContacts } from "@/features/contact"
 import { fetchEmployees } from "@/features/employee"
 import { fetchOrganizations } from "@/features/organization"
-import {
-  validScheduleWeek,
-  fetchScheduleWeek,
-  fetchScheduleItems,
-} from "@/features/schedule"
+import { fetchScheduleItems } from "@/features/schedule"
 import ScheduleError from "@/features/schedule/components/error"
 import ScheduleView from "@/features/schedule/components/view"
 import { fetchWorkOrders } from "@/features/work-order"
+import { DateTime } from "luxon"
 import { Suspense } from "react"
 
 type ScheduleProps = {
@@ -23,25 +20,29 @@ export default async function Page({ params }: ScheduleProps) {
   const yearNum = Number(year)
   const weekNum = Number(week)
 
-  if (!validScheduleWeek(yearNum, weekNum)) {
+  const firstDayOfWeek = DateTime.fromObject({
+    weekYear: yearNum,
+    weekNumber: weekNum,
+  })
+    .startOf("week")
+    .toISO()
+  if (!firstDayOfWeek) {
     return <ScheduleError />
   }
 
   const employees = fetchEmployees()
   const workOrders = fetchWorkOrders()
+  const scheduleItems = fetchScheduleItems(weekNum)
   const organizations = fetchOrganizations()
   const contacts = fetchContacts()
-
-  const scheduleWeek = await fetchScheduleWeek(yearNum, weekNum)
-  const scheduleItems = fetchScheduleItems(scheduleWeek)
 
   return (
     <Suspense fallback={<LoadingState />}>
       <ScheduleView
+        currentDate={firstDayOfWeek}
         contactDTOs={contacts}
         employeeDTOs={employees}
         organizationDTOs={organizations}
-        scheduleWeekDTO={scheduleWeek}
         scheduleItemDTOs={scheduleItems}
         workOrderDTOs={workOrders}
       />

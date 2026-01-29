@@ -19,7 +19,10 @@ export default function ScheduleItemEditView({
   show,
   onHide,
 }: ScheduleItemEditViewProps) {
-  const [formData, setFormData] = useState<ScheduleItemFormData>(scheduleItem)
+  const [formData, setFormData] = useState<ScheduleItemFormData>({
+    ...scheduleItem,
+    date: scheduleItem.date.toFormat("yyyy-LL-dd"),
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Use the partial data object to update the form state, since not all fields may contain a value yet

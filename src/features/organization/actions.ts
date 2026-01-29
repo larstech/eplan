@@ -4,64 +4,41 @@ import { OrganizationDTO } from "@/features/organization/types"
 import { validate } from "@/features/organization/validation"
 import { deleteWorkOrdersByOrganizationId } from "@/features/work-order"
 import { route } from "@/helpers/routes"
+import { sql } from "@/lib/neon"
 import { revalidatePath } from "next/cache"
 
-// Temporary in-memory organization database
-const organizations: OrganizationDTO[] = []
-let lastOrganizationId = organizations.length
-
-export const getNextOrganizationId = async (): Promise<number> =>
-  ++lastOrganizationId
-
 export const fetchOrganizations = async (): Promise<OrganizationDTO[]> => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
-  return organizations
+  return await sql<OrganizationDTO[]>`SELECT *
+                                      FROM organizations`
 }
 
 export const createOrganization = async (organizationDTO: OrganizationDTO) => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
   if (!validate(organizationDTO)) {
     return
   }
 
-  organizations.push(organizationDTO)
+  await sql`INSERT INTO organizations (name)
+            VALUES (${organizationDTO.name})`
 
   revalidatePath(route.organizations)
 }
 
 export const editOrganization = async (organizationDTO: OrganizationDTO) => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
   if (!validate(organizationDTO)) {
     return
   }
 
-  const index = organizations.findIndex((e) => e.id === organizationDTO.id)
-  if (index === -1) {
-    return
-  }
-
-  organizations[index] = organizationDTO
+  await sql`UPDATE organizations
+            SET name = ${organizationDTO.name}
+            WHERE id = ${organizationDTO.id}`
 
   revalidatePath(route.organizations)
 }
 
 export const deleteOrganization = async (organizationId: number) => {
-  // Fake a delay to simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
-  const index = organizations.findIndex((e) => e.id === organizationId)
-  if (index === -1) {
-    return
-  }
-
   await deleteWorkOrdersByOrganizationId(organizationId)
-  organizations.splice(index, 1)
+  await sql`DELETE FROM organizations
+            WHERE id = ${organizationId}`
 
   revalidatePath(route.organizations)
 }
