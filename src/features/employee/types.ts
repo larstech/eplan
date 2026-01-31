@@ -3,11 +3,19 @@ export interface EmployeeDTO {
   firstName: string
   lastName: string
   freelancer: boolean
+  email?: string | undefined
+  password?: string | undefined
 }
 
 export class Employee {
   static fromDTO(dto: EmployeeDTO): Employee {
-    return new Employee(dto.id, dto.firstName, dto.lastName, dto.freelancer)
+    return new Employee(
+      dto.id,
+      dto.firstName,
+      dto.lastName,
+      dto.freelancer,
+      dto.email,
+    )
   }
 
   constructor(
@@ -15,6 +23,7 @@ export class Employee {
     public firstName: string,
     public lastName: string,
     public freelancer: boolean,
+    public email?: string | undefined,
   ) {}
 
   fullName(): string {

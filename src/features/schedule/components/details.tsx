@@ -7,6 +7,7 @@ import {
   OrganizationsContext,
 } from "@/features/schedule/components/view"
 import { WorkOrder } from "@/features/work-order"
+import { authClient } from "@/lib/auth/client"
 import { MailIcon, PhoneIcon } from "lucide-react"
 import Link from "next/link"
 import { useContext, useState } from "react"
@@ -57,6 +58,8 @@ export default function ScheduleItemDetailsView({
     // TODO: Display an error instead of silently failing
     return null
   }
+
+  const { data: session } = authClient.useSession()
 
   return (
     <>
@@ -130,61 +133,73 @@ export default function ScheduleItemDetailsView({
             </Stack>
           </Stack>
 
-          <Stack gap={2} className="mt-3">
-            {/* Open view to edit schedule item */}
-            <Button
-              variant="primary"
-              className="w-100"
-              onClick={() => setShowEditModal(true)}
-            >
-              Bewerken
+          {session?.user && session?.user.role === "admin" ? (
+            <>
+              <Stack gap={2} className="mt-3">
+                {/* Open view to edit schedule item */}
+                <Button
+                  variant="primary"
+                  className="w-100"
+                  onClick={() => setShowEditModal(true)}
+                >
+                  Bewerken
+                </Button>
+
+                <Stack direction="horizontal" gap={2}>
+                  {/* Open view to close details */}
+                  <Button variant="secondary" className="w-50" onClick={onHide}>
+                    Sluiten
+                  </Button>
+
+                  {/* Open view to delete schedule item */}
+                  <Button
+                    variant="danger"
+                    className="w-50"
+                    onClick={() => setShowDeleteModal(true)}
+                  >
+                    Verwijderen
+                  </Button>
+                </Stack>
+              </Stack>
+            </>
+          ) : (
+            <Button variant="secondary" className="mt-3 w-100" onClick={onHide}>
+              Sluiten
             </Button>
-
-            <Stack direction="horizontal" gap={2}>
-              {/* Open view to close details */}
-              <Button variant="secondary" className="w-50" onClick={onHide}>
-                Sluiten
-              </Button>
-
-              {/* Open view to delete schedule item */}
-              <Button
-                variant="danger"
-                className="w-50"
-                onClick={() => setShowDeleteModal(true)}
-              >
-                Verwijderen
-              </Button>
-            </Stack>
-          </Stack>
+          )}
         </Offcanvas.Body>
       </Offcanvas>
 
-      <ScheduleViewModeEditView
-        scheduleItem={scheduleItem}
-        show={showEditModal}
-        onHide={() => {
-          setShowEditModal(false)
+      {session?.user && session?.user.role === "admin" && (
+        <>
+          <ScheduleViewModeEditView
+            scheduleItem={scheduleItem}
+            show={showEditModal}
+            onHide={() => {
+              setShowEditModal(false)
 
-          // Invoke the onHide callback to prevent showing potential outdated data
-          // It's possible that nothing has changed, but in the case it did, this is the
-          // simplest solution
-          onHide()
-        }}
-      />
-      <ScheduleItemDeleteView
-        employee={employee}
-        scheduleItem={scheduleItem}
-        workOrder={workOrder}
-        show={showDeleteModal}
-        onHide={() => {
-          setShowDeleteModal(false)
+              // Invoke the onHide callback to prevent showing potential outdated data
+              // It's possible that nothing has changed, but in the case it did, this is the
+              // simplest solution
+              onHide()
+            }}
+          />
+          <ScheduleItemDeleteView
+            employee={employee}
+            scheduleItem={scheduleItem}
+            workOrder={workOrder}
+            show={showDeleteModal}
+            onHide={() => {
+              setShowDeleteModal(false)
 
-          // Invoke the onHide callback to prevent showing potential delete schedule item
-          // It's possible that the schedule item hasn't been deleted, but in the case it
-          // did, this is the simplest solution
-          onHide()
-        }}
-      />
+              // Invoke the onHide callback to prevent showing potential delete schedule item
+              // It's possible that the schedule item hasn't been deleted, but in the case it
+              // did, this is the simplest solution
+              onHide()
+            }}
+          />
+        </>
+      )}
     </>
   )
 }

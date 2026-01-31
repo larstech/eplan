@@ -14,6 +14,8 @@ export default function EmployeeCreateView({
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [freelancer, setFreelancer] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: FormEvent) => {
@@ -25,6 +27,8 @@ export default function EmployeeCreateView({
       firstName,
       lastName,
       freelancer,
+      email,
+      password,
     })
 
     // Reset the form field values
@@ -68,6 +72,29 @@ export default function EmployeeCreateView({
               label="Werkt als zzp'er"
               type="checkbox"
               onChange={(e) => setFreelancer(e.target.checked)}
+            />
+          </Form.Group>
+
+          <hr />
+
+          {/* Account details */}
+          <Form.Group className="mb-3">
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control
+              required
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Wachtwoord</Form.Label>
+            {/* Don't set the type to 'password' so that the administrator can see/copy the password */}
+            <Form.Control
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
         </Modal.Body>

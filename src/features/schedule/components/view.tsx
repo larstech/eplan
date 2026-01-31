@@ -9,6 +9,7 @@ import ScheduleItemDetailsView from "@/features/schedule/components/details"
 import ScheduleItemEditView from "@/features/schedule/components/edit"
 import { WorkOrder, WorkOrderDTO } from "@/features/work-order"
 import { route } from "@/helpers/routes"
+import { authClient } from "@/lib/auth/client"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DateTime } from "luxon"
 import { useRouter } from "next/navigation"
@@ -59,6 +60,8 @@ function DataTableHeader() {
   const previousWeek = currentDate.minus({ weeks: 1 })
   const nextWeek = currentDate.plus({ weeks: 1 })
 
+  const { data: session } = authClient.useSession()
+
   return (
     <>
       <Row className="g-3">
@@ -106,18 +109,22 @@ function DataTableHeader() {
           </div>
         </Col>
 
-        <Col md="auto">
-          {/* Open view to add new schedule item */}
-          <Button className="w-100" onClick={() => setShowCreateModal(true)}>
-            Werkorder inplannen
-          </Button>
-        </Col>
+        {session?.user && session?.user.role === "admin" && (
+          <Col md="auto">
+            {/* Open view to add new schedule item */}
+            <Button className="w-100" onClick={() => setShowCreateModal(true)}>
+              Werkorder inplannen
+            </Button>
+          </Col>
+        )}
       </Row>
 
-      <ScheduleItemCreateView
-        show={showCreateModal}
-        onHide={() => setShowCreateModal(false)}
-      />
+      {session?.user && session?.user.role === "admin" && (
+        <ScheduleItemCreateView
+          show={showCreateModal}
+          onHide={() => setShowCreateModal(false)}
+        />
+      )}
     </>
   )
 }

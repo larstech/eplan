@@ -6,6 +6,8 @@ const EmployeeZod = z.object({
   firstName: z.string(),
   lastName: z.string(),
   freelancer: z.boolean(),
+  email: z.string().nullable(),
+  password: z.string().nullable(),
 })
 
 export const validate = (employee: EmployeeDTO): boolean => {
