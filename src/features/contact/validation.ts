@@ -3,7 +3,7 @@ import z from "zod"
 
 const ContactZod = z.object({
   id: z.number(),
-  companyId: z.number(),
+  companyId: z.number().nullable(),
   country: z.string().nonempty(),
   streetName: z.string().nonempty(),
   houseNumber: z.string().nonempty(),

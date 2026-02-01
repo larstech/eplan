@@ -5,7 +5,7 @@ const WorkOrderZod = z.object({
   id: z.number(),
   pipedriveId: z.coerce.string().nonempty(),
   organizationId: z.number(),
-  contactId: z.number(),
+  contactId: z.number().nullable(),
   title: z.string().nonempty(),
   description: z.string(),
 })

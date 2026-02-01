@@ -29,7 +29,7 @@ export const createWorkOrder = async (workOrderDTO: WorkOrderDTO) => {
     }
 
     await sql`INSERT INTO work_orders (pid, organization_id, contact_id, title, description)
-              VALUES (${workOrderDTO.pid}, ${workOrderDTO.organizationId}, ${workOrderDTO.contactId}, ${workOrderDTO.title}, ${workOrderDTO.description})`
+              VALUES (${workOrderDTO.pid}, ${workOrderDTO.organizationId}, NULLIF(${workOrderDTO.contactId}, -1), ${workOrderDTO.title}, ${workOrderDTO.description})`
 
     revalidatePath(route.workOrders)
   })
@@ -42,7 +42,7 @@ export const editWorkOrder = async (workOrder: WorkOrderDTO) => {
     }
 
     await sql`UPDATE work_orders
-              SET organization_id = ${workOrder.organizationId}, contact_id = ${workOrder.contactId}, title = ${workOrder.title}, description = ${workOrder.description}
+              SET organization_id = ${workOrder.organizationId}, contact_id = NULLIF(${workOrder.contactId}, -1), title = ${workOrder.title}, description = ${workOrder.description}
               WHERE pid = ${workOrder.pid}`
 
     revalidatePath(route.workOrders)
