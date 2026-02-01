@@ -42,7 +42,7 @@ export default function ContactFormView({
               updateFormData({ companyId: parseInt(e.target.value) })
             }
           >
-            <option value={-1}>Geen organization</option>
+            <option value={-1}>Geen organisatie</option>
             {organizations
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((organization) => {

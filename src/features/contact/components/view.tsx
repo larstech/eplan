@@ -91,7 +91,7 @@ function DataTableBody({ contacts, organizations }: DataTableBodyProps) {
       <thead>
         <tr>
           <th>Naam</th>
-          <th>Organization</th>
+          <th>Organisatie</th>
           <th>Locatie</th>
           <th>Email</th>
           <th>Telefoonnummer</th>
