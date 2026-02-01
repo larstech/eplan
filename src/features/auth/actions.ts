@@ -25,3 +25,9 @@ export const signUp = async (formData: SignUpFormData) => {
     })
   } catch {}
 }
+
+export const signOut = async () => {
+  try {
+    await auth.signOut()
+  } catch {}
+}

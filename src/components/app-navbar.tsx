@@ -5,10 +5,15 @@ import { route } from "@/helpers/routes"
 import { authClient } from "@/lib/auth/client"
 import Image from "next/image"
 import Link from "next/link"
-import { Container, Nav, Navbar } from "react-bootstrap"
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap"
+import { signOut } from "@/features/auth/actions"
 
 export default function AppNavbar() {
   const { data: session } = authClient.useSession()
+
+  const handleLogout = async () => {
+    await signOut()
+  }
 
   return (
     <Navbar sticky="top" expand="lg" className="bg-body-tertiary">
@@ -45,8 +50,16 @@ export default function AppNavbar() {
             </Nav>
           )}
 
-          <Navbar.Text className="ms-auto">
-            <ThemeSwitcher />
+          <Navbar.Text className="ms-auto d-flex align-items-center justify-content-between gap-2">
+            {session && session.user && (
+              <NavDropdown title={session.user.name} className="me-3">
+                <NavDropdown.Item onClick={handleLogout}>Log uit</NavDropdown.Item>
+              </NavDropdown>
+            )}
+
+            <Nav.Item>
+              <ThemeSwitcher />
+            </Nav.Item>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>
