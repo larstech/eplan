@@ -43,7 +43,7 @@ export const editWorkOrder = async (workOrder: WorkOrderDTO) => {
 
     await sql`UPDATE work_orders
               SET organization_id = ${workOrder.organizationId}, contact_id = NULLIF(${workOrder.contactId}, -1), title = ${workOrder.title}, description = ${workOrder.description}
-              WHERE pid = ${workOrder.pid}`
+              WHERE id = ${workOrder.id}`
 
     revalidatePath(route.workOrders)
   })
@@ -52,7 +52,7 @@ export const editWorkOrder = async (workOrder: WorkOrderDTO) => {
 export const deleteWorkOrder = async (workOrderId: number) => {
   await adminAction(async () => {
     await sql`DELETE FROM work_orders
-              WHERE pid = ${workOrderId}`
+              WHERE id = ${workOrderId}`
 
     revalidatePath(route.workOrders)
   })
