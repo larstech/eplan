@@ -2,15 +2,20 @@ import { auth } from "@/lib/auth/server"
 import { NextRequest, NextResponse } from "next/server"
 
 export default async function middleware(request: NextRequest) {
-  if (request.headers.has("next-action")) {
-    return
+  const { pathname } = request.nextUrl
+
+  if (request.headers.has("next-action") || pathname.startsWith("/api/auth")) {
+    return NextResponse.next()
   }
 
   const { data: session } = await auth.getSession()
-  const { pathname } = request.nextUrl
 
   if (pathname.startsWith("/auth/sign-in")) {
-    return
+    if (session) {
+      return NextResponse.redirect(new URL("/schedule", request.url))
+    }
+
+    return NextResponse.next()
   }
 
   if (!session) {
@@ -18,14 +23,14 @@ export default async function middleware(request: NextRequest) {
   }
 
   if (pathname.startsWith("/schedule")) {
-    return
+    return NextResponse.next()
   }
 
   if (session.user.role !== "admin") {
     return NextResponse.redirect(new URL("/schedule", request.url))
   }
 
-  return
+  return NextResponse.next()
 }
 
 export const config = {
